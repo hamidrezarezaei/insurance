@@ -1,0 +1,32 @@
+﻿
+<header id="sec-header">
+    <nav class="navbar">
+        <div class="container">
+            <div  class="row">
+                <div class="col-9 order-2 col-md-3">
+                    <a href="/">
+                        <img src="~/dana/image/theme/logo.jpg" alt="آسایش تدبیر ایرانیان" class="logo" />
+                    </a>
+                </div>
+                <div class="col-md-9 col-12 order-3  desktop-menu">
+
+                    @await Component.InvokeAsync("Menu", new { id = 10 })
+                </div>
+                <div class="col-3 order-1 mobile-menu">
+                    <button type="button" data-toggle="modal" data-target="#sidebar-right" class="hamberger-menu-button btn btn-default">&#9776;</button>
+                    <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                @await Component.InvokeAsync("Menu", new { id = 10, template = "Accordion" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+             
+            </div>
+        </div>
+    </nav>
+</header>
+

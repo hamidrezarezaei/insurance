@@ -1,0 +1,47 @@
+﻿@model IEnumerable<menu>
+@{
+    var rand = new Random().Next();
+}
+
+
+
+<ul class="row default-menu level1-container no-gutters" id="@ViewData["componentName"]">
+    @foreach (var level1 in Model)
+    {
+        if (level1.childs.Count() > 0)
+        {
+            <li class="menu-item level1-item dropdown">
+                <a href="@level1.link">@level1.title <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                <ul class="level2-container">
+                    @foreach (var level2 in level1.childs)
+                    {
+                        if (level2.childs.Count() > 0)
+                        {
+                            <li class="menu-item level2-item">
+                                <a href="@level2.link">@level2.title<i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                <ul class="level3-container">
+                                    @foreach (var level3 in level2.childs)
+                                    {
+                                        <li class="menu-item level3-item"><a href="@level3.link">@level3.title</a></li>
+                                    }
+                                </ul>
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="menu-item level2-item"><a href="@level2.link">@level2.title</a></li>
+                        }
+                    }
+                </ul>
+            </li>
+        }
+        else
+        {
+            <li class="menu-item level1-item"><a href="@level1.link">@level1.title</a></li>
+        }
+    }
+
+</ul>
+
+

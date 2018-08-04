@@ -1,0 +1,38 @@
+﻿@model post
+@{
+    ViewData["Title"] = Model.title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@await Html.PartialAsync("_header.cshtml")
+<article class="post">
+    <div class="post-header">
+        <img class="background-img" src="@Model.image" asp-append-version="true"  title="@Model.title"/>
+        <div class="container">
+            <h1 class="title">
+                @Model.title
+            </h1>
+            @if (@Model.title2 != null && @Model.title2 != "")
+            {
+                <p class="title2">
+                    @Model.title2
+                </p>
+            }
+        </div>
+    </div>
+    <div class="container">
+        @if (@Model.brief != null && @Model.brief != "")
+        {
+
+            <p class="brief">
+                @Html.Raw(Model.brief)
+            </p>
+        }
+        <p class="content">
+            @Html.Raw(Model.content)
+        </p>
+    </div>
+
+</article>
+
+@await Html.PartialAsync("_footer.cshtml")
+ 

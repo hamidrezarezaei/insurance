@@ -1,0 +1,27 @@
+﻿@model order
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-4 col-xs-1"></div>
+        <div class="col-md-4 alert alert-success" style="text-align:center;line-height:3;margin-top:150px;">
+            <b>
+                سفارش شما با موفقیت ثبت شد.
+            </b>
+            <br />
+            کد رهگیری شما عبارت است از :
+            <b>
+                @Model.trackingCode
+            </b>
+            @if (Model.bankReference != null && Model.bankReference != "")
+            {
+            <div>
+                شماره ارجاع بانک :
+                <b>
+                    @Model.bankReference
+                </b>
+            </div>
+            }
+        </div>
+        <div class="col-md-4 col-xs-1"></div>
+    </div>
+</div>

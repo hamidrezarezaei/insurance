@@ -1,0 +1,60 @@
+﻿.field-title.static-width{
+    width:140px;
+}
+
+.logo {
+    width: 100%;
+}
+
+#sec-insurance {
+    height: auto;
+}
+
+    #sec-insurance .insurance-tab {
+        width: 100px;
+    }
+        #sec-insurance .insurance-tab span {
+            font-size:14px;
+        }
+            .about-us-img {
+    width: 100%;
+}
+
+h2 > span::before {
+    display: none
+}
+
+h2 > span::after {
+    display: none
+}
+#sec-insurance .insurance-tab .step-label{
+    font-size:13px;
+}
+#sec-insurance .insurance-step {
+    height: auto;
+}
+#sec-insurance .field-title {
+    padding: 7px 12px 7px 0px;
+    font-weight: 500;
+    font-size: 13px;
+    color: black;
+}
+#sec-other-insurance #Other-insurance .box{
+    width:100%;
+    margin:0px;
+    margin-bottom:8px;
+}
+#sec-article #box-category-articles .box {
+    margin-bottom: 15px;
+}
+#enamad {
+    position:relative;
+    top:auto;
+    left:auto;
+    background-color:transparent;
+}
+
+#sec-footer #contact-us
+{
+    margin-top:20px;
+}

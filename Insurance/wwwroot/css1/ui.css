@@ -1,0 +1,18 @@
+﻿div {
+    /*border: dotted 1px black;*/
+}
+.ltr{
+    direction:ltr;
+}
+.section {
+    height: 110vh;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+    .section#sec1 {
+        /*background-image: url(../image/theme/back1.jpg);*/
+    }
+input.dp-picker-input.ng-pristine {
+    width: 100% !important;
+}

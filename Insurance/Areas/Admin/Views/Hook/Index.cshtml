@@ -1,0 +1,33 @@
+﻿
+@model IEnumerable<hook>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست هوک ها</h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="Create" asp-action="Create" asp-route-returnurl="/Admin/Hook/Index">ایجاد دسته جدید</a>
+    </div>
+</div>
+
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{int r = 0;}
+            @foreach (var item in Model)
+            {
+                r++;
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.id">@r -  @Html.DisplayFor(modelItem => item.title)</a>
+                    </td>
+                    <td class="ltr">
+                        @item.name
+                    </td>
+                    <td class="op-buttns">
+                        <a btntype="Edit" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Hook/Index">ویرایش</a>
+                        <a btntype="Delete" asp-action="Delete" asp-route-id="@item.id" asp-route-returnurl="/Admin/Hook/Index">حذف </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

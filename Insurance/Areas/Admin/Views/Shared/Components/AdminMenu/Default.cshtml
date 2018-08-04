@@ -1,0 +1,25 @@
+﻿@model List<adminMenu>
+
+
+@{ 
+    var currentController = ViewContext.RouteData.Values["Controller"].ToString();
+    
+}
+
+<ul class="admin-menu">
+    @foreach (var item in Model)
+    {
+        string className = "admin-menu-item";
+
+        if (item.controller.ToLower() == currentController.ToLower())
+        {
+            className += " active";
+
+        }
+        <li class="@className">
+            <a asp-route-area="@Html.Raw(item.area)" asp-controller="@Html.Raw(item.controller)" asp-action="Index">
+                @Html.Raw(item.title)
+            </a>
+        </li>
+    }
+</ul>

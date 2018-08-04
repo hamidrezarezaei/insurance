@@ -1,0 +1,107 @@
+﻿@model dataValue
+
+@if (ViewBag.type == "edit")
+{
+    <input type="hidden" asp-for="dataTypeId" />
+}
+else if (ViewBag.type == "create" )
+{
+<input type="hidden" asp-for="dataTypeId"  value="@ViewData["ParentId"]"/>
+}
+<div class="admin-box">
+    <table class="table detail table-striped">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.orderIndex)
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="orderIndex" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.orderIndex)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.active)
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="active" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.active)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.title)
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="title" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.title)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.fatherId)
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <select id="fatherId" asp-for="fatherId" class="form-control" dir="rtl" asp-items="ViewBag.dataValues">
+                        <option value="">بدون والد</option>
+                    </select>
+                    <script>
+                        $(document).ready(function () {
+                            $("#fatherId").select2({
+                                placeholder: "انتخاب والد",
+                                allowClear: true
+                            });
+                        });
+                    </script>
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.fatherId)
+
+                </td>
+            }
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,13 @@
+<div class="step-navigation-container  row no-gutters justify-content-center">
+    <div *ngFor="let sn of insurance.step_navigations" [ngClass]="{'enable':  sn.number < insurance.currentStep , 'current': sn.number == insurance.currentStep }" class="step-navigation">
+        <ng-container *ngIf="sn.number < insurance.currentStep">
+            <img *ngIf="sn.image" class="step-navigation-icon" src="{{sn.image}}" (click)="stepChange(sn.number)" />
+        </ng-container>
+        <ng-container *ngIf="sn.number >= insurance.currentStep">
+            <img *ngIf="sn.image" class="step-navigation-icon" src="{{sn.image}}" />
+        </ng-container>
+        <div class="step-label">
+            {{sn.title}}
+        </div>
+    </div>
+</div>

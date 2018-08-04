@@ -1,0 +1,6 @@
+<div class="row alert alert-danger" *ngIf="_authService.user && _authService.user.clientMessage">{{_authService.user.clientMessage}}</div>
+
+<div class="row no-gutters">
+    <loginForm class="col-12 col-md-6 p-2" (previousStepClicked)="previousStepClick()"></loginForm>
+    <registerForm class="col-12 col-md-6 p-2" (previousStepClicked)="previousStepClick()"></registerForm>
+</div>

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<boxCategory>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست دسته های باکس</h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="Create"  asp-action="Create" asp-route-returnurl="/Admin/BoxCategory/Index">ایجاد دسته جدید</a>
+    </div>
+</div>
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{int l1 = 0;}
+            @foreach (var level1 in Model)
+            {
+                l1++;
+                <tr class="level1">
+                    <td>
+                        <a asp-action="Details" asp-route-id="@level1.id"> @l1 - @Html.DisplayFor(modelItem => level1.title)</a>
+                    </td>
+
+                    <td class="op-buttns">
+
+                        <a btntype="Edit" asp-action="Edit" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">ویرایش</a>
+                        <a btntype="Delete" asp-action="Delete" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">حذف </a>
+                    </td>
+                </tr>
+                int l2 = 0;
+                @foreach (var level2 in level1.childs)
+                {
+                    l2++;
+                    <tr class="level2">
+                        <td>
+                            <a asp-action="Details" asp-route-id="@level2.id"> @l2  - @l1 - @Html.DisplayFor(modelItem => level2.title)</a>
+                        </td>
+
+                        <td class="op-buttns">
+                            <a btntype="Edit" asp-action="Edit" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">ویرایش</a>
+                            <a btntype="Delete" asp-action="Delete" asp-route-id="@level2.id" asp-route-returnurl="/Admin/BoxCategory/Index">حذف </a>
+                        </td>
+                    </tr>
+
+                    int l3 = 0;
+                    @foreach (var level3 in level2.childs)
+                    {
+                        l3++;
+                        <tr class="level3">
+                            <td>
+                                <a asp-action="Details" asp-route-id="@level3.id">@l3  -  @l2  - @l1 - @Html.DisplayFor(modelItem => level3.title)</a>
+                            </td>
+
+                            <td class="op-buttns">
+                                <a btntype="Edit" asp-action="Edit" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">ویرایش</a>
+                                <a btntype="Delete" asp-action="Delete" asp-route-id="@level3.id" asp-route-returnurl="/Admin/BoxCategory/Index">حذف </a>
+                            </td>
+                        </tr>
+
+                        int l4 = 0;
+                        @foreach (var level4 in level3.childs)
+                        {
+                            l4++;
+                            <tr class="level4">
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@level4.id">@l4 - @l3  -  @l2  - @l1 - @Html.DisplayFor(modelItem => level4.title)</a>
+                                </td>
+
+                                <td class="op-buttns">
+                                    <a btntype="Edit" asp-action="Edit" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">ویرایش</a>
+                                    <a btntype="Delete" asp-action="Delete" asp-route-id="@level4.id" asp-route-returnurl="/Admin/BoxCategory/Index">حذف </a>
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>

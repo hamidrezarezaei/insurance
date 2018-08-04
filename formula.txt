@@ -1,0 +1,29 @@
+var B = field.attribute('thirdParty','model','basePrice');
+var C = field.attribute('thirdParty','model','discountBase');
+var E = field.attribute('thirdParty','model','premiumPassenger');
+var discountPercent = field.attribute('thirdParty','discount','discountPercent');
+var x = field.yearCount('thirdParty','productionYear');
+var D = B - C;
+var F = D + E;
+var I = D + E;
+var G = I * 9 / 100;
+var U = I * 109 / 100;
+
+var AN = (D * (100-discountPercent)/100) / 365 ;
+var delay = field.delayDays('thirdParty','expireDate');
+
+var penaltyPercent = field.attribute('thirdParty','damage','penaltyPercent');
+if(penaltyPercent > 0)
+{
+    var penalty = D * penaltyPercent / 100;    
+    var W = ((D + penalty) + (E * 95 /100)) * 109 / 100;
+	AN = (D * (100+penaltyPercent)/100) / 365 ;
+    W = W + (AN * delay);
+    return W;
+}
+
+var discount = U * discountPercent / 100; 
+var Z = U - discount;
+
+Z = Z + (AN * delay);
+return Z;

@@ -1,0 +1,21 @@
+﻿@model user_express
+
+@{ViewBag.type = "create";}
+<div class="row">
+    <h1 class="col-md-9 admin-box-title"><a asp-action="Index">لیست کاربران</a> > ایجاد کاربر جدید </h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+    </div>
+</div>
+<form asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @Html.Partial("Details_partial", Model)
+    <div class="op-buttns bottom">
+        <a btntype="cancel" asp-action="Index">لغو</a>
+        <input btntype="save" type="submit" value="ایجاد" />
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

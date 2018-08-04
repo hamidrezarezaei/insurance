@@ -1,0 +1,67 @@
+﻿@section styles {
+    <link href="~/Component/Menu/Default.css" rel="stylesheet" />
+    <link href="~/Component/Menu/Accordion.css" rel="stylesheet" />
+}
+
+@await Html.PartialAsync("_header.cshtml")
+
+<section id="sec-insurance">
+    <div class="container holder">
+        <app class="row no-gutters" asp-ng2-prerender-module="ClientApp/dist/main-server" asp-prerender-timeout="100000">
+            <div id="loadingContainer">
+                <div class="loading"></div>
+            </div>
+        </app>
+    </div>
+</section>
+<section id="sec-why-us">
+    <div class="container holder">
+        @await Component.InvokeAsync("BoxCategory", new { id = 1007, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "why-us" })
+    </div>
+</section>
+
+<section id="sec-about-us">
+    <div class="container holder">
+        <div class="row">
+            <div class="col1 col-md-7 col-xs-12">
+                @await Component.InvokeAsync("Box", new { id = 29, componentName = "about-us" })
+            </div>
+            <div class="col2 col-md-5 col-xs-12 about-us-img-container">
+                <img src="~/bimebaz/image/theme/about-us.png" title="بیمه پاسارگاد" class="about-us-img" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sec-reminder">
+    <div class="container holder">
+        <h2 class="col-7">
+            <span>
+                سه بار تاریخ بیمه‌نامه‌اتو یادآوری می‌کنیم
+            </span>
+        </h2>
+        aaaaaaaaaaaaaaaa<br />
+        <br /><br /><br /><br /><br />
+        <br /><br /><br /><br /><br />
+    </div>
+</section>
+
+<section id="sec-others-service">
+    <div class="container holder">
+        @await Component.InvokeAsync("BoxCategory", new { id = 1009, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "others-service" })
+    </div>
+</section>
+
+<section id="sec-article-before"></section>
+
+<section id="sec-article">
+    <div class="container holder">
+        @await Component.InvokeAsync("BoxCategory", new { id = 1010, isShowCategoryTitle = true, componentName = "box-category-articles" })
+    </div>
+</section>
+<section id="sec-article-after"></section>
+@await Html.PartialAsync("_footer.cshtml")
+
+@section scripts {
+    <script src="~/dist/main-client.js" asp-append-version="true"></script>
+}

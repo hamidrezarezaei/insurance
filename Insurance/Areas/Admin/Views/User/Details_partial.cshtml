@@ -1,0 +1,163 @@
+﻿@model user_express
+<div class="admin-box">
+    <table class="table detail table-striped">
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.firstName):
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="firstName" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.firstName)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.lastName):
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="lastName" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.lastName)
+
+                </td>
+            }
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.nationalCode):
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="nationalCode" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.nationalCode)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                شماره موبایل:
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="phoneNumber" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.phoneNumber)
+
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                ایمیل:
+
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="email" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.email)
+
+                </td>
+            }
+        </tr>
+
+        <tr>
+            <td>
+                نام کاربری:
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="actualUserName" class="form-control" />
+
+                </td>
+            }
+            else
+            {
+
+                <td>
+                    @Html.DisplayFor(model => model.actualUserName)
+
+                </td>
+            }
+        </tr>
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>
+                    کلمه عبور:
+                </td>
+
+                <td>
+                    <input asp-for="password" class="form-control" />
+
+                </td>
+
+
+            </tr>
+            <tr>
+                <td>
+                    تکرار کلمه عبور:
+                </td>
+
+                <td>
+                    <input asp-for="confirmPassword" class="form-control" />
+
+                </td>
+
+
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+

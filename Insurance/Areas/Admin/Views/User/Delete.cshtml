@@ -1,0 +1,19 @@
+﻿@model user_express
+@{ViewBag.type = "delete";}
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">آیا از حذف @Model.fullName اطمینان دارید? </h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+    </div>
+</div>
+@Html.Partial("Details_partial", Model)
+
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="id" />
+    <div class="op-buttns bottom">
+        <a btntype="cancel" asp-action="Index">لغو</a>
+        <input btntype="submitdelete" type="submit" value="حذف" />
+    </div>
+</form>

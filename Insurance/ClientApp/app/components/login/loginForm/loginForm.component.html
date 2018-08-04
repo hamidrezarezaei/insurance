@@ -1,0 +1,44 @@
+<div class="row no-gutters">
+    <div id="login-form" class="field-set col-12 p-3">
+        <span class="field-set-legend">ورود</span>
+        <form #f="ngForm" class="row no-gutters">
+
+            <div class="col-12 p-1">
+                <div class="row no-gutters">
+                    <div class="field-title textBox-type col-md-3 col-4 ">
+                        نام کاربری:
+                    </div>
+                    <div class="textBox-type ltr col-md-9 col-8">
+                        <div class="field-container ">
+                            <input class="control" placeholder="username" ngModel name="actualUserName" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 p-1">
+                <div class="row no-gutters">
+                    <div class="field-title textBox-type col-md-3 col-4">
+                        کلمه عبور:
+                    </div>
+                    <div class="textBox-type ltr col-md-9 col-8">
+                        <div class="field-container ">
+                            <input type="password" class="control" placeholder="password" ngModel name="passWord" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4 col-12 order-1 p-2"></div>
+            <div class="col-md-4  col-6 order-3 p-2">
+                <button class="next-step" (click)="Login(f)" [disabled]="!f.valid">ورود</button>
+            </div>
+            <div class="col-md-4  col-6 order-2 p-2">
+                <button class="previous-step" (click)="previousStepClick()">بازگشت</button>
+            </div>
+
+        </form>
+    </div>
+</div>

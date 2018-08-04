@@ -1,0 +1,14 @@
+﻿@model  box
+    <div id="@ViewData["componentName"]" class="row no-gutters">
+        @if ((bool)ViewData["isShowTitle"])
+        {
+            <h2 class="col-12">
+                <span>
+                    @Model.title
+                </span>
+            </h2>
+        }
+        <div class="content col-12">
+           @Html.Raw(Model.content)
+        </div>
+    </div>

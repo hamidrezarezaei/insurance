@@ -1,0 +1,95 @@
+﻿@model dataValue_vm
+
+<div class="row">
+    @*<h1>share</h1>*@
+    <h1 class="col-md-8 admin-box-title"> ویرایش @Model.dataValue.title</h1>
+    <div class="col-md-4 op-buttns top">
+        <a btntype="back" href="@ViewData["ReturnUrl"]">بازگشت </a>
+    </div>
+</div>
+
+<form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="@Model.dataValue.id" />
+    <input type="hidden" asp-for="@Model.dataValue.siteId" />
+    <input type="hidden" asp-for="@Model.dataValue.dataTypeId" />
+    <div class="admin-box">
+        <table class="table detail table-striped">
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.dataValue.orderIndex)
+                </td>
+                <td class="ltr">
+                    <input asp-for="dataValue.orderIndex" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.dataValue.active)
+                </td>
+                <td>
+                    <input asp-for="@Model.dataValue.active" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.dataValue.title)
+
+                </td>
+                <td>
+                    <input asp-for="@Model.dataValue.title" class="form-control" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.dataValue.fatherId)
+
+                </td>
+                <td>
+                    <select id="fatherId" asp-for="@Model.dataValue.fatherId" class="form-control" dir="rtl" asp-items="ViewBag.dataValues">
+                        <option value="">بدون والد</option>
+                    </select>
+                    <script>
+                        $(document).ready(function () {
+                            $("#fatherId").select2({
+                                placeholder: "انتخاب والد",
+                                allowClear: true
+                            });
+                        });
+                    </script>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="row">
+        <h1 class="col-md-9 admin-box-title">کلاس ها</h1>
+    </div>
+    <div class="admin-box">
+
+        @foreach (var term in Model.terms)
+        {
+            <div class="fieldset row">
+                <h4 class="fieldset-legend">@term.title</h4>
+                @foreach (var category in term.categories)
+                {
+                    <div class="col-md-3">
+                        <input type="checkbox" @if (Model.selectedCategories.Contains(category.id)) { @Html.Raw("checked") ; } name="selectedCategories" value="@category.id" id="c_@category.id" />
+                        <label for="c_@category.id">@category.title</label>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <div class="op-buttns bottom">
+        <a btntype="cancel" href="@ViewData["ReturnUrl"]">لغو</a>
+        <input btntype="save" type="submit" value="ذخیره" />
+    </div>
+
+
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

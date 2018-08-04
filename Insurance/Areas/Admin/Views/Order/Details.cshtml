@@ -1,0 +1,133 @@
+﻿@model order
+
+<div class="row">
+    <h1 class="col-md-8 admin-box-title"></h1>
+    <div class="col-md-4 op-buttns">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+    </div>
+</div>
+<div class="admin-box">
+    <table class="table detail table-striped">
+        <tr>
+            <td>
+                نام کاربر:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.user.fullName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                شناسه کاربری:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.user.actualUserName)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                نوع بیمه درخواستی:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.insurance.title)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                تاریخ سفارش:
+            </td>
+            <td>
+                <span>@Html.DisplayFor(model => model.persianDate)</span> - <span> @Html.DisplayFor(model => model.persianTime)</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                مبلغ محاسبه شده:
+            </td>
+            <td>
+                @string.Format("{0:n0}", @Model.price) تومان
+            </td>
+        </tr>
+        <tr>
+            <td>
+                نوع پرداخت:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.paymentType.title)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                وضعیت سفارش:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.orderStatus.title)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                شماره ارجاع از بانک:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.bankReference)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                کدرهگیری سایت:
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.trackingCode)
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">اطلاعات ارسال شده</h1>
+    <div class="col-md-3 op-buttns">
+    </div>
+</div>
+<div class="admin-box">
+    <table class="table detail table-striped">
+        @foreach (var field in Model.fields)
+        {
+            <tr>
+                <td>
+                    @field.title:
+                </td>
+                <td>
+                    @if (field.type == "image" || field.type == "inputImage")
+                    {
+                        <img src="@field.image" asp-append-version="true" rowid="@field.id" imagesrc="@field.image" hideinput="true" />
+                        <a href="@field.image" download>دانلود</a>
+                    }
+                    else if (field.type == "checkBox")
+                    {
+                        @if (field.value == "true")
+                        {
+                            <span>بلی</span>
+                        }
+                        else
+                        {
+                            <span>خیر</span>
+                        }
+                    }
+                    else if (field.type == "date")
+                    {
+                        <span>
+                            @field.persianDateFormat
+                        </span>
+                    }
+                    else
+                    {
+                        @field.value
+                    }
+                </td>
+            </tr>
+        }
+                </table>
+            </div>
+
+
+

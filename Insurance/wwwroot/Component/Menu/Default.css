@@ -1,0 +1,101 @@
+﻿.level1-item .fa-angle-down {
+    position: relative;
+    top: 3px;
+}
+
+.level2-item .fa-angle-left {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    -webkit-transition: left 0.5s; /* Safari */
+    transition: left 0.5s;
+}
+
+.level2-item:hover .fa-angle-left {
+    left: 8px;
+}
+
+.menu-item a {
+    color: #444 !important;
+    font-weight: 500;
+    font-size: 15px;
+    text-transform: none;
+    text-align: right;
+    display: block;
+}
+
+    .menu-item a:hover {
+        background-color: #f8b617 !important;
+    }
+
+.level1-item > a {
+    padding: 30px 7px !important;
+}
+
+.level1-item .level2-container {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    padding: 0px;
+    right: 0px;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    z-index: 999;
+}
+
+.default-menu ul {
+    -webkit-transition-delay: 0.5s; /* Safari */
+    transition-delay: 0.5s;
+}
+
+.level1-item:hover .level2-container {
+    visibility: visible;
+    opacity: 1;
+}
+
+.level2-item {
+    position: relative;
+    width: 310px;
+}
+
+    .level2-item > a {
+        padding: 6px 10px;
+        border-bottom: 1px dotted;
+    }
+
+    .level2-item .level3-container {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        right: 310px;
+        top: 0px;
+        position: absolute;
+        padding: 0px;
+        background-color: #fff;
+        -webkit-background-clip: padding-box;
+        background-clip: padding-box;
+        border: 1px solid rgba(0,0,0,.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        box-shadow: 0 6px 12px rgba(0,0,0,.175);
+        z-index: 999;
+    }
+
+    .level2-item:hover .level3-container {
+        visibility: visible;
+        opacity: 1;
+    }
+
+.level3-item {
+    width: 310px;
+}
+
+    .level3-item > a {
+        padding: 6px 10px;
+        border-bottom: 1px dotted;
+    }

@@ -1,0 +1,26 @@
+﻿@model role
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title"><a asp-action="Index">لیست نقش ها</a> > ایجاد نقش جدید</h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+    </div>
+</div>
+<form asp-action="Create">
+    <div class="admin-box">
+        <table class="table detail table-striped">
+            <tr>
+                <td>
+                    نام نقش
+                </td>
+                <td class="ltr">
+                    <input name="name" type="text" class="form-control" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="op-buttns bottom">
+        <a btntype="cancel" asp-action="Index">لغو</a>
+        <input btntype="save" type="submit" value="ایجاد" />
+    </div>
+</form>

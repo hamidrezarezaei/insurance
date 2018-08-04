@@ -1,0 +1,13 @@
+﻿.desktop {
+    display: none;
+}
+
+.desktop-menu {
+    display: none
+}
+.mobile-menu {
+    display: block;
+}
+#sec-header .hamberger-menu-button {
+    background-color: white;
+}

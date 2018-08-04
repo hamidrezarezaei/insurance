@@ -1,0 +1,38 @@
+﻿@model List<user>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست کاربران</h1>
+    <div class="col-md-3 op-buttns top">
+        <a btntype="Create" asp-action="Create">ایجاد کاربر جدید</a>
+    </div>
+</div>
+
+<div class="admin-box">
+    <table class="table table-striped">
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.Id">
+                        @user.fullName
+                    </a>
+                </td>
+                <td class="ltr">
+                    @user.actualUserName
+                </td>
+                <td class="ltr">
+                    @user.Email
+                </td>
+                <td class="ltr">
+                    @user.actualRole
+                </td>
+                <td class="op-buttns">
+                    <a asp-action="PaymentTypes" asp-route-id="@user.Id" asp-route-returnurl="/Admin/User/Index">شیوه های پرداخت</a>|
+                    <a asp-action="Role" asp-route-id="@user.Id" asp-route-returnurl="/Admin/User/Index">نقش</a>
+                    <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-rounded">حذف <i class="far fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

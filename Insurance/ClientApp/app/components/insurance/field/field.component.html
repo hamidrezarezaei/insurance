@@ -1,0 +1,172 @@
+<div class="row no-gutters" >
+    
+    <ng-container *ngIf="field.type=='label'">
+        <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="label-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <label class="control">{{_insuranceService.textById(insurance.name,field.fatherid)}}</label>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='html'">
+        <div *ngIf="!field.isHideLabel" class="field-title html-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="html-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <div class="control" [innerHTML]="field.value"></div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='image'">
+        <div class="image-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img [src]="imageFile" (click)="openFileDialog()">
+                <!--<canvas #imageCanvas (click)="openFileDialog()"></canvas>-->
+                <input type="file" (change)="valueChange($event)" accept="image/x-png,image/jpeg" #fileInput id="{{field.name}}" style="display: none;" />
+                <button (click)="openFileDialog()" class="image-button">{{field.title}}</button>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='inputImage'">
+        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div class="inputImage-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <input type="file" (change)="valueChange($event)" accept="image/x-png,image/jpeg" #inputImage id="{{field.name}}" />
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='button'">
+        <div *ngIf="!field.isHideLabel" class="field-title button-type {{field.labelCssClass}}">{{field.title}}:</div>
+
+        <div id="{{field.name}}" class="button-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <button class="control"> {{field.title}} </button>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='number'">
+        <div *ngIf="!field.isHideLabel" class="field-title number-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="number-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <input type="text" [(ngModel)]="field.value" value="{{field.value  | frenchDecimal}}" (input)="valueChange($event)" class="control" placeholder="{{field.placeHolder}}" />
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='textBox'">
+        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="textBox-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <input type="text" [(ngModel)]="field.value" (input)="valueChange($event)" class="control" placeholder="{{field.placeHolder}}" />
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='checkBox'">
+        <div *ngIf="!field.isHideLabel" class="field-title checkBox-type {{field.elementCssClass}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='acceptCheckBox'">
+        <div *ngIf="!field.isHideLabel" class="field-title  acceptCheckBox-type {{field.elementCssClass}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='date'">
+        <div *ngIf="!field.isHideLabel" class="field-title date-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="date-type  {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <div class="date-container control">
+                    <dp-date-picker dir="rtl" [(ngModel)]="field.value" [config]="datePickerConfig" (onChange)="valueChange($event)" mode="day" theme="dp-material" placeholder="{{field.placeHolder}}"> </dp-date-picker>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='textArea'">
+        <div *ngIf="!field.isHideLabel" class="field-title textArea-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="textArea-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <textarea [(ngModel)]='field.value' (input)="valueChange($event)" class="control" placeholder="{{field.placeHolder}}"></textarea>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='radio'">
+        <div *ngIf="!field.isHideLabel" class="field-title radio-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <label *ngFor="let dataValue of field.dataValues">
+            <input type="radio" name="field.name" value="{{dataValue.id}}" [(ngModel)]="field.value" (change)="valueChange($event)" class="{{field.elementCssClass}}">
+            {{dataValue.title}}
+        </label>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='radioButton'">
+        <div *ngIf="!field.isHideLabel" class="field-title radioButton-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <label *ngFor="let dataValue of field.dataValues" [ngClass]="{'btn-success': dataValue.id == field.value}" class="field-label {{field.elementCssClass}}">
+            <input type="radio" style="display:none;" name="field.name" value="{{dataValue.id}}" [(ngModel)]="field.value" (change)="valueChange($event)">
+            {{dataValue.title}}
+        </label>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='comboBox'">
+        <div *ngIf="!field.isHideLabel" class="field-title comboBox-type {{field.labelCssClass}}">
+            {{field.title}}:
+        </div>
+        <div id="{{field.name}}" class="comboBox-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="!field.isShowLoading&&field.image" class="icon" src="{{field.image}}" />
+                <img *ngIf="field.isShowLoading" class="icon" src="/common/image/loading32.gif" />
+
+                <ng-select2 [(data)]="field.dataValues"
+                            [placeholder]="field.placeHolder"
+                            [(ngModel)]="field.value"
+                            (valueChanged)="valueChange($event)"
+                            dir="rtl"
+                            class="control">
+                </ng-select2>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='year'">
+        <div *ngIf="!field.isHideLabel" class="field-title year-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="year-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+
+                <ng-select2 [(data)]="years"
+                            [placeholder]="field.placeHolder"
+                            [(ngModel)]="field.value"
+                            (valueChanged)="valueChange($event)"
+                            dir="rtl"
+                            class="control">
+                </ng-select2>
+            </div>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="field.type=='paymentType'">
+        <div *ngIf="!field.isHideLabel" class="field-title paymentType-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <img *ngIf="field.isShowLoading" class="icon" src="/common/image/loading32.gif" />
+
+        <div *ngFor="let dataValue of field.dataValues" class="paymentType-type  {{field.elementCssClass}}">
+            <div class="field-container">
+
+                <label class="btn control dv-{{dataValue.id}}" ngClass="{{dataValue.id == field.value ? 'btn-success': 'btn-default'}}">
+                    <input type="radio" style="display:none;" name="field.name" value="{{dataValue.id}}" [(ngModel)]="field.value" (change)="valueChange($event)">
+                    {{dataValue.title}}
+                </label>
+            </div>
+        </div>
+    </ng-container>
+
+    <div *ngIf="field.afterCssClass" class="{{field.afterCssClass}}"></div>
+</div>

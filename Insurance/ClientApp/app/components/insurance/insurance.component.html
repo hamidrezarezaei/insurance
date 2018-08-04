@@ -1,0 +1,26 @@
+<div class="row no-gutters insurance">
+    <ng-container *ngIf="_insuranceService.isWaiting||_authService.isWaiting">
+        <div id="loadingContainer">
+            <div class="loading"></div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!currentInsurance.tabLocation || currentInsurance.tabLocation == 'top' || currentInsurance.tabLocation == ''">
+        <tab class="col-12" *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
+    </ng-container>
+    <ng-container *ngIf="currentInsurance.tabLocation == 'right'">
+        <tab *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
+    </ng-container>
+    <div class="col">
+        <div class="row no-gutters">
+            <stepNavigation class="col-12" *ngIf="currentInsurance.currentStep>1" [insurance]="currentInsurance" (stepChanged)="stepChange($event)"></stepNavigation>
+            <aInsurance class="col-12" [insurance]="currentInsurance" id="{{currentInsurance.name}}" (stepChanged)="stepChange($event)"></aInsurance>
+        </div>
+    </div>
+    <ng-container *ngIf="currentInsurance.tabLocation == 'left'">
+        <tab  *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
+    </ng-container>
+    <ng-container *ngIf="currentInsurance.tabLocation == 'bottom'">
+        <tab class="col-12" *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
+    </ng-container>
+
+</div>

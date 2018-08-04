@@ -1,0 +1,23 @@
+﻿@model List<order>
+
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => order.insurance.title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => order.persianDate)
+                    </td>
+
+                    <td>
+                        <a asp-action="Details" asp-route-id="@order.id">مشاهده</a> |
+                        <a asp-action="Delete" asp-route-id="@order.id">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

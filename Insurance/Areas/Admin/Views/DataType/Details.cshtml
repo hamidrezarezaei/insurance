@@ -1,0 +1,48 @@
+﻿@model dataType
+@{ViewBag.type = "details";}
+
+<div class="row">
+    <h1 class="col-md-8 admin-box-title">
+        @Model.title
+    </h1>
+    <div class="col-md-4 op-buttns">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+        <a btntype="edit" asp-action="Edit" asp-route-id="@Model.id" asp-route-returnurl="/Admin/DataType/Details/@Model.id">ویرایش</a>
+        <a btntype="delete" asp-action="Delete" asp-route-id="@Model.id" asp-route-returnurl="/Admin/DataType/Index">حذف</a>
+    </div>
+</div>
+@Html.Partial("Details_partial", Model)
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست مقادیر @Model.title</h1>
+    <div class="col-md-3 op-buttns">
+        <a btntype="Create" asp-controller="DataValue" asp-action="Create" asp-route-dataTypeId="@Model.id" asp-route-returnurl="/Admin/DataType/Details/@Model.id">ایجاد مقدار جدید</a>
+    </div>
+</div>
+
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{int r = 0;}
+            @foreach (var item in ViewBag.dataValues)
+            {
+                r++;
+
+                dataValue dataValue = item as dataValue;
+                <tr>
+                    <td>
+                        <a asp-controller="DataValue" asp-action="Edit" asp-route-id="@dataValue.id" asp-route-returnurl="/Admin/DataType/Details/@Model.id">@r - @Html.DisplayFor(modelItem => dataValue.title)</a>
+                    </td>
+                    <td class="op-buttns">
+                        <a btntype="edit" asp-controller="DataValue" asp-action="Edit" asp-route-id="@dataValue.id" asp-route-returnurl="/Admin/DataType/Details/@Model.id">ویرایش </a>
+                        <a btntype="delete" asp-controller="DataValue" asp-action="Delete" asp-route-id="@dataValue.id" asp-route-returnurl="/Admin/DataType/Details/@Model.id">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

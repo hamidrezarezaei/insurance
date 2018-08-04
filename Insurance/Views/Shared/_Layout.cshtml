@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <base href="~/" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous" />
+    <link rel="stylesheet" href="~/common/css/select2/select2.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/common/css/bootstrap/bootstrap.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/common/css/common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/common/css/insurance.css" asp-append-version="true" />
+
+    @RenderSection("styles", required: false)
+
+
+    <link rel="stylesheet" href="~/@ViewData["viewName"]/css/ui.css" asp-append-version="true" />
+    <link rel="stylesheet" media="screen and (max-width: 992px)" href="~/@ViewData["viewName"]/css/tablet.css" asp-append-version="true" />
+    <link rel="stylesheet" media="screen and (max-width: 768px)" href="~/@ViewData["viewName"]/css/mobile.css" asp-append-version="true" />
+
+</head>
+<body>
+
+    @RenderBody()
+    <script src="~/dist/vendor.js" asp-append-version="true"></script>
+    <script src="~/common/js/jQuery/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/common/js/select2/select2.min.js"></script>
+    <script src="~/common/js/bootstrap/bootstrap.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

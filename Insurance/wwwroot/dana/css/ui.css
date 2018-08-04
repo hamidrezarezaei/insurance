@@ -1,0 +1,330 @@
+﻿
+.field-title.static-width {
+    width: 160px;
+}
+.field-title.static-width-small {
+    width: 110px;
+}
+.mobile-menu {
+    display: none;
+}
+.select2-search__field {
+    background-image: url(../image/theme/search.png);
+    background-repeat: no-repeat;
+    background-position: 5px 5px;
+}
+
+
+#sec-header .navbar {
+    margin-bottom: 0px;
+}
+
+
+
+/*******************************************************************************************/
+#sec-insurance {
+    background-image: url(../image/theme/back3.jpg);
+    min-height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 35px 0px 30px;
+}
+
+    #sec-insurance .paymentType-type .field-container .control.dv-1 {
+        background-image: url(../image/theme/online.png);
+        background-position: center 8px;
+        background-repeat: no-repeat;
+    }
+
+    #sec-insurance .paymentType-type .field-container .control.dv-2 {
+        background-image: url(../image/theme/credit.png);
+        background-position: center 8px;
+        background-repeat: no-repeat;
+    }
+
+    #sec-insurance .insurance-tab {
+        width: 130px;
+        background-color: white;
+        border-radius: 10px;
+        margin: 3px;
+        padding: 10px 0px;
+        display: inline-block;
+        background-repeat: no-repeat;
+        background-size: 50px 50px;
+        background-position: center 10px;
+        -webkit-transition: all 1s; /* For Safari 3.1 to 6.0 */
+        transition: all 1s;
+        cursor: pointer;
+    }
+
+        #sec-insurance .insurance-tab:hover, #sec-insurance .insurance-tab.active {
+            background-color: #f8b617;
+        }
+
+            #sec-insurance .insurance-tab.active button, #sec-insurance .insurance-tab:hover button {
+                background-color: #f8b617;
+            }
+
+    #sec-insurance .step {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 4px;
+        padding-bottom: 20px;
+        padding: 18px 0px 5px;
+        margin-top: 5px;
+        border: 5px solid rgba(255, 255, 255, 0.9);
+    }
+
+    #sec-insurance .price-container {
+        padding: 4px 0px;
+        background-color: #ffdd89;
+        border-radius: 3px;
+        font-weight: 700;
+    }
+
+        #sec-insurance .price-container .price-value {
+            color: red;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+    #sec-insurance #loadingContainer > .loading {
+        background-image: url(../image/theme/loading.gif);
+        width: 128px;
+        height: 128px;
+    }
+
+/*******************************************************************************************/
+#sec-about-us {
+    margin-top: 30px;
+}
+
+    #sec-about-us #about-us .content {
+        text-align: justify;
+        color: #444;
+    }
+
+    #sec-about-us .col2 {
+        text-align: left;
+    }
+/*******************************************************************************************/
+
+#sec-other-insurance {
+    margin-top: 30px;
+    background-color: rgba(226,226,226, 1);
+    padding: 30px 0px;
+}
+
+    #sec-other-insurance #Other-insurance .box {
+        background-color: white;
+        width: 90%;
+        margin: 20px;
+        box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        padding: 10px;
+        -webkit-transition: all 1s; /* For Safari 3.1 to 6.0 */
+        transition: all 1s;
+    }
+
+        #sec-other-insurance #Other-insurance .box:hover {
+            background-color: #f8b617;
+            border-radius: 5px;
+        }
+
+        #sec-other-insurance #Other-insurance .box .title {
+            color: #333333;
+            padding: 10px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        #sec-other-insurance #Other-insurance .box .image {
+            padding: 10px;
+        }
+
+            #sec-other-insurance #Other-insurance .box .image img {
+                width: 100px;
+            }
+/*******************************************************************************************/
+
+#sec-article {
+    margin-top: 30px;
+}
+
+    #sec-article #box-category-articles .box {
+        box-shadow: 0 18px 35px rgba(50,50,93,.1), 0 8px 15px rgba(0,0,0,.07);
+        padding: 5px;
+        height: 460px;
+        overflow: hidden;
+    }
+#box-category-articles img{
+    width:100%;
+}
+#sec-article #box-category-articles .box .title {
+    text-align: center;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+}
+
+        #sec-article #box-category-articles .box .content {
+            text-align: justify;
+            color: #444;
+        }
+
+/*******************************************************************************************/
+
+h2 {
+    text-align: center;
+    padding: 10px;
+    color: #222222;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+    h2 > span {
+        position: relative;
+        padding: 0 20px;
+    }
+
+        h2 > span::before {
+            display: block;
+            content: "";
+            position: absolute;
+            left: 100%;
+            height: 4px;
+            bottom: 40%;
+            width: 100%;
+            background-color: #f8b617;
+            max-width: 70px;
+            margin: 0 auto;
+        }
+
+        h2 > span::after {
+            display: block;
+            content: "";
+            position: absolute;
+            right: 100%;
+            height: 4px;
+            bottom: 40%;
+            width: 100%;
+            background-color: #f8b617;
+            max-width: 70px;
+            margin: 0 auto;
+        }
+
+h3 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+    h3 > span::after {
+        display: block;
+        content: "";
+        width: 100px;
+        height: 2px;
+        background: #f8b617;
+        margin-top: 10px;
+    }
+
+/*******************************************************************************************/
+
+
+
+#sec-footer {
+    background-color: #2c3e50;
+    margin-top: 40px;
+    padding: 46px 0 10px;
+    color: white;
+    position: relative;
+}
+
+    #sec-footer #footer-links .box {
+        padding: 5px 20px;
+        font-size: 14px;
+    }
+
+        #sec-footer #footer-links .box a {
+            color: #dfdfdf;
+        }
+
+        #sec-footer #footer-links .box a {
+            color: white;
+        }
+
+    #sec-footer .copyright {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 10px;
+        border-top: 1px dotted;
+    }
+
+/*******************************************************************************************/
+
+
+
+
+
+.post-header {
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    position:relative;
+    overflow:hidden;
+}
+
+    .post-header .background-img {
+        width: 100%;
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        right: 0px;
+    }
+    .post .title {
+        font-weight: 700;
+        font-size: 35px;
+        color: white;
+        margin-bottom: 25px;
+    }
+
+.post .title2 {
+    font-size: 18px;
+    color: white;
+    position: relative;
+    display: inline-block;
+    padding: 4px 10px;
+}
+
+    .post .title2:before {
+        display: block;
+        content: "";
+        position: absolute;
+        left: 100%;
+        height: 4px;
+        bottom: 40%;
+        width: 100%;
+        background-color: #f8b617;
+        max-width: 70px;
+        margin: 0 auto;
+    }
+
+    .post .title2:after {
+        display: block;
+        content: "";
+        position: absolute;
+        right: 100%;
+        height: 4px;
+        bottom: 40%;
+        width: 100%;
+        background-color: #f8b617;
+        max-width: 70px;
+        margin: 0 auto;
+    }
+
+#enamad {
+    position: absolute;
+    top: 3rem;
+    left: 1rem;
+    border-radius: 10px;
+    background-color: white;
+    padding: 5px 0px;
+}

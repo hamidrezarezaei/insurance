@@ -1,0 +1,25 @@
+﻿<header id="sec-header">
+        <div class="container">
+            <div  class="row">
+                <div class="col-9 order-2 col-md-3">
+                    <a href="/">
+                        <img src="~/bimebaz/image/theme/logo.png" alt="بیمه پاسارگاد" class="logo" />
+                    </a>
+                </div>
+                <div class="col-md-9 col-12 order-3  desktop-menu">
+                    @await Component.InvokeAsync("Menu", new { id = 1088 })
+                </div>
+                <div class="col-3 order-1 mobile-menu">
+                    <button type="button" data-toggle="modal" data-target="#sidebar-right" class="hamberger-menu-button btn btn-default">&#9776;</button>
+                    <div class="modal fade right" id="sidebar-right" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                @await Component.InvokeAsync("Menu", new { id = 1088, template = "Accordion" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</header>
+

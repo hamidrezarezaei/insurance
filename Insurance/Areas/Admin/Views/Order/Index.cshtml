@@ -1,0 +1,54 @@
+﻿@model IEnumerable<order>
+
+@{
+    List<orderStatus> orderStatuses = ViewBag.orderStatuses;
+}
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست سفارشات</h1>
+</div>
+
+<div class="status-tabs">
+    @foreach (var orderStatus in orderStatuses)
+    {
+        string cls = "status-tab btn btn-default";
+        if(orderStatus.id == (int)ViewBag.orderStatusId)
+        {
+            cls += " active";
+
+        }
+        <a class="@cls" asp-route-id="@orderStatus.id">@orderStatus.title</a>
+        <br />
+    }
+</div>
+
+
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{int r = 0;}
+
+            @foreach (var order in Model)
+    {
+        r++;
+        <tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@order.id">
+                    @r - @order.insurance.title ( @if (order.user != null) { <span> @order.user.fullName  - @order.user.actualUserName </span>} else {<span>کاربر حذف شده است</span> } )
+                </a>
+            </td>
+    
+            <td>
+                <span>@order.persianDate</span> - <span> @order.persianTime</span>
+            </td>
+            <td>
+                @order.orderStatus.title
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@order.id">ویرایش</a> |
+            <a asp-action="Delete" asp-route-id="@order.id">حذف</a>*@
+            </td>
+        </tr>
+}
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,139 @@
+﻿@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../font/IRANSans/eot/IRANSansWeb_Bold.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 700;
+    src: url('../font/IRANSans/eot/IRANSansWeb_Bold.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 500;
+    src: url('../font/IRANSans/eot/IRANSansWeb_Medium.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb_Medium.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb_Medium.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb_Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 300;
+    src: url('../font/IRANSans/eot/IRANSansWeb_Light.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb_Light.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb_Light.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: 200;
+    src: url('../font/IRANSans/eot/IRANSansWeb_UltraLight.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb_UltraLight.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb_UltraLight.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb_UltraLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: IRANSans;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../font/IRANSans/eot/IRANSansWeb.eot');
+    src: url('../font/IRANSans/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+    url('../font/IRANSans/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+    url('../font/IRANSans/ttf/IRANSansWeb.ttf') format('truetype');
+}
+
+a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body {
+    direction: rtl;
+    text-align:right;
+}
+
+* {
+    font-family: "IRANSans";
+    font-size: 0.95rem;
+    /*line-height: 25px;*/
+    outline: none;
+}
+
+
+input.dp-picker-input.ng-pristine {
+    width: 100% !important;
+    border: 0px
+}
+
+.ltr {
+    direction: ltr;
+    text-align: left;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+ul {
+    padding: 0px;
+    list-style: none;
+    margin: 0px;
+}
+
+.icon-bar {
+    background-color: black;
+}
+
+.hamberger-menu-items {
+    position: absolute;
+    width: 90vw;
+    z-index: 99;
+    padding: 10px;
+    background-color: white;
+    right: 0px;
+    border: 1px solid rgba(90, 88, 88, 0.75);
+}
+
+#loadingContainer {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0px;
+    right: 0px;
+    background-color: #6969696e;
+    z-index: 99999;
+    text-align: center;
+}
+
+    #loadingContainer > .loading {
+        top: 40%;
+        left: 50%;
+        transform: translateY(-50%);
+        transform: translateX(-50%);
+        position: relative;
+        position: fixed;
+        background-position: center;
+        background-size: cover;
+    }
+button:disabled {
+    cursor: not-allowed;
+}
+button,i{
+    cursor:pointer;
+}

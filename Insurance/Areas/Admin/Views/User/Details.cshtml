@@ -1,0 +1,10 @@
+﻿@model user_express
+@{ViewBag.type = "details";}
+<div class="row">
+    <h1 class="col-md-8 admin-box-title"><a asp-action="Index">لیست کاربران</a> > @Model.fullName</h1>
+    <div class="col-md-4 op-buttns">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+        <a btntype="delete" asp-action="Delete" asp-route-id="@Model.id">حذف</a>
+    </div>
+</div>
+@Html.Partial("Details_partial", Model)

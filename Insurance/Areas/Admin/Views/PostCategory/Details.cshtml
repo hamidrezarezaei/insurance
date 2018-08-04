@@ -1,0 +1,8 @@
+﻿@model postCategory
+@{ViewBag.type = "details";}
+@Html.Partial("Details_partial", Model)
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">ویرایش</a> |
+    <a asp-action="Index">بازگشت به لیست بیمه ها</a>
+</div>

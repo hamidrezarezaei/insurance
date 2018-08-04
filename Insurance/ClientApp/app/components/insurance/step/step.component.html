@@ -1,0 +1,33 @@
+<div  class="col-12" >
+    <div id="{{step.name}}" class="row step no-gutters">
+        <ng-container *ngIf="step.number >= 2  && !_authService.user.clientIsValid">
+            <login class="col-12" (previousStepClicked)="previousStepClick()"></login>
+        </ng-container>
+
+        <ng-container *ngIf="step.number < 2 || _authService.user.clientIsValid">
+            <div *ngFor="let fieldSet of step.fieldSets" id="{{fieldSet.name}}" class="{{fieldSet.cssClass}}">
+                <fieldSet class="row no-gutters" [fieldSet]="fieldSet" [insurance]="insurance" (fieldValueChanged)="fieldValueChange($event)" ></fieldSet>
+            </div>
+            <div class="col-12 navigation-buttons">
+                <div class="row no-gutters">
+                    <div *ngIf="step.beforStepButtonsCssClass" class="col order-1 {{step.beforStepButtonsCssClass}}">
+                    </div>
+                    <div *ngIf="step.number == 1" class="col order-2 {{step.priceCssClass}} price-section">
+                        <div class="price-container">
+                            <span class="price-title">مبلغ:</span>
+                            <span *ngIf="insurance.price > 0"><span class="price-value">{{insurance.price  | frenchDecimal:locale}}</span> تومان</span>
+                            <span *ngIf="!insurance.price || insurance.price == 0" class="price-notValid">.......</span>
+                        </div>
+                    </div>
+
+                    <div class="col order-4 {{step.nextStepCssClass}}">
+                        <button [disabled]="!step.isValidAllRequired" (click)="nextStepClick()" class="next-step">{{step.nextStepText}}</button>
+                    </div>
+                    <div *ngIf="step.number != 1" class="col order-3 {{step.previousStepCssClass}}">
+                        <button (click)="previousStepClick()" class="previous-step">{{step.previousStepText}}</button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

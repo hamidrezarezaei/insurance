@@ -1,0 +1,42 @@
+﻿@model baseEntity
+@{ViewBag.type = "delete";
+    //var parentType = entityRelations.parentName(Model);
+    //var parentId = entityRelations.parentId(Model);
+}
+
+<div class="row">
+    @*<h1>share</h1>*@
+    <h1 class="col-md-9 admin-box-title">آیا از حذف @Model.title اطمینان دارید? </h1>
+    <div class="col-md-3 op-buttns top">
+        @*@if (parentType == "")*@
+        @*{
+            <a btntype="back" asp-action="Index">بازگشت </a>
+        }
+        else
+        {
+            <a btntype="back" asp-controller="@parentType" asp-action="Details" asp-route-id="@parentId">بازگشت </a>
+
+        }*@
+        <a btntype="back"  href="@ViewData["ReturnUrl"]">بازگشت </a>
+
+    </div>
+</div>
+@Html.Partial("Details_partial", Model)
+
+<form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="Delete">
+    <input type="hidden" asp-for="id" />
+    <div class="op-buttns bottom">
+        @*@if (parentType == "")
+        {
+            <a btntype="cancel" asp-action="Index">لغو</a>
+        }
+        else
+        {
+            <a btntype="cancel" asp-controller="@parentType" asp-action="Details" asp-route-id="@parentId">لغو</a>
+        }*@
+        <a btntype="cancel" href="@ViewData["ReturnUrl"]">لغو</a>
+
+        <input btntype="submitdelete" type="submit" value="حذف" />
+
+    </div>
+</form>

@@ -1,0 +1,285 @@
+﻿.label-type .field-container {
+    background-color: inherit;
+    border:0;
+    font-weight: bold;
+    color:maroon;
+}
+dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-material .dp-calendar-nav-container * {
+    background-color: #58595b !important;
+    color:white;
+}
+.paymentType-type .field-container {
+    background-color: inherit;
+    border: 0;
+}
+    .paymentType-type .field-container .control {
+        background-color: white;
+        border: 1px solid rgb(169, 169, 169);
+    }
+    .field-label {
+        padding: 10px 15px 10px 0;
+    }
+
+.field-container {
+    width: 100%;
+    background-color: white;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid rgb(169, 169, 169);
+    /*margin-bottom: 5px;*/
+}
+
+    .field-container:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+
+.image-type .field-container {
+    background-color: transparent;
+    border: none;
+    text-align: center;
+}
+
+.field-container .control {
+    width: 100%;
+    float: left;
+    padding: 5px;
+    border-color: transparent;
+    /*background-color: green;*/
+}
+
+.field-container .icon {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 5px;
+}
+
+    .field-container .icon ~ .control {
+        width: calc(100% - 30px);
+    }
+
+.date-container {
+    height: 40px;
+}
+
+.field-container.label-type .control {
+    border: none;
+    padding: 10px 10px 10px 5px;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection--single {
+    border: none !important;
+}
+
+
+
+.field-title {
+    padding-top: 7px;
+    font-weight: 500;
+    color: black;
+}
+
+    .field-title.checkBox-type {
+        padding: 3px 0px;
+    }
+
+.checkBox-type input {
+    height: 18px;
+    width: 18px;
+    background: #fff;
+    position:relative;
+    top:4px;
+}
+
+.checkBox-type label {
+    padding: 0px 8px 0px 8px;
+    margin-top: 0px;
+    position: absolute;
+    font-weight: 500;
+}
+
+.acceptCheckBox-type input {
+    height: 18px;
+    width: 18px;
+    background: #fff;
+}
+
+.acceptCheckBox-type label {
+    padding: 0px 8px 0px 8px;
+    margin-top: 0px;
+    position: absolute;
+    font-weight: 500;
+}
+
+.image-type .field-container img {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed black;
+    cursor: pointer;
+}
+
+
+.paymentType-type .field-container .control {
+    text-align: center;
+    padding: 70px 0px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+    .paymentType-type .field-container .control.btn-success {
+        background-color: #5cb85c;
+    }
+
+.image-button {
+    width: 200px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    background-color: #f8b617;
+    color: black;
+    border: 0px;
+    border-radius: 3px;
+}
+
+    .image-button:hover {
+        background-color: #ffb400;
+    }
+
+.tab-container {
+    text-align: center;
+}
+
+.insurance-tab .insurance-label {
+    width: 100%;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 10px 0px 5px;
+}
+
+.step-navigation-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding:7px;
+    border-radius: 4px;
+   
+}
+.step-navigation-container .step-navigation{
+    width:15%;
+    position:relative;
+}
+
+
+    .step-navigation-container .step-navigation:before {
+        position: absolute;
+        top: 25px;
+        z-index: 0;
+        width: 50%;
+        height: 4px;
+        content: "";
+        background-color: white;
+        right: 0px;
+    }
+    .step-navigation-container .step-navigation:first-child:before {
+        display: none;
+    }
+    .step-navigation-container .step-navigation:after {
+        position: absolute;
+        top: 25px;
+        z-index: 0;
+        width: 50%;
+        height: 4px;
+        content: "";
+        background-color: white;
+        left: 0px;
+    }
+    .step-navigation-container .step-navigation:last-child:after {
+        display:none;
+    }
+    .step-navigation .step-navigation-icon {
+        border-radius: 50%;
+        background-color:white;
+        width:50px;
+        height:50px;
+        cursor: default;
+        position: relative;
+        z-index: 1;
+    }
+.step-navigation.enable .step-navigation-icon {
+    border: 2px solid #4caf50;
+    cursor:pointer;
+}
+
+.step-navigation.current .step-navigation-icon {
+    border: 2px solid #4caf50;
+}
+
+.step-navigation-container .step-navigation.enable:before,
+.step-navigation-container .step-navigation.enable:after,
+.step-navigation-container .step-navigation.current:before {
+    background-color: #4caf50;
+}
+
+.step-navigation .step-label {
+    font-size: 0.85rem;
+    padding-top: 5px;
+}
+.step-navigation.enable .step-label,
+.step-navigation.current .step-label {
+    color: #4caf50;
+    font-weight: bold;
+}
+            .field-set {
+                margin-bottom: 7px;
+                border: 2px solid rgba(255, 255, 255, 0.7);
+                padding-top: 15px;
+                padding-bottom: 10px;
+                position: relative;
+            }
+
+    .field-set .field-set-legend {
+        position: absolute;
+        background-color: white;
+        top: -15px;
+        font-weight:bold;
+        right: 15px;
+        padding: 3px 15px;
+        border-radius: 5px;
+    }
+
+.price-section {
+    text-align: center;
+}
+
+.next-step {
+    border-radius: 3px;
+    background-color: #4caf50;
+    color: white;
+    padding: 5px;
+    border: 0px;
+    width: 100%;
+    margin-right:5px;
+}
+
+    .next-step:hover {
+        background-color: #579e59;
+    }
+
+.previous-step {
+    border-radius: 3px;
+    background-color: #969ba8;
+    color: white;
+    padding: 5px;
+    border: 0px;
+    width: 100%;
+}
+
+    .previous-step:hover {
+        background-color: #7c808c;
+    }

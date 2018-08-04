@@ -1,0 +1,50 @@
+﻿@model user_vm
+<div class="row">
+    @*<h1>share</h1>*@
+    <h1 class="col-md-8 admin-box-title"> شیوه های پرداخت @Model.user.fullName</h1>
+    <div class="col-md-4 op-buttns top">
+        <a btntype="back" href="@ViewData["ReturnUrl"]">بازگشت </a>
+    </div>
+</div>
+<form asp-route-returnurl="@ViewData["ReturnUrl"]" asp-action="PaymentTypes" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="user.id" />
+
+    <div class="admin-box">
+
+        <table class="table detail table-striped">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.user.fullName) :</td>
+                <td>@Html.DisplayFor(model => model.user.fullName)</td>
+
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <h1 class="col-md-9 admin-box-title">شیوه های پرداخت</h1>
+    </div>
+
+    <div class="admin-box">
+        <div class="row">
+            @foreach (var pt in Model.paymentTypes)
+            {
+                <div class="col-md-3">
+                    <input type="checkbox" @if (Model.selectedPaymentTypes.Contains(pt.id)) { @Html.Raw("checked") ; } name="paymentTypes" value="@pt.id" id="@pt.name" />
+                    <label for="@pt.name">@pt.title</label>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="op-buttns bottom">
+        <a btntype="cancel" href="@ViewData["ReturnUrl"]">لغو</a>
+        <input btntype="save" type="submit" value="ذخیره" />
+    </div>
+
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

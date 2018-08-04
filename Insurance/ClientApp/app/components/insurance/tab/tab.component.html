@@ -1,0 +1,8 @@
+<div class="tab-container row no-gutters justify-content-center">
+    <div *ngFor="let insurance of insurances" [ngClass]="{'active': currentInsurance == insurance}" class="insurance-tab {{insurance.cssClass}}" (click)="tabChange(insurance)">
+        <img *ngIf="insurance.image" class="insurance-icon" src="{{insurance.image}}" />
+        <div class="insurance-label">
+            {{insurance.title}}
+        </div>
+    </div>
+</div>

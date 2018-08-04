@@ -1,0 +1,39 @@
+﻿@model IEnumerable<box>
+<div id="@ViewData["componentName"]" class="row no-gutters">
+    @if ((bool)ViewData["isShowCategoryTitle"])
+    {
+        <h2 class="boxcategory-title col-lg-12">
+            <span>
+                @ViewData["categoryTitle"]
+            </span>
+        </h2>
+
+    }
+    @foreach (var box in Model)
+    {
+        <div class="@box.cssClass">
+            <div class="box">
+                <a href="@box.link">
+                    @if ((bool)ViewData["isShowImage"])
+                    {
+                        <div class="image">
+                            <img src="@box.image" title="@box.title" />
+                        </div>
+                    }
+                    @if ((bool)ViewData["isShowTitle"])
+                    {
+                        <div class="title">
+                            @box.title
+                        </div>
+                    }
+                    @if ((bool)ViewData["isShowContent"])
+                    {
+                        <div class="content">
+                            @Html.Raw(box.content)
+                        </div>
+                    }
+                </a>
+            </div>
+        </div>
+    }
+</div>

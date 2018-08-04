@@ -1,0 +1,351 @@
+﻿@model field
+
+@if (ViewBag.type == "edit")
+{
+    <input type="hidden" asp-for="fieldSetId" />
+}
+else if (ViewBag.type == "create")
+{
+    <input type="hidden" asp-for="fieldSetId" value="@ViewData["ParentId"]" />
+}
+
+<div class="admin-box">
+    <table class="table detail table-striped">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.orderIndex)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-append-version="true" asp-for="orderIndex" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.orderIndex)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.active)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="active" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.active)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.name)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="name" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.name)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.title)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="title" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.title)
+                </td>
+            }
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.isHideLabel)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="isHideLabel" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.isHideLabel)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.value)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="value" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.value)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.type)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="type" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.type)
+                </td>
+            }
+
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.isRequire)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="isRequire" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.isRequire)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.fieldCssClass)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="fieldCssClass" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.labelCssClass)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.labelCssClass)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="labelCssClass" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.labelCssClass)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.elementCssClass)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="elementCssClass" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.elementCssClass)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.beforeCssClass)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="beforeCssClass" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.beforeCssClass)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.afterCssClass)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="afterCssClass" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.afterCssClass)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.placeHolder)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="placeHolder" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.placeHolder)
+                </td>
+            }
+        </tr>
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.image)
+                </td>
+
+                <td>
+                    <script>
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#preview')
+                                        .attr('src', e.target.result)
+                                };
+
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
+                    </script>
+                    <img id="preview" src="@Model.image" rowid="@Model.id" imagesrc="@Model.image" />
+                    @if (ViewBag.type == "edit")
+                    {
+                        <a href="@Model.image" download>دانلود</a>
+                    }
+                </td>
+
+
+            </tr>}
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.dataType)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <select id="dataTypeid" asp-for="dataTypeid" class="form-control" dir="rtl" asp-items="ViewBag.dataTypes">
+                        <option value="">بدون والد</option>
+                    </select>
+                    <script>
+                        $(document).ready(function () {
+                            $("#dataTypeid").select2({
+                                placeholder: "انتخاب مقادیر",
+                                allowClear: true
+                            });
+                        });
+                    </script>
+                </td>
+            }
+            else
+            {
+                <td>
+                    @if (Model.dataType != null)
+                    {
+                        <span>
+                            @Html.DisplayFor(model => model.dataType.title)
+                        </span>
+                    }
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.father)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <select id="fatherid" asp-for="fatherid" class="form-control" dir="rtl" asp-items="ViewBag.fields">
+                        <option value="">بدون والد</option>
+                    </select>
+                    <script>
+                        $(document).ready(function () {
+                            $("#fatherid").select2({
+                                placeholder: "انتخاب والد",
+                                allowClear: true
+                            });
+                        });
+                    </script>
+                </td>
+            }
+            else
+            {
+                <td>
+                    @if (Model.father != null)
+                    {
+                        <span>
+                            @Html.DisplayFor(model => model.father.title)  (@Html.DisplayFor(model => model.father.name))
+                        </span>
+                    }
+                </td>
+            }
+        </tr>
+
+    </table>
+</div>

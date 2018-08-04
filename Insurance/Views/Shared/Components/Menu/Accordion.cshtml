@@ -1,0 +1,89 @@
+﻿@model IEnumerable<menu>
+@{
+    var rand = new Random().Next();
+}
+
+<div class="row accordion-menu no-gutters" id="@ViewData["componentName"]">
+    <div id="accordion">
+        @foreach (var level1 in Model)
+        {
+        <div class="card">
+
+            <div class="card-header level1" id="heading_@level1.id">
+                @if (level1.childs == null || level1.childs.Count() < 1)
+                    {
+                <a class="btn btn-link" href="@level1.link">
+                    @level1.title
+                </a>
+                    }
+                    else
+                    {
+                <a class="btn btn-link have-child collapsed" data-toggle="collapse" data-target="#collapse_@level1.id" aria-expanded="false" aria-controls="collapse_@level1.id">
+                    @level1.title
+                </a>
+                    }
+            </div>
+            <div id="collapse_@level1.id" class="collapse level1" aria-labelledby="heading_@level1.id" data-parent="#accordion">
+                @*childs*@
+                <div id="accordion_@level1.id">
+                    @foreach (var level2 in level1.childs)
+                        {
+                    <div class="card">
+                        <div class="card-header level2" id="heading_@level2.id">
+                            @if (level2.childs == null || level2.childs.Count() < 1)
+                                    {
+                            <a class="btn btn-link" href="@level2.link">
+                                @level2.title
+                            </a>
+                                    }
+                                    else
+                                    {
+                            <a class="btn btn-link have-child collapsed" data-toggle="collapse" data-target="#collapse_@level2.id" aria-expanded="false" aria-controls="collapse_@level2.id">
+                                @level2.title
+                            </a>
+                                    }
+                        </div>
+                        <div id="collapse_@level2.id" class="collapse level2" aria-labelledby="heading_@level2.id" data-parent="#accordion_@level1.id">
+                            @*childs*@
+                            <div id="accordion_@level2.id">
+                                @foreach (var level3 in level2.childs)
+                                        {
+                                <div class="card">
+                                    <div class="card-header level3" id="heading_@level3.id">
+                                        @if (level3.childs == null || level3.childs.Count() < 1)
+                                                    {
+                                        <a class="btn btn-link" href="@level3.link">
+                                            @level3.title
+                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                        <a class="btn btn-link have-child collapsed" data-toggle="collapse" data-target="#collapse_@level3.id" aria-expanded="false" aria-controls="collapse_@level3.id">
+                                            @level3.title
+                                        </a>
+                                                    }
+                                    </div>
+                                    <div id="collapse_@level3.id" class="collapse level3" aria-labelledby="heading_@level3.id" data-parent="#accordion_@level2.id">
+                                        @*childs*@
+                                        <div id="accordion_@level3.id">
+                                            level4
+                                        </div>
+                                        @*child*@
+                                    </div>
+                                </div>
+                                        }
+                            </div>
+                            @*child*@
+                        </div>
+                    </div>
+                        }
+                </div>
+                @*child*@
+            </div>
+        </div>
+        }
+
+
+
+    </div>
+</div>

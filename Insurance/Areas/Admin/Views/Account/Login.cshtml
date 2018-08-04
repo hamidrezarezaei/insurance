@@ -1,0 +1,36 @@
+﻿@model user_express
+@{
+    Layout = "_AccountLayout";
+}
+ 
+
+<div class="login-form">
+    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <h3 class="text-center">ورود به داشبورد مدیریت </h3>
+        <div class="form-group">
+            <div class="input-group">
+                <input asp-for="actualUserName" class="form-control" placeholder="نام کاربری"/>
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <input asp-for="password" class="form-control" placeholder="کلمه عبور"/>
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary login-btn btn-block">ورود</button>
+        </div>
+        <div class="clearfix">
+            <label asp-for="rememberMe" class="pull-right checkbox-inline">
+                <input asp-for="rememberMe" />
+                @Html.DisplayNameFor(m => m.rememberMe)
+            </label>
+            @*<a href="#" class="pull-left">فراموشی رمز عبور</a>*@
+        </div>
+
+
+    </form>
+    @*<p class="text-center text-muted small">حساب کاربری ندارید؟ <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">ایجاد کاربر جدید</a></p>*@
+</div>

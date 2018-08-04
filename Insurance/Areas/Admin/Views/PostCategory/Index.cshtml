@@ -1,0 +1,26 @@
+﻿@model IEnumerable<postCategory>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست دسته های مقاله</h1>
+    <div class="col-md-3 op-buttns">
+        <a asp-action="Create" class="btn btn-success btn-rounded">ایجاد دسته جدید<i class="fa fa-plus-circle"></i></a>
+    </div>
+</div>
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id"> @Html.DisplayFor(modelItem => item.title)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger btn-rounded">حذف <i class="far fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

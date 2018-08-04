@@ -1,0 +1,74 @@
+﻿@model hook
+@{ViewBag.type = "details";}
+<div class="row">
+    <h1 class="col-md-8 admin-box-title">
+        هوک @Model.title
+    </h1>
+    <div class="col-md-4 op-buttns">
+        <a btntype="back" asp-action="Index">بازگشت </a>
+        <a btntype="edit" asp-action="Edit" asp-route-id="@Model.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">ویرایش</a>
+        <a btntype="delete" asp-action="Delete" asp-route-id="@Model.id" asp-route-returnurl="/Admin/Hook/Index">حذف</a>
+    </div>
+</div>
+
+@Html.Partial("Details_partial", Model)
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست Sms های هوک @Model.title</h1>
+    <div class="col-md-3 op-buttns">
+        <a btntype="Create" asp-controller="Sms" asp-action="Create" asp-route-hookId="@Model.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">ایجاد Sms جدید</a>
+    </div>
+</div>
+
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{int r = 0;}
+            @foreach (var item in ViewBag.smses)
+            {
+                r++;
+
+                sms sms = item as sms;
+                <tr>
+                    <td>
+                        <a asp-controller="Sms" asp-action="Edit" asp-route-id="@sms.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">@r - @Html.DisplayFor(modelItem => sms.title)</a>
+                    </td>
+                    <td class="op-buttns">
+                        <a btntype="edit" asp-controller="Sms" asp-action="Edit" asp-route-id="@sms.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">ویرایش </a>
+                        <a btntype="delete" asp-controller="Sms" asp-action="Delete" asp-route-id="@sms.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <h1 class="col-md-9 admin-box-title">لیست Email های هوک @Model.title</h1>
+    <div class="col-md-3 op-buttns">
+        <a btntype="Create" asp-controller="Email" asp-action="Create" asp-route-hookId="@Model.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">ایجاد Email جدید</a>
+    </div>
+</div>
+
+<div class="admin-box">
+    <table class="table table-striped">
+        <tbody>
+            @{r = 0;}
+            @foreach (var item in ViewBag.emails)
+            {
+                r++;
+
+                email email = item as email;
+                <tr>
+                    <td>
+                        <a asp-controller="Email" asp-action="Edit" asp-route-id="@email.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">@r - @Html.DisplayFor(modelItem => email.title)</a>
+                    </td>
+                    <td class="op-buttns">
+                        <a btntype="edit" asp-controller="Email" asp-action="Edit" asp-route-id="@email.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">ویرایش </a>
+                        <a btntype="delete" asp-controller="Email" asp-action="Delete" asp-route-id="@email.id" asp-route-returnurl="/Admin/Hook/Details/@Model.id">حذف</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

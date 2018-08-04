@@ -1,0 +1,19 @@
+﻿<footer id="sec-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5">
+                @await Component.InvokeAsync("Box", new { id = 48, componentName = "contact-us", isShowTitle = false })
+            </div>
+            <div class="col-12 col-md-4">
+                @await Component.InvokeAsync("BoxGroupCategory", new { id = 1011, componentName = "footer-links", isShowCategoryTitle = false })
+            </div>
+            <div class="col-12 col-md-3">
+                @await Component.InvokeAsync("Box", new { id = 49, componentName = "enamad", isShowTitle = false })
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        کلیه حقوق مادی و معنوی این سایت برای شرکت بیمه پاسارگاد محفوظ می باشد.
+    </div>
+</footer>
+

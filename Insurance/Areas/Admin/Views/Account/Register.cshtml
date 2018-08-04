@@ -1,0 +1,51 @@
+﻿@model user_express
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="firstName"></label>
+                <input asp-for="firstName" class="form-control" />
+                <span asp-validation-for="firstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lastName"></label>
+                <input asp-for="lastName" class="form-control" />
+                <span asp-validation-for="lastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="nationalCode"></label>
+                <input asp-for="nationalCode" class="form-control" />
+                <span asp-validation-for="nationalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="phoneNumber"></label>
+                <input asp-for="phoneNumber" class="form-control" />
+                <span asp-validation-for="phoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="actualUserName"></label>
+                <input asp-for="actualUserName" class="form-control" />
+                <span asp-validation-for="actualUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="confirmPassword"></label>
+                <input asp-for="confirmPassword" class="form-control" />
+                <span asp-validation-for="confirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-default">Register</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

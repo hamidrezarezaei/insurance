@@ -1,0 +1,18 @@
+﻿h1{
+    font-size:18px;
+}
+.table.detail td:first-child{
+    width:15%;
+}
+iframe {
+    height: auto !important;
+    direction: rtl;
+}
+
+.jHtmlArea {
+    width: 100% !important;
+}
+
+.ToolBar {
+    width: 100% !important;
+}

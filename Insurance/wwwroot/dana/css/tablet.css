@@ -1,0 +1,14 @@
+﻿body {
+}
+.desktop{
+    display:none;
+}
+.desktop-menu {
+    display: none
+}
+.step-navigation-container .step-navigation {
+    width: 25%;
+}
+.mobile-menu {
+    display: block ;
+}

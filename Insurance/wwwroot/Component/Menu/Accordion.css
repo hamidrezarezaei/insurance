@@ -1,0 +1,90 @@
+﻿
+#sec-header .hamberger-menu-button {
+    background-color: #f8b617;
+    font-size: 25px;
+    padding: 5px 16px;
+    margin-top: 10PX;
+}
+
+/* MODAL FADE LEFT RIGHT BOTTOM */
+.modal.fade:not(.in).left .modal-dialog {
+    -webkit-transform: translate3d(-25%, 0, 0);
+    transform: translate3d(-25%, 0, 0);
+}
+
+.modal.fade:not(.in).right .modal-dialog {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+.modal.fade:not(.in).bottom .modal-dialog {
+    -webkit-transform: translate3d(0, 25%, 0);
+    transform: translate3d(0, 25%, 0);
+}
+
+.modal.right .modal-dialog {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    margin: 0;
+    width: 65vw;
+}
+
+.modal.left .modal-content, .modal.right .modal-content {
+    min-height: 100vh;
+    border: 0;
+}
+.accordion-menu {
+    width: 100%;
+    z-index: 9999999;
+    margin: 0px;
+}
+
+    .accordion-menu #accordion {
+        width: 100%;
+    }
+
+    .accordion-menu .card-header {
+        padding: 1px;
+    }
+
+        .accordion-menu .card-header a {
+            display: block;
+            padding: 10px;
+            text-align: right;
+            position: relative;
+            color: #100f0f;
+        }
+
+            .accordion-menu .card-header a.have-child:after {
+                content: "";
+                transform: rotate(-135deg);
+                -webkit-transform: rotate(-135deg);
+                border: solid #7b7b7b;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                padding: 3px;
+                left: 20px;
+                position: absolute;
+                top: 16px;
+            }
+
+            .accordion-menu .card-header a.have-child.collapsed:after {
+                content: "";
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                border: solid #7b7b7b;
+                border-width: 0 3px 3px 0;
+                display: inline-block;
+                left: 20px;
+                position: absolute;
+                top: 16px;
+            }
+
+        .accordion-menu .card-header.level2 a {
+            padding-right: 40px;
+        }
+
+        .accordion-menu .card-header.level3 a {
+            padding-right: 80px;
+        }

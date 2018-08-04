@@ -1,0 +1,84 @@
+﻿@model sms
+
+@if (ViewBag.type == "edit")
+{
+    <input type="hidden" asp-for="hookId" />
+}
+else if (ViewBag.type == "create")
+{
+    <input type="hidden" asp-for="hookId" value="@ViewData["ParentId"]" />
+}
+
+<div class="admin-box">
+    <table class="table detail table-striped">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.active)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="active" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.active)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.title)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <input asp-for="title" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.title)
+                </td>
+            }
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.text)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td>
+                    <textarea asp-for="text" class="form-control"></textarea>
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.text)
+                </td>
+            }
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.mobile)
+            </td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr">
+                    <input asp-for="mobile" class="form-control" />
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.DisplayFor(model => model.mobile)
+                </td>
+            }
+        </tr>
+    </table>
+</div>

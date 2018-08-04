@@ -1,0 +1,4 @@
+<img *ngIf="!insurance.steps" src="/dana/image/theme/loading.gif" class="loading" />
+<ng-container *ngFor="let step of insurance.steps">
+    <step *ngIf="step.number == insurance.currentStep" class="row no-gutters"  [insurance]="insurance" [step]="step" (stepChanged)="stepChange($event)" (fieldValueChanged)="fieldValueChange($event)"></step>
+</ng-container>
