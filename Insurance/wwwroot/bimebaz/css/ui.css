@@ -246,6 +246,9 @@ h3 >span{
     background-color: #1a4677 !important;
     color: white !important;
 }
+body{
+
+}
 #sec-insurance {
     background-image: url(../image/theme/4.jpg);
     min-height: 100vh;
