@@ -241,7 +241,9 @@ h3 >span{
     color: white !important;
     font-weight: 700;
 }
+body{
 
+}
 .menu-item a:hover {
     background-color: #1a4677 !important;
     color: white !important;
