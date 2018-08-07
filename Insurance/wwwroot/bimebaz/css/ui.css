@@ -1,49 +1,111 @@
-﻿#sec-insurance .step *{
+﻿/*
+    #0f2d63
+    #fec903
+*/
+#sec-header #phone {
+    position: absolute;
+    left: 0.5rem;
+    top: 1rem;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #0f2d63;
+}
+    #sec-header #phone i{
+        font-size:1rem;
+        margin-left:4px;
+    }
+    #sec-header #phone .content {
+        font-size: 1rem;
+        color: white;
+    }
+    insurance {
+        top: 75px;
+    }
+#sec-header .top-sticky {
+    background-color: #003cb6;
+    height: 60px;
+    padding: 10px 0px;
+    transition: all 0.5s ease 0s;
+    -webkit-transition: all 0.5s ease 0s;
+    -moz-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    transition: all 0.2s;
+    -webkit-transition: all 0.2s;
+    position: static;
+}
+#sec-insurance {
+    background-image: url(../image/theme/4.jpg);
+    /*background-attachment: fixed;*/
+    margin-top: -75px;
+    background-size: cover;
+    /*padding-top: 5rem;*/
+    /*background-color: red;*/
+    /*min-height: calc(100vh - 30px);*/
+    height: 100vh;
+}
+tab {
+    align-self: flex-end;
+}
+#sec-insurance > .container-fluid {
+    padding: 0;
+    margin: 0;
+}
+.insurance {
+    /*background-color: green !important;*/
+    height: 100vh;
+    height: calc(100vh - 75px);
+}
+#thirdParty > step > div > div > div.col-12.navigation-buttons > div
+{
     display:none;
 }
-#sec-insurance .insurance {
-    background-color: rgba(255, 255, 255, 0.78);
-    height: 20rem;
-}
 #sec-insurance .step {
-    /*background-color: rgba(255,255,255,0.98);*/
-    /*background-color: rgba(0,0,0,0.5);*/
+    /*display: none;*/
+    position: relative;
+    top: 58px;
+    width: 80%;
+    height: 477px;
+    margin: auto;
+    background-color: yellow;
+    background-color: #fffffff0;
     border-radius: 5px;
-    height: 18rem;
-    overflow: hidden;
-    /*height: 80vh;*/
-    padding: 2rem;
-    /*border: 1px solid #dbdbdb;*/
+    border: 2px solid #cdcdcd;
+    box-shadow: 2px 2px 0 #cdcdcd;
 }
-
-#sec-insurance .insurance-tab {
-    /*background-color: #a2df48;*/
-    /*margin-left: 1.5rem;*/
-    border-radius: 5px;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 134px;
-    height: 134px;
-    /*border: 2px solid white;*/
-    margin: 2px;
-    /*background-color: #ffffffbd;*/
-    background-color: rgba(255,255,255,0.98);
-    border-bottom: 1px solid rgba(0, 46, 91,1);
-    border-left: 1px solid rgba(0, 46, 91,1);
-    /*background-color: rgba(0,0,0,0.5);*/
+#sec-insurance .step .field-set{
+    display:none;
 }
 #sec-insurance .tab-container {
-    /*flex-direction: column;*/
-    margin-top: -3rem;
-    /*padding-top: 0.3rem;*/
-    /*background-color: red;*/
+    background-color: #0f2d63;
+    height: 100px;
 }
-#sec-insurance .insurance-label {
-    /*background-color: red;*/
-    font-size: 0.8rem;
-    font-weight: normal;
-    margin-top: -2.7rem;
+
+
+#sec-insurance .insurance-tab {
+    border-radius: 5px;
+    border-radius: 50%;
+    /*overflow: hidden;*/
+    width: 120px;
+    height: 120px;
+    margin: 2px;
+    /*border: 6px solid #f5f5f5;*/
+    position: relative;
+    top: -60px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.2);
+    background: #fec903;
+    /*background: white;*/
+    cursor: pointer;
 }
+    #sec-insurance .insurance-tab:hover {
+        /*background: #607bff;*/
+    }
+    #sec-insurance .insurance-label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-top: 14px;
+        color: white;
+        /*color: #002e5b !important;*/
+    }
 #sec-insurance #loadingContainer > .loading {
     background-image: url(../image/theme/loading.gif);
     width: 128px;
@@ -119,8 +181,8 @@ h3 >span{
         text-align:justify;
     }
 #sec-article-before {
-    background: url(../image/theme/article-bg.png);
-    /*background: #204588;*/
+    background: #fec903;
+    background: #0f2d63;
     background-size: cover;
     padding: 10rem;
     margin-top: 5rem;
@@ -133,6 +195,9 @@ h3 >span{
 #sec-article {
     margin-top: -18rem;
 }
+    #sec-article h2 > span {
+        color: #fec903;
+    }
 #others-service .title {
     position: absolute;
     bottom: 0.5rem;
@@ -141,7 +206,7 @@ h3 >span{
     right: 3rem;
     text-align: center;
     padding: 1.1rem 0;
-    background: rgba(162, 223, 72, .85);
+    background: rgba(15, 45, 99, 0.73);
     font-weight: 700;
     -webkit-transition: 400ms;
     -moz-transition: 400ms;
@@ -174,7 +239,7 @@ h3 >span{
     position: relative;
 }
     #sec-reminder:after {
-        background-color: rgba(162, 223, 72, 0.80);
+        background-color: #1a4677f2;
         /*background-color: #1a4677e0;*/
         z-index: 0;
         position: absolute;
@@ -191,11 +256,12 @@ h3 >span{
         padding:1.5rem 0;
     }
     #sec-reminder h2 span {
-        color: white;
+        color: #fec903;
         text-shadow: 2px 2px black;
     }
 #sec-about-us {
-    margin-top: 2rem;
+    padding-top: 1rem;
+    background-color: #f5f5f5;
 }
     #sec-about-us .content
     {
@@ -225,31 +291,33 @@ h3 >span{
             -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
             z-index: 0;
-            border-bottom: 2px solid #a2df48;
+            border-bottom: 2px solid #fec903;
         }
 .mobile-menu {
     display: none;
 }
 
 #sec-header {
-    background-color: #a2df48;
+    /*background-color: #a2df48;*/
     /*background-color: #002e5b;*/
+    /*background-color: #f5f5f5;*/
+    /*background-color: transparent;*/
+    position: relative;
+    z-index: 999;
+    /*background-color: #ffffffb0;*/
+    /*box-shadow: 0 2px 5px rgba(0,0,0,.1);*/
 }
 
+.menu-item > a {
+    color: #002e5b !important;
+}
 .level1-item > a {
     padding: 25px 7px !important;
-    color: white !important;
+    /*color: white !important;*/
     font-weight: 700;
 }
 
 .menu-item a:hover {
-    background-color: #1a4677 !important;
+    background-color: #003cb6 !important;
     color: white !important;
-}
-#sec-insurance {
-    background-image: url(../image/theme/4.jpg);
-    min-height: 100vh;
-    background-attachment: fixed;
-    background-size: cover;
-    padding-top: 5rem;
 }

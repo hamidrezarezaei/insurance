@@ -1,12 +1,19 @@
 ﻿@model post
+
 @{
     ViewData["Title"] = Model.title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section styles {
+    <link href="~/Component/Menu/Default.css" rel="stylesheet" />
+    <link href="~/Component/Menu/Accordion.css" rel="stylesheet" />
+}
+
 @await Html.PartialAsync("_header.cshtml")
 <article class="post">
     <div class="post-header">
-        <img class="background-img" src="@Model.image" asp-append-version="true"  title="@Model.title"/>
+        <img class="background-img" src="@Model.image" asp-append-version="true" title="@Model.title" />
         <div class="container">
             <h1 class="title">
                 @Model.title
@@ -35,4 +42,3 @@
 </article>
 
 @await Html.PartialAsync("_footer.cshtml")
- 

@@ -6,7 +6,7 @@
 @await Html.PartialAsync("_header.cshtml")
 
 <section id="sec-insurance">
-    <div class="container holder">
+    <div class="container-fluid holder" >
         <app class="row no-gutters" asp-ng2-prerender-module="ClientApp/dist/main-server" asp-prerender-timeout="100000">
             <div id="loadingContainer">
                 <div class="loading"></div>
@@ -14,11 +14,8 @@
         </app>
     </div>
 </section>
-<section id="sec-why-us">
-    <div class="container holder">
-        @await Component.InvokeAsync("BoxCategory", new { id = 1007, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "why-us" })
-    </div>
-</section>
+
+
 
 <section id="sec-about-us">
     <div class="container holder">
@@ -45,7 +42,11 @@
         <br /><br /><br /><br /><br />
     </div>
 </section>
-
+<section id="sec-why-us">
+    <div class="container holder">
+        @await Component.InvokeAsync("BoxCategory", new { id = 1007, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "why-us" })
+    </div>
+</section>
 <section id="sec-others-service">
     <div class="container holder">
         @await Component.InvokeAsync("BoxCategory", new { id = 1009, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "others-service" })

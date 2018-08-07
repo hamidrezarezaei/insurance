@@ -72,6 +72,7 @@ export class fieldComponent {
         var filename = file.name;
         var index = filename.lastIndexOf(".");
         var strsubstring = filename.substring(index, filename.length);
+        strsubstring = strsubstring.toLowerCase();
         if (!(strsubstring == '.png' || strsubstring == '.jpeg' || strsubstring == '.jpg')) {
             alert("لطفا فقط تصویر انتخاب کنید.");
             this.field.value = false;
