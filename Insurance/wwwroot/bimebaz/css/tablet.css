@@ -2,12 +2,73 @@
     display: none;
 }
 
-.desktop-menu {
+#sec-header .desktop-menu {
     display: none
 }
-.mobile-menu {
+
+#sec-header .mobile-menu {
     display: block;
 }
+
 #sec-header .hamberger-menu-button {
     background-color: white;
+}
+
+#sec-insurance tab {
+    align-self: flex-start;
+    order: 1;
+}
+
+#sec-insurance .insurance > div {
+    order: 2;
+}
+
+#sec-insurance .tab-container {
+    height: auto;
+    background-color:transparent;
+    padding:5px;
+    margin-bottom:5px;
+}
+
+#sec-insurance .insurance-tab {
+    top:0px;
+    width: 75px;
+    height: 75px;
+}
+#sec-insurance .insurance-icon{
+    width:50px;
+    height:50px;
+}
+#sec-header .hamberger-menu-button{
+    margin-top:5px;
+}
+#sec-insurance .insurance-label {
+    font-size: 0.6rem;
+    margin-top: -13px;
+    color: #0f2d63;
+}
+#sec-insurance .step{
+    top:auto;
+    height:auto;
+    width:90%;
+}
+#sec-insurance{
+    height:auto;
+}
+    #sec-insurance .insurance{
+        height:auto;
+    }
+    #sec-insurance insurance{
+        padding-bottom:10px;
+    }
+#sec-article .box{
+    height:auto;
+}
+#footer-links
+{
+    margin-top:30px;
+}
+#enamad
+{
+    margin-top:30px;
 }

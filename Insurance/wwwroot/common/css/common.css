@@ -137,3 +137,6 @@ button:disabled {
 button,i{
     cursor:pointer;
 }
+body{
+    padding-right:0px !important;
+}

@@ -16,6 +16,28 @@
 </section>
 
 
+<section id="sec-reminder">
+    <div class="container holder">
+        <div class="row no-gutters">
+            <div class="col2 col-md-4 col-12 about-us-img-container desktop">
+                <img src="~/bimebaz/image/theme/reminder.jpg" title="بیمه پاسارگاد" class="reminder" />
+            </div>
+            <div class="col1 col-md-8 col-12 reminder-form">
+                <h2 class="col-12">
+                    <span>
+                        سه بار تاریخ بیمه‌نامه‌اتو یادآوری می‌کنیم
+                    </span>
+                </h2>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="sec-why-us">
+    <div class="container holder">
+        @await Component.InvokeAsync("BoxCategory", new { id = 1007, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "why-us" })
+    </div>
+</section>
 
 <section id="sec-about-us">
     <div class="container holder">
@@ -23,16 +45,16 @@
             <div class="col1 col-md-7 col-xs-12">
                 @await Component.InvokeAsync("Box", new { id = 29, componentName = "about-us" })
             </div>
-            <div class="col2 col-md-5 col-xs-12 about-us-img-container">
+            <div class="col2 col-md-5 col-xs-12 about-us-img-container desktop">
                 <img src="~/bimebaz/image/theme/about-us.png" title="بیمه پاسارگاد" class="about-us-img" />
             </div>
         </div>
     </div>
 </section>
 
-<section id="sec-reminder">
+<section id="sec-reminder-old">
     <div class="container holder">
-        <h2 class="col-7">
+        <h2 class="col-12">
             <span>
                 سه بار تاریخ بیمه‌نامه‌اتو یادآوری می‌کنیم
             </span>
@@ -42,18 +64,14 @@
         <br /><br /><br /><br /><br />
     </div>
 </section>
-<section id="sec-why-us">
-    <div class="container holder">
-        @await Component.InvokeAsync("BoxCategory", new { id = 1007, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "why-us" })
-    </div>
-</section>
+
 <section id="sec-others-service">
     <div class="container holder">
         @await Component.InvokeAsync("BoxCategory", new { id = 1009, isShowCategoryTitle = true, isShowImage = true, isShowContent = false, componentName = "others-service" })
     </div>
 </section>
 
-<section id="sec-article-before"></section>
+<section id="sec-article-before" class="desktop"></section>
 
 <section id="sec-article">
     <div class="container holder">

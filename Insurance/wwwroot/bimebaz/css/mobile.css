@@ -1,1 +1,7 @@
-﻿
+﻿h2 > span
+{
+    font-size:1.1rem;
+}
+#sec-article{
+    margin-top:auto;
+}
