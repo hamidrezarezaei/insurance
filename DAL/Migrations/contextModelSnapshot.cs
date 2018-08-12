@@ -461,6 +461,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("name");
 
+                    b.Property<string>("onClientClick");
+
                     b.Property<int>("orderIndex");
 
                     b.Property<int>("siteId");
@@ -932,6 +934,8 @@ namespace DAL.Migrations
 
                     b.Property<bool>("active");
 
+                    b.Property<int?>("dataTypeId");
+
                     b.Property<bool>("isDeleted");
 
                     b.Property<string>("name");
@@ -947,6 +951,8 @@ namespace DAL.Migrations
                     b.Property<int>("updateUserId");
 
                     b.HasKey("id");
+
+                    b.HasIndex("dataTypeId");
 
                     b.HasIndex("siteId");
 
@@ -1292,6 +1298,10 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Entities.term", b =>
                 {
+                    b.HasOne("Entities.dataType", "dataType")
+                        .WithMany()
+                        .HasForeignKey("dataTypeId");
+
                     b.HasOne("Entities.site", "site")
                         .WithMany()
                         .HasForeignKey("siteId")

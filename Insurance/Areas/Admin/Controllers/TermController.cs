@@ -3,6 +3,7 @@ using Entities;
 using Insurance.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Insurance.Areas.Admin.Controllers
 {
@@ -40,6 +41,7 @@ namespace Insurance.Areas.Admin.Controllers
         }
         public IActionResult Create(string returnUrl = null)
         {
+            ViewBag.dataTypes = new SelectList(this.repository.GetDataTypes(), "id", "title");
             ViewData["ReturnUrl"] = returnUrl;
             return View(new term());
         }
@@ -52,6 +54,7 @@ namespace Insurance.Areas.Admin.Controllers
                 repository.AddEntity(term);
                 return RedirectToLocal(returnUrl);
             }
+            ViewBag.dataTypes = new SelectList(this.repository.GetDataTypes(), "id", "title");
             ViewData["ReturnUrl"] = returnUrl;
             return View(term);
         }
@@ -67,6 +70,7 @@ namespace Insurance.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            ViewBag.dataTypes = new SelectList(this.repository.GetDataTypes(), "id", "title");
             ViewData["ReturnUrl"] = returnUrl;
             return View(term);
         }
@@ -84,6 +88,7 @@ namespace Insurance.Areas.Admin.Controllers
                 this.repository.UpdateEntity(term);
                 return RedirectToLocal(returnUrl);
             }
+            ViewBag.dataTypes = new SelectList(this.repository.GetDataTypes(), "id", "title");
             ViewData["ReturnUrl"] = returnUrl;
             return View(term);
         }

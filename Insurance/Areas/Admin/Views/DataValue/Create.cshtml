@@ -61,26 +61,28 @@
         </table>
     </div>
 
-    <div class="row">
-        <h1 class="col-md-9 admin-box-title">کلاس ها</h1>
-    </div>
-    <div class="admin-box">
+    @if (Model.terms.Count() > 0)
+    {
+        <div class="row">
+            <h1 class="col-md-9 admin-box-title">کلاس ها</h1>
+        </div>
+        <div class="admin-box">
 
-        @foreach (var term in Model.terms)
-        {
-            <div class="fieldset row">
-                <h4 class="fieldset-legend">@term.title</h4>
-                @foreach (var category in term.categories)
-                {
-                    <div class="col-md-3">
-                        <input type="checkbox" @if (Model.selectedCategories.Contains(category.id)) { @Html.Raw("checked") ; } name="selectedCategories" value="@category.id" id="c_@category.id" />
-                        <label for="c_@category.id">@category.title</label>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-
+            @foreach (var term in Model.terms)
+            {
+                <div class="fieldset row">
+                    <h4 class="fieldset-legend">@term.title</h4>
+                    @foreach (var category in term.categories)
+                    {
+                        <div class="col-md-3">
+                            <input type="checkbox" @if (Model.selectedCategories.Contains(category.id)) { @Html.Raw("checked") ; } name="selectedCategories" value="@category.id" id="c_@category.id" />
+                            <label for="c_@category.id">@category.title</label>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
     <div class="op-buttns bottom">
         <a btntype="cancel" asp-action="Index">لغو</a>
         <input btntype="save" type="submit" value="ایجاد" />

@@ -71,7 +71,7 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='checkBox'">
-        <div *ngIf="!field.isHideLabel" class="field-title checkBox-type {{field.elementCssClass}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
+        <div *ngIf="!field.isHideLabel" class="field-title checkBox-type {{field.elementCssClass}} {{field.name}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
     </ng-container>
 
     <ng-container *ngIf="field.type=='acceptCheckBox'">

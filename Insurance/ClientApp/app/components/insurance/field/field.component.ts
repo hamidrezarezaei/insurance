@@ -61,7 +61,7 @@ export class fieldComponent {
             this.field.value = this.field.value.replace(event.data, "");
             //console.log(event);
         }
-        else if (this.field.type == 'comboBox')
+        else if (this.field.type == 'comboBox' || this.field.type == 'year')
             this.field.value = event.value;
         //console.log("field " + this.field.name + " change to -> " + this.field.value);
         this.valueChanged.emit(this.field);

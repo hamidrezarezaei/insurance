@@ -46,6 +46,8 @@ namespace Entities
         [Display(Name = "موقعیت تب ها")]
         public string tabLocation { get; set; }
         public List<order> orders { get; set; }
+        [Display(Name = "جاوااسکریپت")]
+        public string onClientClick { get; set; }
     }
 
     public class insurance_client : baseClient
@@ -66,6 +68,7 @@ namespace Entities
         public string image { get; set; }
         public List<step_navigation> step_navigations { get; set; }
         public string tabLocation { get; set; }
+        public string onClientClick { get; set; }
 
     }
 }
