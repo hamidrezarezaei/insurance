@@ -98,7 +98,8 @@
 
 
 
-            </tr>}
+            </tr>
+        }
         <tr>
             <td>@Html.DisplayNameFor(model => model.stepCount) :</td>
             @if (ViewBag.type == "create" || ViewBag.type == "edit")
@@ -121,6 +122,14 @@
                 <td>@Html.DisplayFor(model => model.tabLocation)</td>
             }
         </tr>
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.onClientClick)  :</td>
 
+                <td class="ltr"><textarea asp-for="onClientClick" class="form-control"></textarea></td>
+
+            </tr>
+        }
     </table>
 </div>

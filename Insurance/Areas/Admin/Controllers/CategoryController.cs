@@ -3,6 +3,7 @@ using Entities;
 using Insurance.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Insurance.Areas.Admin.Controllers
 {

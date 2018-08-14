@@ -2,6 +2,7 @@
     #0f2d63
     #fde428
 */
+
 /********************************************************************************************************/
 #sec-header #phone {
     /*display:none;*/
@@ -53,6 +54,17 @@
     /*color: white !important;*/
 }
 /********************************************************************************************************/
+#sec-insurance .price-container {
+    background-color: rgba(206, 206, 206, 0.7);
+    color: #0f2d63;
+    padding: 4px;
+}
+#sec-insurance .price-value {
+    color: #ef5661;
+    font-weight: 700;
+    padding: 2px;
+    font-size: 1.1rem;
+}
 #sec-insurance insurance {
     /*background-color: red;*/
 }
@@ -76,25 +88,42 @@
         height: calc(100vh - 110px);
     }
 
-    #sec-insurance #thirdParty > step > div > div > div.col-12.navigation-buttons > div {
+    /*#sec-insurance #thirdParty > step > div > div > div.col-12.navigation-buttons > div {
         display: none;
+    }*/
+    #sec-insurance .field-set {
+        border: 2px solid rgba(206, 206, 206, 0.7);
     }
-
+.field-set .field-set-legend {
+    background-color: rgb(239, 239, 239);
+}
+#sec-insurance .haveLife{
+    padding-top:15px;
+    padding-left:10px;
+}
+#sec-insurance #haveLife {
+    float: left;
+}
+#sec-insurance .aInsurance-container {
+    align-self: center;
+}
     #sec-insurance .step {
+        display:none;
         position: relative;
         top: 3rem;
         width: 80%;
-        height: calc(100vh - (270px + 6rem));
+        /*height: calc(100vh - (270px + 6rem));*/
         margin: auto;
         background-color: #fffffff0;
         border-radius: 5px;
         border: 2px solid #cdcdcd;
         box-shadow: 2px 2px 0 #cdcdcd;
+        padding: 1rem;
     }
 
-        #sec-insurance .step .field-set {
+        /*#sec-insurance .step .field-set {
             display: none;
-        }
+        }*/
 
     #sec-insurance .tab-container {
         background-color: #0f2d63;

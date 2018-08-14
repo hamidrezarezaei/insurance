@@ -919,10 +919,11 @@ namespace Insurance.Services
             return terms;
 
         }
-        public List<term> GetTermsIncludeCategory()
+        public List<term> GetTermsIncludeCategory(int dataTypeId)
         {
             var terms = context.terms.Include(t => t.categories).
-                                Where(t => (t.siteId == this.allSiteId || t.siteId == this.siteId) && !t.isDeleted).
+                                Where(t => t.dataTypeId == dataTypeId &&
+                                     (t.siteId == this.allSiteId || t.siteId == this.siteId) && !t.isDeleted).
                                 OrderBy(t => t.orderIndex).
                                 ToList();
             foreach (var term in terms)

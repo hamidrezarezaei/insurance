@@ -4,14 +4,16 @@ using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(context))]
-    partial class contextModelSnapshot : ModelSnapshot
+    [Migration("20180811041637_active_default")]
+    partial class active_default
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -460,8 +462,6 @@ namespace DAL.Migrations
                     b.Property<bool>("isDeleted");
 
                     b.Property<string>("name");
-
-                    b.Property<string>("onClientClick");
 
                     b.Property<int>("orderIndex");
 
@@ -934,8 +934,6 @@ namespace DAL.Migrations
 
                     b.Property<bool>("active");
 
-                    b.Property<int?>("dataTypeId");
-
                     b.Property<bool>("isDeleted");
 
                     b.Property<string>("name");
@@ -951,8 +949,6 @@ namespace DAL.Migrations
                     b.Property<int>("updateUserId");
 
                     b.HasKey("id");
-
-                    b.HasIndex("dataTypeId");
 
                     b.HasIndex("siteId");
 
@@ -1298,10 +1294,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("Entities.term", b =>
                 {
-                    b.HasOne("Entities.dataType", "dataType")
-                        .WithMany()
-                        .HasForeignKey("dataTypeId");
-
                     b.HasOne("Entities.site", "site")
                         .WithMany()
                         .HasForeignKey("siteId")

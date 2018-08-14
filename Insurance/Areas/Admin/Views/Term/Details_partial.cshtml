@@ -8,17 +8,17 @@
 
             </td>
             @if (ViewBag.type == "create" || ViewBag.type == "edit")
-            {
-                <td><input asp-for="active" /></td>
-            }
-            else
-            {
+        {
+            <td><input asp-for="active" /></td>
+    }
+    else
+    {
 
-                <td>
-                    @Html.DisplayFor(model => model.active)
+        <td>
+            @Html.DisplayFor(model => model.active)
 
-                </td>
-            }
+        </td>
+}
         </tr>
         <tr>
             <td>
@@ -26,16 +26,16 @@
 
             </td>
             @if (ViewBag.type == "create" || ViewBag.type == "edit")
-            {
-                <td class="ltr"><input asp-for="name" class="form-control" /></td>
-            }
-            else
-            {
+        {
+            <td class="ltr"><input asp-for="name" class="form-control" /></td>
+    }
+    else
+    {
 
-                <td>
-                    @Html.DisplayFor(model => model.name)
-                </td>
-            }
+        <td>
+            @Html.DisplayFor(model => model.name)
+        </td>
+}
         </tr>
         <tr>
             <td>
@@ -43,16 +43,38 @@
 
             </td>
             @if (ViewBag.type == "create" || ViewBag.type == "edit")
-            {
-                <td><input asp-for="title" class="form-control" /></td>
-            }
-            else
-            {
-                <td>
-                    @Html.DisplayFor(model => model.title)
-                </td>
-            }
+        {
+            <td><input asp-for="title" class="form-control" /></td>
+    }
+    else
+    {
+        <td>
+            @Html.DisplayFor(model => model.title)
+        </td>
+}
         </tr>
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+    {
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.dataTypeId):
+            </td>
+
+            <td>
+                <select id="dataTypeId" asp-for="dataTypeId" class="form-control" dir="rtl" asp-items="ViewBag.dataTypes">
+                    <option value="">بدون نوع داده</option>
+                </select>
+                <script>
+                        $(document).ready(function () {
+                            $("#dataTypeId").select2({
+                                placeholder: "انتخاب نوع داده",
+                                allowClear: true
+                            });
+                        });
+                </script>
+            </td>
+        </tr>
+}
     </table>
 </div>
 

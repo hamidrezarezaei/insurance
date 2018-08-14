@@ -14,6 +14,8 @@ export class tabComponent {
 
     tabChange(insurance: any) {
         //this.currentInsurance = insurance;
+        let f = new Function(insurance.onClientClick);
+        f();
         this.tabChanged.emit(insurance);
     }
 

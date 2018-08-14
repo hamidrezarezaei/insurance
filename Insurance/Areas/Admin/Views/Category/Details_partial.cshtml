@@ -4,7 +4,7 @@
 {
     <input type="hidden" asp-for="termId" />
 }
-else if (ViewBag.type == "create" )
+else if (ViewBag.type == "create")
 {
     <input type="hidden" asp-for="termId" value="@ViewData["ParentId"]" />
 }

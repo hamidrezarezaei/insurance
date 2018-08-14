@@ -28,7 +28,7 @@ namespace Insurance.Areas.Admin.Controllers
             dataValue_vm dataValue_vm = new dataValue_vm
             {
                 dataValue = new dataValue(),
-                terms = this.repository.GetTermsIncludeCategory(),
+                terms = this.repository.GetTermsIncludeCategory(dataTypeId),
                 selectedCategories = new List<int>()
             };
 
@@ -70,7 +70,7 @@ namespace Insurance.Areas.Admin.Controllers
             dataValue_vm dataValue_vm = new dataValue_vm
             {
                 dataValue = dataValue,
-                terms = this.repository.GetTermsIncludeCategory(),
+                terms = this.repository.GetTermsIncludeCategory(dataValue.dataTypeId),
                 selectedCategories = this.repository.GetAcitveCategories(id).Select(c => c.id).ToList()
             };
 

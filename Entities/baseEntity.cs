@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
@@ -9,6 +10,10 @@ namespace Entities
 {
     public class baseEntity : baseClass
     {
+        public baseEntity()
+        {
+            this.active = true;
+        }
         [Display(Name = "عنوان")]
         public string title { get; set; }
 
