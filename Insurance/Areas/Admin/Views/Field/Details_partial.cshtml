@@ -346,6 +346,12 @@ else if (ViewBag.type == "create")
                 </td>
             }
         </tr>
-
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.showIf) :</td>
+                <td class="ltr"><textarea asp-for="showIf" class="form-control"></textarea></td>
+            </tr>
+        }
     </table>
 </div>

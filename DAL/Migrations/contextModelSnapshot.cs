@@ -356,6 +356,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("placeHolder");
 
+                    b.Property<string>("showIf");
+
                     b.Property<int>("siteId");
 
                     b.Property<string>("title");
@@ -808,11 +810,17 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("active");
+
                     b.Property<bool>("isDeleted");
 
                     b.Property<string>("key");
 
+                    b.Property<int>("orderIndex");
+
                     b.Property<int>("siteId");
+
+                    b.Property<string>("title");
 
                     b.Property<DateTime>("updateDateTime");
 

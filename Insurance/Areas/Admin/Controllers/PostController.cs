@@ -88,7 +88,7 @@ namespace Insurance.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                post = (post)this.repository.UpdateEntity(post, image);
+                this.repository.UpdateEntity(post, image);
 
                 return RedirectToLocal(returnUrl);
             }

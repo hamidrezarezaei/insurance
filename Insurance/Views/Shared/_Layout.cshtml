@@ -3,8 +3,10 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["MetaDescription"]" />
+    <meta name="keywords" content="@ViewData["MetaKeywords"]" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="~/" />
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous" />
@@ -31,5 +33,6 @@
     <script src="~/common/js/bootstrap/bootstrap.min.js"></script>
 
     @RenderSection("scripts", required: false)
+    @Html.Raw(ViewData["GoogleAnalytics"])
 </body>
 </html>

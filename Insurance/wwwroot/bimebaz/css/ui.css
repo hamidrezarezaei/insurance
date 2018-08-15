@@ -54,6 +54,17 @@
     /*color: white !important;*/
 }
 /********************************************************************************************************/
+.checkBox-type input{
+    width:17px;
+    height:17px;
+}
+#sec-insurance #discounts{
+    margin-top:-75px;
+}
+#sec-insurance .checkBox-type label {
+    font-size: 0.8rem;
+    padding: 5px 5px 0px 0px;
+}
 #sec-insurance .price-container {
     background-color: rgba(206, 206, 206, 0.7);
     color: #0f2d63;
@@ -101,6 +112,15 @@
     padding-top:15px;
     padding-left:10px;
 }
+.field-title.static-width {
+    width: 160px;
+    padding-right: 10px;
+}
+
+.field-title.static-width-small {
+    width: 110px;
+    padding-right: 5px;
+}
 #sec-insurance #haveLife {
     float: left;
 }
@@ -108,7 +128,7 @@
     align-self: center;
 }
     #sec-insurance .step {
-        display:none;
+        /*display:none;*/
         position: relative;
         top: 3rem;
         width: 80%;
@@ -368,20 +388,20 @@ h3 >span{
         text-shadow: 2px 2px black;
     }
 
-    h2 {
-        text-align: center;
-        padding: 10px;
-        color: #222222;
-        font-weight: 700;
-        margin-bottom: 2rem;
-        margin-top:1rem;
-    }
-    h2 > span {
+h1,h2 {
+    text-align: center;
+    padding: 10px;
+    color: #222222;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+    h1 > span ,h2 > span {
         position: relative;
         padding: 0 20px;
         font-size: 1.5rem;
     }
-        h2 > span::after {
+        h1 > span::after ,h2 > span::after {
             content: '';
             position: absolute;
             bottom: -10px;

@@ -1,0 +1,62 @@
+﻿@model setting
+<div class="admin-box">
+    <table class="table detail table-striped">
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.orderIndex) :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr"><input asp-for="orderIndex" class="form-control" /></td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(model => model.orderIndex)</td>
+            }
+        </tr>
+        <tr>
+            <td> @Html.DisplayNameFor(model => model.active) :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td><input asp-for="active" /></td>
+            }
+            else
+            {
+                <td>@Html.DisplayFor(model => model.active)</td>
+            }
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.title) :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td ><input asp-for="title" class="form-control" /></td>
+            }
+            else
+            {
+                <td> @Html.DisplayFor(model => model.title)</td>
+            }
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.key) :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td class="ltr"><input asp-for="key" class="form-control" /></td>
+            }
+            else
+            {
+                <td> @Html.DisplayFor(model => model.key)</td>
+            }
+        </tr>
+
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.value)  :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td><textarea asp-for="value" class="form-control"></textarea></td>
+            }
+            else
+            {
+                <td>@Model.value</td>
+            }
+        </tr>
+    </table>
+</div>
+

@@ -11,8 +11,6 @@ namespace Entities
 {
     public class field : baseEntity
     {
-
-
         [Display(Name = "نام")]
         public string name { get; set; }
         [Display(Name = "مقدار پیشفرض")]
@@ -80,19 +78,23 @@ namespace Entities
                 return $"{this.title}  ({this.type})";
             }
         }
+        [Display(Name = "شرط نمایش")]
+        public string showIf { get; set; }
     }
 
     public class field_client : baseClient
     {
+        public field_client()
+        {
+            this.isShowField = true;
+        }
         public string name { get; set; }
         public string title { get; set; }
         public string value { get; set; }
         public int? fatherid { get; set; }
         public string type { get; set; }
         public int? dataTypeid { get; set; }
-
         public List<dataValue_client> dataValues { get; set; }
-        //public dataType_ViewModel dataType { get; set; }
         public bool isRequire { get; set; }
         public bool isHideLabel { get; set; }
         public string fieldCssClass { get; set; }
@@ -104,7 +106,8 @@ namespace Entities
         public string image { get; set; }
         public bool isShowLoading { get; set; }
         public int orderIndex { get; set; }
-
+        public string showIf { get; set; }
+        public bool isShowField { get; set; } 
     }
 
 }

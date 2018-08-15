@@ -6,7 +6,7 @@
 
         <ng-container *ngIf="step.number < 2 || _authService.user.clientIsValid">
             <div *ngFor="let fieldSet of step.fieldSets" id="{{fieldSet.name}}" class="{{fieldSet.cssClass}}">
-                <fieldSet class="row no-gutters" [fieldSet]="fieldSet" [insurance]="insurance" (fieldValueChanged)="fieldValueChange($event)" ></fieldSet>
+                <fieldSet class="row no-gutters" [insurance]="insurance"  [step]="step"  [fieldSet]="fieldSet" (fieldValueChanged)="fieldValueChange($event)" ></fieldSet>
             </div>
             <div class="col-12 navigation-buttons">
                 <div class="row no-gutters">

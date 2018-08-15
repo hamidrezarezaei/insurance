@@ -13,6 +13,7 @@ import { authService } from '../../../services/auth.service';
 })
 export class fieldComponent {
     @Input() insurance: any;
+    @Input() step: any;
     @Input() fieldSet: any;
     @Input() field: any;
     // options: any;
@@ -64,6 +65,13 @@ export class fieldComponent {
         else if (this.field.type == 'comboBox' || this.field.type == 'year')
             this.field.value = event.value;
         //console.log("field " + this.field.name + " change to -> " + this.field.value);
+
+        this._insuranceService.resetChild(this.step, this.field);
+        this._insuranceService.refreshFields(this.insurance);
+        this._insuranceService.ValidateAllRequired(this.step);
+        if (this.step.number == 1)
+            this._insuranceService.calcPrice(this.insurance);
+
         this.valueChanged.emit(this.field);
     }
     //-----------------------------------------------------------------------------

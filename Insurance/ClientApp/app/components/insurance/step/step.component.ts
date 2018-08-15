@@ -32,11 +32,7 @@ export class stepComponent {
         this.stepChanged.emit(this.insurance);
     }
     fieldValueChange(field: any) {
-        this._insuranceService.resetChild(this.step, field);
 
-        this._insuranceService.ValidateAllRequired(this.step);
-        if (this.step.number == 1)
-            this._insuranceService.calcPrice(this.insurance);
 
         this.fieldValueChanged.emit(field);
     }

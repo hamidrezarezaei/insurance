@@ -45,6 +45,9 @@ namespace Insurance.Controllers
             string viewName = repository.GetSiteName();
             ViewData["viewName"] = viewName;
             ViewData["Title"] = this.repository.GetSetting("siteTitle");
+            ViewData["MetaDescription"] = this.repository.GetSetting("MetaDescription");
+            ViewData["MetaKeywords"] = this.repository.GetSetting("MetaKeywords");
+            ViewData["GoogleAnalytics"] = this.repository.GetSetting("GoogleAnalytics");
 
             switch (type)
             {

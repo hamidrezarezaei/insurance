@@ -3,9 +3,11 @@
 }
 .field-title.static-width {
     width: 160px;
+    padding-right: 10px;
 }
 .field-title.static-width-small {
     width: 110px;
+    padding-right: 5px;
 }
 .mobile-menu {
     display: none;
@@ -175,7 +177,7 @@
 
 /*******************************************************************************************/
 
-h2 {
+h1,h2 {
     text-align: center;
     padding: 10px;
     color: #222222;
@@ -183,12 +185,12 @@ h2 {
     font-size: 24px;
 }
 
-    h2 > span {
+    h1 > span, h2 > span {
         position: relative;
         padding: 0 20px;
     }
 
-        h2 > span::before {
+        h1 > span::before ,h2 > span::before {
             display: block;
             content: "";
             position: absolute;
@@ -201,7 +203,7 @@ h2 {
             margin: 0 auto;
         }
 
-        h2 > span::after {
+        h1 > span::after ,h2 > span::after {
             display: block;
             content: "";
             position: absolute;

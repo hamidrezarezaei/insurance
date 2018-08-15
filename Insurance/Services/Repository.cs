@@ -553,7 +553,7 @@ namespace Insurance.Services
             try
             {
                 return this.context.settings.FirstOrDefault(s => s.key == key &&
-                                                               (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).
+                                                               (s.siteId == this.allSiteId || s.siteId == this.siteId) && s.active && !s.isDeleted).
                                             value;
             }
             catch
@@ -562,6 +562,23 @@ namespace Insurance.Services
                 return "";
             }
         }
+
+        public IEnumerable<setting> GetSettings()
+        {
+            var settings = context.settings.Where(s => (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).
+                                     OrderBy(s=>s.orderIndex).
+                                     ToList();
+            return settings;
+
+        }
+
+        public setting GetSetting(int? id)
+        {
+            var setting = context.settings.SingleOrDefault(s => s.id == id &&
+                                                                (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted);
+            return setting;
+        }
+
         #endregion
 
         #region Insurance
@@ -858,26 +875,7 @@ namespace Insurance.Services
             return dataValue;
         }
 
-        //public dataValue AddDataValue(dataValue dataValue)
-        //{
-        //    this.UpdateEntity(dataValue as baseClass);
-        //    this.context.Add(dataValue);
-        //    this.context.SaveChanges();
-        //    return dataValue;
-        //}
 
-        //public dataValue UpdateDataValue(dataValue dataValue)
-        //{
-        //    this.UpdateEntity(dataValue as baseClass);
-        //    this.context.Update(dataValue);
-        //    this.context.SaveChanges();
-        //    return dataValue;
-        //}
-
-        //public void DeleteDataValue(dataValue dataValue)
-        //{
-        //    this.DeleteEntity(dataValue as baseClass);
-        //}
 
         public List<dataValue_client> GetAcitveDataValues_Client(int dataTypeId)
         {
@@ -888,7 +886,14 @@ namespace Insurance.Services
                                        ThenInclude(dataValue_category => dataValue_category.category).
                                        ThenInclude(category => category.attributes).
                                     OrderBy(dv => dv.orderIndex).ToList();
-
+            foreach (var dataValue in dataValues)
+            {
+                dataValue.categories = dataValue.categories.Where(dv => !dv.isDeleted).ToList();
+                foreach (var category in dataValue.categories)
+                {
+                    category.category.attributes = category.category.attributes.Where(a => !a.isDeleted && a.active).ToList() ;
+                }
+            }
             //var dataValues = this.GetActiveDataTypeIncludeValues(dataTypeId).dataValues;
             var res = mapperConfiguration.CreateMapper().Map<List<dataValue_client>>(dataValues);
             return res;
@@ -904,6 +909,14 @@ namespace Insurance.Services
                                                         ThenInclude(category => category.attributes).
                                                       OrderBy(dv => dv.orderIndex).
                                                       ToList();
+            foreach (var dataValue in dataValues)
+            {
+                dataValue.categories = dataValue.categories.Where(dv => !dv.isDeleted).ToList();
+                foreach (var category in dataValue.categories)
+                {
+                    category.category.attributes = category.category.attributes.Where(a => !a.isDeleted && a.active).ToList();
+                }
+            }
             var res = mapperConfiguration.CreateMapper().Map<List<dataValue_client>>(dataValues);
             return res;
         }
@@ -1387,29 +1400,6 @@ namespace Insurance.Services
                                                                 (p.siteId == this.allSiteId || p.siteId == this.siteId) && !p.isDeleted);
             return post;
         }
-
-        //public post AddPost(post post, IFormFile image)
-        //{
-        //    this.UpdateEntity(post as baseClass);
-        //    this.context.Add(post);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<post>(image, post);
-        //    return post;
-        //}
-
-        //public post UpdatePost(post post, IFormFile image)
-        //{
-        //    this.UpdateEntity(post as baseClass);
-        //    this.context.Update(post);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<post>(image, post);
-        //    return post;
-        //}
-
-        //public void DeletePost(post post)
-        //{
-        //    this.DeleteEntity(post as baseClass);
-        //}
         #endregion
 
         #region PaymentType

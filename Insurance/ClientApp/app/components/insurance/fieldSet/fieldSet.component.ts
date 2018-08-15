@@ -9,6 +9,7 @@ import { fieldComponent } from '../field/field.component';
 export class fieldSetComponent {
     @Input() fieldSet: any;
     @Input() insurance: any;
+    @Input() step: any;
     @Output() fieldValueChanged = new EventEmitter<any>();
 
     fieldValueChange(field: any) {

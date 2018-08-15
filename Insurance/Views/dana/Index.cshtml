@@ -19,11 +19,16 @@
 <section id="sec-about-us">
     <div class="container holder">
         <div class="row">
+            <h1 class="col-12">
+                <span>
+                    درباره بیمه دانا
+                </span>
+            </h1>
             <div class="col1 col-md-6 col-xs-12">
-                @await Component.InvokeAsync("Box", new { id = 14, componentName = "about-us" })
+                @await Component.InvokeAsync("Box", new { id = 14, componentName = "about-us", isShowTitle = false })
             </div>
             <div class="col2 col-md-6 col-xs-12">
-                <img src="~/dana/image/theme/about-us.png" title="آسایش تدبیر ایرانیان" class="about-us-img" />
+                <img src="~/dana/image/theme/about-us.png" title="درباره بیمه دانا" alt="درباره بیمه دانا"  class="about-us-img" />
             </div>
         </div>
     </div>

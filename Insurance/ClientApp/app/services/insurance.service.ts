@@ -131,17 +131,35 @@ export class insuranceService {
         }, error => console.error(error));
     }
     //-----------------------------------------------------------------------------
-    resetChild(step: any, field: any) {
-        for (var k = 0; k < step.fieldSets.length; k++) {
-            let fieldSet = step.fieldSets[k];
-            for (let j = 0; j < fieldSet.fields.length; j++) {
-                let tempField = fieldSet.fields[j];
-                if (tempField.fatherid && tempField.fatherid == field.id) {
-                    this.fetchChildDataValues(tempField, field.value);
-                    tempField.value = null;
+    //for show or hide
+    refreshFields(insurance: any) {
+        for (var i = 0; i < insurance.steps.length; i++) {
+            let step = insurance.steps[i];
+            for (var k = 0; k < step.fieldSets.length; k++) {
+                let fieldSet = step.fieldSets[k];
+                for (let j = 0; j < fieldSet.fields.length; j++) {
+                    let field = fieldSet.fields[j];
+                    if (field.showIf && field.showIf != "") {
+                        field.isShowField = this.execJavascript(field.showIf);
+                        console.log(field.isShowField);
+                        continue;
+                    }
                 }
             }
         }
+    }
+    //-----------------------------------------------------------------------------
+    resetChild(step: any, field: any) {
+            for (var k = 0; k < step.fieldSets.length; k++) {
+                let fieldSet = step.fieldSets[k];
+                for (let j = 0; j < fieldSet.fields.length; j++) {
+                    let tempField = fieldSet.fields[j];
+                    if (tempField.fatherid && tempField.fatherid == field.id) {
+                        this.fetchChildDataValues(tempField, field.value);
+                        tempField.value = null;
+                    }
+                }
+            }
     }
     //-----------------------------------------------------------------------------
     fetchDataValues(field: any) {
@@ -231,15 +249,20 @@ export class insuranceService {
         }
     }
     //-----------------------------------------------------------------------------
+    execJavascript(code: string) {
+        let f = new Function("field", code);
+        let res = f(this);
+        return res;
+    }
+    //-----------------------------------------------------------------------------
     calcPrice(insurance: any) {
         //console.log('calcPrice');
         if (insurance.steps[0].isValidAllRequired) {
             //پارامتر کل کلاس است برای اینکه موقع نوشتن فرمول قابل فهم تر باشد نام فیلد گذاشتیم
-            let f = new Function("field", insurance.formula);
-            let res = f(this);
-            //console.log("res is " + res);
+            // let f = new Function("field", insurance.formula);
+            //let res = f(this);
+            let res = this.execJavascript(insurance.formula);
             insurance.price = Math.ceil(res);
-            //console.log(f(this));
         }
         else {
             insurance.price = null;
@@ -256,7 +279,8 @@ export class insuranceService {
         //console.log('attribute');
         let attribute = this.findAttribute(insuranceName, fieldName, attributeName);
         if (attribute)
-            return parseInt(attribute.value);
+            return parseFloat(attribute.value);
+        //return parseInt(attribute.value);
         return null;
     }
     //-----------------------------------------------------------------------------
