@@ -1,0 +1,119 @@
+﻿@model reminder
+
+<div class="row no-gutters ">
+    <div class="reminder-container @ViewData["insuranceTypeClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.insuranceType) :
+            </div>
+            <select asp-for="insuranceType" class="col reminder-control">
+                <option value="بیمه شخص ثالث">بیمه شخص ثالث</option>
+                <option value="بیمه بدنه">بیمه بدنه</option>
+                <option value="بیمه آتش سوزی">بیمه آتش سوزی</option>
+                <option value="بیمه زلزله">بیمه زلزله</option>
+                <option value="بیمه درمان">بیمه درمان</option>
+                <option value="بیمه مسئولیت">بیمه مسئولیت</option>
+            </select>
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["dayClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.day) :
+            </div>
+            <select asp-for="day" class="col reminder-control">
+                @for (int i = 1; i <= 31; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["monthClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.month) :
+            </div>
+            <select asp-for="month" class="col reminder-control">
+                <option value="1">فروردین</option>
+                <option value="2">اردیبهشت</option>
+                <option value="3">خرداد</option>
+                <option value="4">تیر</option>
+                <option value="5">مرداد</option>
+                <option value="6">شهریور</option>
+                <option value="7">مهر</option>
+                <option value="8">آبان</option>
+                <option value="9">آذر</option>
+                <option value="10">دی</option>
+                <option value="11">بهمن</option>
+                <option value="12">اسفند</option>
+            </select>
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["fullNameClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.fullName) :
+            </div>
+            <input asp-for="fullName" class="col reminder-control" />
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["mobileClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.mobile) :
+            </div>
+            <input asp-for="mobile" class="col reminder-control" />
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["emailClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.email) :
+            </div>
+            <input asp-for="email" class="col reminder-control" />
+        </div>
+    </div>
+    <div class="reminder-container @ViewData["commentClass"]" style="border:1px solid red">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.comment) :
+            </div>
+            <input asp-for="comment" class="col reminder-control" />
+        </div>
+    </div>
+    <div class="col-12">
+        <input type="button" class="btn btn-primary" value="@ViewData["submitText"]" onclick="addReminder()" />
+    </div>
+</div>
+<script>
+    function addReminder() {
+
+        if ($("#mobile").val().length != 11)
+            return;
+
+        var reminder = {
+            insuranceType: $("#insuranceType").val(),
+            day: $("#day").val(),
+            month: $("#month").val(),
+            fullName: $("#fullName").val(),
+            mobile: $("#mobile").val(),
+            email: $("#email").val(),
+            comment: $("#comment").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/api/Reminder/AddReminder",
+            data: JSON.stringify(reminder),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+            },
+            failure: function (errMsg) {
+                alert(errMsg);
+            }
+        });
+    }
+</script>

@@ -777,6 +777,47 @@ namespace DAL.Migrations
                     b.ToTable("price");
                 });
 
+            modelBuilder.Entity("Entities.reminder", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("active");
+
+                    b.Property<string>("comment");
+
+                    b.Property<int>("day");
+
+                    b.Property<string>("email");
+
+                    b.Property<string>("fullName");
+
+                    b.Property<string>("insuranceType");
+
+                    b.Property<bool>("isDeleted");
+
+                    b.Property<string>("mobile");
+
+                    b.Property<int>("month");
+
+                    b.Property<int>("orderIndex");
+
+                    b.Property<int>("siteId");
+
+                    b.Property<string>("title");
+
+                    b.Property<DateTime>("updateDateTime");
+
+                    b.Property<int>("updateUserId");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("siteId");
+
+                    b.ToTable("reminders");
+                });
+
             modelBuilder.Entity("Entities.role_adminMenu", b =>
                 {
                     b.Property<int>("id")
@@ -842,6 +883,8 @@ namespace DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("host");
+
+                    b.Property<DateTime>("lastAccess");
 
                     b.Property<string>("name");
 
@@ -1252,6 +1295,14 @@ namespace DAL.Migrations
                         .WithMany("childs")
                         .HasForeignKey("fatherId");
 
+                    b.HasOne("Entities.site", "site")
+                        .WithMany()
+                        .HasForeignKey("siteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Entities.reminder", b =>
+                {
                     b.HasOne("Entities.site", "site")
                         .WithMany()
                         .HasForeignKey("siteId")

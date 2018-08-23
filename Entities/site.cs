@@ -9,5 +9,6 @@ namespace Entities
         public int id { get; set; }
         public string host { get; set; }
         public string name { get; set; }
+        public DateTime lastAccess { get; set; }
     }
 }

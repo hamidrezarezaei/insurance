@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
@@ -12,15 +13,19 @@ namespace Insurance.Controllers
     public class HomeController : Controller
     {
         //context ctx;
-        repository repository;
+        private readonly repository repository;
+        private readonly HookManager hookManager;
 
-        public HomeController(repository repository)
+
+        public HomeController(repository repository, HookManager hookManager)
         {
             this.repository = repository;
+            this.hookManager = hookManager;
         }
 
         public IActionResult Index()
         {
+            this.ManageRemindersAsync();
             return View(this.viewAddress("Index"));
         }
 
@@ -62,7 +67,26 @@ namespace Insurance.Controllers
             return "";
         }
 
+        private async Task ManageRemindersAsync()
+        {
+            //اولین نفری که در هر روز به سایت وارد شد باعث می شود که تمام یاد آوری های مال اون روز ارسال شوند
+            if (this.repository.GetLastAccess().Day == DateTime.Now.Day)
+                return;
+            PersianCalendar pc = new PersianCalendar();
+            if (pc.GetHour(DateTime.Now) < 7)
+                return;
 
+            this.repository.UpdateLastAccess();
+            var reminders = this.repository.GetReminders(7).ToList();
+            this.hookManager.HookFired("reminder7", reminders);
+
+            reminders = this.repository.GetReminders(3).ToList();
+            this.hookManager.HookFired("reminder3", reminders);
+
+            reminders = this.repository.GetReminders(1).ToList();
+            this.hookManager.HookFired("reminder1", reminders);
+
+        }
         #endregion
     }
 }

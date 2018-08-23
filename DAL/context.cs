@@ -48,6 +48,6 @@ namespace DAL
         public DbSet<hook> hooks{ get; set; }
         public DbSet<sms> smses{ get; set; }
         public DbSet<email> emails { get; set; }
-        
+        public DbSet<reminder> reminders { get; set; }
     }
 }

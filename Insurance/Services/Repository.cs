@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -58,8 +59,8 @@ namespace Insurance.Services
             string host = this.httpContextAccessor.HttpContext.Request.Host.ToString();
 
             if (host.Contains("localhost"))
-                //host = "danainsurance.co";
-                host = "bimebaz.com";
+                host = "danainsurance.co";
+            //host = "bimebaz.com";
 
 
             return context.sites.FirstOrDefault(s => s.host == host.ToLower()).id;
@@ -76,6 +77,19 @@ namespace Insurance.Services
                 return 0;
             }
         }
+        public DateTime GetLastAccess()
+        {
+            var site = context.sites.FirstOrDefault(s => s.id == this.siteId);
+            return site.lastAccess;
+        }
+        public void UpdateLastAccess()
+        {
+            var site = context.sites.FirstOrDefault(s => s.id == this.siteId);
+            site.lastAccess = DateTime.Now;
+            context.SaveChanges();
+
+        }
+
         public void Labeling(baseClass entity)
         {
             entity.siteId = this.siteId;
@@ -128,7 +142,6 @@ namespace Insurance.Services
             this.SaveFile1(entity, image);
             return entity;
         }
-
         private bool SaveFile1(baseClass entity, IFormFile file, string extention = ".jpg")
         {
             var t = entity.GetType();
@@ -151,8 +164,6 @@ namespace Insurance.Services
             }
             return true;
         }
-
-
         private bool SaveFile<T>(IFormFile file, T item, string extention = ".jpg")
         {
             var type = typeof(T);
@@ -176,6 +187,37 @@ namespace Insurance.Services
         }
 
         #endregion
+
+        #region Reminder
+        public IEnumerable<reminder> GetReminders()
+        {
+            var reminders = context.reminders.Where(r => (r.siteId == this.allSiteId || r.siteId == this.siteId) && !r.isDeleted).
+                                     OrderBy(r => r.title).
+                                     ToList();
+            return reminders;
+
+        }
+        public IEnumerable<reminder> GetReminders(int remindDays)
+        {
+            PersianCalendar pc = new PersianCalendar();
+            var dt= pc.AddDays(DateTime.Now, remindDays);
+            int dayOfMonth = pc.GetDayOfMonth(dt);
+            int month = pc.GetMonth(dt);
+            var reminders = context.reminders.Where(r => r.day == dayOfMonth && r.month == month && 
+                                                        (r.siteId == this.allSiteId || r.siteId == this.siteId) && !r.isDeleted).
+                                              OrderBy(r => r.title).
+                                              ToList();
+            return reminders;
+        }
+
+        public reminder GetReminder(int? id)
+        {
+            var reminder = context.reminders.SingleOrDefault(r => r.id == id &&
+                                                          (r.siteId == this.allSiteId || r.siteId == this.siteId) && !r.isDeleted);
+            return reminder;
+        }
+        #endregion
+
 
         #region User
         public List<user> GetUsers_ThisSite()

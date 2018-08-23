@@ -28,6 +28,8 @@
                         سه بار تاریخ بیمه‌نامه‌اتو یادآوری می‌کنیم
                     </span>
                 </h2>
+                @await Component.InvokeAsync("Reminder", new {componentName = "reminder" })
+
             </div>
         </div>
     </div>
