@@ -46,6 +46,9 @@ export class fieldComponent {
             this.replacePatterns();
         }
 
+        this._insuranceService.resetChild(this.step, this.field);
+
+    
         // this.options = [{ id: 1, title: 'mohammad' }, { id: 2, text: 'hamid' }];
     }
 
@@ -69,6 +72,7 @@ export class fieldComponent {
         this._insuranceService.resetChild(this.step, this.field);
         this._insuranceService.refreshFields(this.insurance);
         this._insuranceService.ValidateAllRequired(this.step);
+
         if (this.step.number == 1)
             this._insuranceService.calcPrice(this.insurance);
 

@@ -40,6 +40,7 @@
                         @Html.DisplayFor(modelItem => field.type)
                     </td>
                     <td class="op-buttns">
+                        <a btntype="dublicate" asp-controller="field" asp-action="Duplicate" asp-route-id="@item.id" asp-route-returnurl="/Admin/FieldSet/Details/@Model.id">دوبل کردن</a>
                         <a btntype="edit" asp-controller="field" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/FieldSet/Details/@Model.id">ویرایش</a>
                         <a btntype="delete" asp-controller="field" asp-action="Delete" asp-route-id="@item.id" asp-route-returnurl="/Admin/FieldSet/Details/@Model.id">حذف</a>
                     </td>

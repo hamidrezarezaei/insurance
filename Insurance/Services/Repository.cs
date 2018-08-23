@@ -112,7 +112,16 @@ namespace Insurance.Services
             this.context.SaveChanges();
             return entity;
         }
-
+        public baseClass DuplicateEntity(baseClass entity,baseClass newEntity)
+        {
+            var values = context.Entry(entity).CurrentValues.Clone();
+            values["id"] = 0;
+            this.context.Add(newEntity);
+            context.Entry(newEntity).CurrentValues.SetValues(values);
+            this.Labeling(newEntity);
+            this.context.SaveChanges();
+            return entity;
+        }
         public baseClass AddEntity(baseClass entity, IFormFile image)
         {
             this.AddEntity(entity);

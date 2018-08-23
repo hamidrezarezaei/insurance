@@ -4,7 +4,7 @@
 <div class="row">
     <h1 class="col-md-8 admin-box-title">ایجاد نوع جدید </h1>
     <div class="col-md-4 op-buttns top">
-        <a btntype="back" asp-action="Index">بازگشت </a>
+        <a btntype="back" href="@ViewData["ReturnUrl"]">بازگشت </a>
     </div>
 </div>
 <form asp-action="Create" asp-route-returnurl="@ViewData["ReturnUrl"]" enctype="multipart/form-data">
@@ -84,7 +84,7 @@
         </div>
     }
     <div class="op-buttns bottom">
-        <a btntype="cancel" asp-action="Index">لغو</a>
+        <a  btntype="cancel"  href="@ViewData["ReturnUrl"]">لغو</a>
         <input btntype="save" type="submit" value="ایجاد" />
     </div>
 </form>

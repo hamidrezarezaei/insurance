@@ -124,6 +124,25 @@ namespace Insurance.Areas.Admin.Controllers
             return RedirectToLocal(returnUrl);
         }
 
+        public IActionResult Duplicate(int? id, string returnUrl = null)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var field = this.repository.GetField(id);
+            if (field == null)
+            {
+                return NotFound();
+            }
+
+            this.repository.DuplicateEntity(field,new field());
+
+            return RedirectToLocal(returnUrl);
+        }
+
+
         private IActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))

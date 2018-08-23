@@ -54,12 +54,16 @@
     /*color: white !important;*/
 }
 /********************************************************************************************************/
-.checkBox-type input{
-    width:17px;
-    height:17px;
+.oldDiscount .field-title{
+    font-size:0.8rem;
+    padding-top:10px;
+}
+.checkBox-type input {
+    width: 17px;
+    height: 17px;
 }
 #sec-insurance #discounts{
-    margin-top:-75px;
+    /*margin-top:-75px;*/
 }
 #sec-insurance .checkBox-type label {
     font-size: 0.8rem;
@@ -130,7 +134,7 @@
     #sec-insurance .step {
         /*display:none;*/
         position: relative;
-        top: 3rem;
+        /*top: 3rem;*/
         width: 80%;
         /*height: calc(100vh - (270px + 6rem));*/
         margin: auto;
