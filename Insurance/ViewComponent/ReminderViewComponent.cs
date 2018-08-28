@@ -28,7 +28,8 @@ namespace insurance_new
                                                             string insuranceTypeClass = "col-12 col-md-6",
                                                             string commentClass = "col-12",
 
-                                                            string submitText = "ثبت"
+                                                            string submitText = "ثبت",
+                                                            string submitClass = "col-12 col-md-2 float-left btn-success"
 
 
             )
@@ -44,6 +45,7 @@ namespace insurance_new
             ViewData["commentClass"] = commentClass;
 
             ViewData["submitText"] = submitText;
+            ViewData["submitClass"] = submitClass;
 
             return View(template, new reminder());
         } 

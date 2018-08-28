@@ -2,12 +2,12 @@
 <div class="admin-box">
     <table class="table detail table-striped">
         <tr>
-            <td class="ltr">
+            <td>
                 @Html.DisplayNameFor(model => model.orderIndex)
             </td>
             @if (ViewBag.type == "create" || ViewBag.type == "edit")
             {
-                <td>
+                <td class="ltr">
                     <input asp-for="orderIndex" class="form-control" />
                 </td>
             }
@@ -48,10 +48,23 @@
             else
             {
                 <td>
-                    @Html.DisplayFor(model => model.name)
+                    @Html.DisplayFor(model => model.showForAll)
                 </td>
             }
         </tr>
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.showForAll)
+                </td>
+
+                <td>
+                    <input asp-for="showForAll" />
+                </td>
+
+            </tr>
+        }
         <tr>
             <td>
                 @Html.DisplayNameFor(model => model.title)

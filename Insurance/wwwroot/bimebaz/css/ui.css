@@ -190,9 +190,27 @@
         height: 128px;
     }
 /********************************************************************************************************/
-#sec-reminder .reminder-title{
-    width:200px;
-    border:1px solid green;
+#sec-reminder .btn-reminder{
+    margin-top:10px;
+}
+#sec-reminder .reminder-field-container
+{
+    padding:7px 5px;
+}
+#sec-reminder .reminder-control {
+    padding:5px;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    border-radius: 4px;
+    border: 1px solid rgb(169, 169, 169);
+}
+#sec-reminder .reminder-container {
+    padding:5px 10px;
+}
+#sec-reminder .reminder-title {
+    padding: 3px 0px;
+    width: 125px;
 }
 #sec-reminder {
     /*background-color: #f5f5f5;*/

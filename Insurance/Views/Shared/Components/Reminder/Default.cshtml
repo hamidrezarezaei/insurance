@@ -1,7 +1,7 @@
 ﻿@model reminder
 
-<div class="row no-gutters ">
-    <div class="reminder-container @ViewData["insuranceTypeClass"]" style="border:1px solid red">
+<div class="row no-gutters reminder-container">
+    <div class="reminder-field-container @ViewData["insuranceTypeClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.insuranceType) :
@@ -16,7 +16,15 @@
             </select>
         </div>
     </div>
-    <div class="reminder-container @ViewData["dayClass"]" style="border:1px solid red">
+    <div class="reminder-field-container @ViewData["fullNameClass"]">
+        <div class="row no-gutters">
+            <div class="reminder-title">
+                @Html.DisplayNameFor(model => model.fullName) :
+            </div>
+            <input asp-for="fullName" class="col reminder-control" />
+        </div>
+    </div>
+    <div class="reminder-field-container @ViewData["dayClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.day) :
@@ -29,7 +37,7 @@
             </select>
         </div>
     </div>
-    <div class="reminder-container @ViewData["monthClass"]" style="border:1px solid red">
+    <div class="reminder-field-container @ViewData["monthClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.month) :
@@ -50,15 +58,8 @@
             </select>
         </div>
     </div>
-    <div class="reminder-container @ViewData["fullNameClass"]" style="border:1px solid red">
-        <div class="row no-gutters">
-            <div class="reminder-title">
-                @Html.DisplayNameFor(model => model.fullName) :
-            </div>
-            <input asp-for="fullName" class="col reminder-control" />
-        </div>
-    </div>
-    <div class="reminder-container @ViewData["mobileClass"]" style="border:1px solid red">
+
+    <div class="reminder-field-container @ViewData["mobileClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.mobile) :
@@ -66,7 +67,7 @@
             <input asp-for="mobile" class="col reminder-control" />
         </div>
     </div>
-    <div class="reminder-container @ViewData["emailClass"]" style="border:1px solid red">
+    <div class="reminder-field-container @ViewData["emailClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.email) :
@@ -74,16 +75,16 @@
             <input asp-for="email" class="col reminder-control" />
         </div>
     </div>
-    <div class="reminder-container @ViewData["commentClass"]" style="border:1px solid red">
+    <div class="reminder-field-container @ViewData["commentClass"]">
         <div class="row no-gutters">
             <div class="reminder-title">
                 @Html.DisplayNameFor(model => model.comment) :
             </div>
-            <input asp-for="comment" class="col reminder-control" />
+            <input asp-for="comment" class="col reminder-control " />
         </div>
     </div>
     <div class="col-12">
-        <input type="button" class="btn btn-primary" value="@ViewData["submitText"]" onclick="addReminder()" />
+        <input type="button" class="btn-reminder @ViewData["submitClass"]" value="@ViewData["submitText"]" onclick="addReminder()" />
     </div>
 </div>
 <script>
@@ -109,10 +110,10 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data) {
-                alert(data);
+                showMessageBox('', 'اطلاعات با موفقیت ثبت شد.');
             },
             failure: function (errMsg) {
-                alert(errMsg);
+                showMessageBox('', 'ثبت اطلاعات با خطا مواجه شد.');
             }
         });
     }
