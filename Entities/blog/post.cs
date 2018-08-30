@@ -11,6 +11,10 @@ namespace Entities
     {
         [Display(Name = "عنوان دوم")]
         public string title2 { get; set; }
+        [Display(Name = "متا دیسکریپشن")]
+        public string metaDescription { get; set; }
+        [Display(Name = "متا کیورد")]
+        public string metaKeywords { get; set; }
         [Display(Name = "متن")]
         [DataType(DataType.MultilineText)]
         public string content { get; set; }

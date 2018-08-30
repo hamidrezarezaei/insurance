@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Insurance.Services;
+using Microsoft.AspNetCore.Rewrite;
 
 namespace insurance_new
 {
@@ -95,6 +96,10 @@ namespace insurance_new
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            app.UseRewriter(new RewriteOptions()
+               .AddRedirectToWww()
+            //.AddRedirectToHttps()
+            );
             app.UseAuthentication();
             app.UseStaticFiles();
 
@@ -112,6 +117,6 @@ namespace insurance_new
             });
         }
 
-   
+
     }
 }

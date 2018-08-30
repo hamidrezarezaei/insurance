@@ -33,7 +33,16 @@
     <script src="~/common/js/bootstrap/bootstrap.min.js"></script>
 
     @RenderSection("scripts", required: false)
-    @Html.Raw(ViewData["GoogleAnalytics"])
     @Html.Partial("_MessageBox")
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@ViewData["GoogleAnalytics"]"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', '@ViewData["GoogleAnalytics"]');
+    </script>
+
 </body>
 </html>

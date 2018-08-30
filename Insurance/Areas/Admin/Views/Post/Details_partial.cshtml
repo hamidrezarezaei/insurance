@@ -49,6 +49,19 @@
         @if (ViewBag.type == "create" || ViewBag.type == "edit")
         {
             <tr>
+                <td>@Html.DisplayNameFor(model => model.metaDescription) :</td>
+
+                <td><input asp-for="metaDescription" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.metaKeywords) :</td>
+
+                <td><input asp-for="metaKeywords" class="form-control" /></td>
+            </tr>
+        }
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
                 <td>
                     @Html.DisplayNameFor(model => model.image) :
                 </td>

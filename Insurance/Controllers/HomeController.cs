@@ -26,12 +26,21 @@ namespace Insurance.Controllers
         public IActionResult Index()
         {
             this.ManageRemindersAsync();
+
+            ViewData["Title"] = this.repository.GetSetting("siteTitle");
+            ViewData["MetaDescription"] = this.repository.GetSetting("MetaDescription");
+            ViewData["MetaKeywords"] = this.repository.GetSetting("MetaKeywords");
+            ViewData["GoogleAnalytics"] = this.repository.GetSetting("GoogleAnalytics");
+
             return View(this.viewAddress("Index"));
         }
 
         public IActionResult Post(int id, string title)
         {
             var post = this.repository.GetPost(id);
+            ViewData["Title"] = post.title;
+            ViewData["MetaDescription"] = post.metaDescription;
+            ViewData["MetaKeywords"] = post.metaKeywords;
             return View(this.viewAddress("Post"), post);
         }
         public IActionResult PostCategory(int id, string title)
@@ -49,11 +58,7 @@ namespace Insurance.Controllers
         {
             string viewName = repository.GetSiteName();
             ViewData["viewName"] = viewName;
-            ViewData["Title"] = this.repository.GetSetting("siteTitle");
-            ViewData["MetaDescription"] = this.repository.GetSetting("MetaDescription");
-            ViewData["MetaKeywords"] = this.repository.GetSetting("MetaKeywords");
-            ViewData["GoogleAnalytics"] = this.repository.GetSetting("GoogleAnalytics");
-
+       
             switch (type)
             {
                 case "Index":
