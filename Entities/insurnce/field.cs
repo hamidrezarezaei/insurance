@@ -80,6 +80,8 @@ namespace Entities
         }
         [Display(Name = "شرط نمایش")]
         public string showIf { get; set; }
+        [Display(Name = "فرمول")]
+        public string formula { get; set; }
     }
 
     public class field_client : baseClient
@@ -107,7 +109,9 @@ namespace Entities
         public bool isShowLoading { get; set; }
         public int orderIndex { get; set; }
         public string showIf { get; set; }
-        public bool isShowField { get; set; } 
+        public bool isShowField { get; set; }
+        public string formula { get; set; }
+
     }
 
 }

@@ -1,4 +1,22 @@
-<div class="row no-gutters" >
+<div class="row no-gutters">
+    <ng-container *ngIf="field.type=='price'">
+        <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="price-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <label class="control">{{field.value | frenchDecimal:locale}}</label>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="field.type=='calc'">
+        <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div id="{{field.name}}" class="calc-type {{field.elementCssClass}}">
+            <div class="field-container">
+                <img *ngIf="field.image" class="icon" src="{{field.image}}" />
+                <label class="control">{{field.value}}</label>
+            </div>
+        </div>
+    </ng-container>
     <ng-container *ngIf="field.type=='label'">
         <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
         <div id="{{field.name}}" class="label-type {{field.elementCssClass}}">

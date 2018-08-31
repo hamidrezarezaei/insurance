@@ -142,7 +142,29 @@ export class insuranceService {
                     if (field.showIf && field.showIf != "") {
                         field.isShowField = this.execJavascript(field.showIf);
                         console.log(field.isShowField);
-                        continue;
+                    }
+                    if (field.type == "calc") {
+                        let res = this.execJavascript(field.formula);
+                        field.value = Math.ceil(res);
+                    }
+                    else if (field.type == "price") {
+                        field.value = insurance.price;
+                    }
+
+                }
+            }
+        }
+    }
+    //-----------------------------------------------------------------------------
+    updatePriceField(insurance: any) {
+        for (var i = 0; i < insurance.steps.length; i++) {
+            let step = insurance.steps[i];
+            for (var k = 0; k < step.fieldSets.length; k++) {
+                let fieldSet = step.fieldSets[k];
+                for (let j = 0; j < fieldSet.fields.length; j++) {
+                    let field = fieldSet.fields[j];
+                    if (field.type == "price") {
+                        field.value = insurance.price;
                     }
                 }
             }
@@ -150,16 +172,16 @@ export class insuranceService {
     }
     //-----------------------------------------------------------------------------
     resetChild(step: any, field: any) {
-            for (var k = 0; k < step.fieldSets.length; k++) {
-                let fieldSet = step.fieldSets[k];
-                for (let j = 0; j < fieldSet.fields.length; j++) {
-                    let tempField = fieldSet.fields[j];
-                    if (tempField.fatherid && tempField.fatherid == field.id) {
-                        this.fetchChildDataValues(tempField, field.value);
-                        tempField.value = null;
-                    }
+        for (var k = 0; k < step.fieldSets.length; k++) {
+            let fieldSet = step.fieldSets[k];
+            for (let j = 0; j < fieldSet.fields.length; j++) {
+                let tempField = fieldSet.fields[j];
+                if (tempField.fatherid && tempField.fatherid == field.id) {
+                    this.fetchChildDataValues(tempField, field.value);
+                    tempField.value = null;
                 }
             }
+        }
     }
     //-----------------------------------------------------------------------------
     fetchDataValues(field: any) {
@@ -263,6 +285,7 @@ export class insuranceService {
             //let res = f(this);
             let res = this.execJavascript(insurance.formula);
             insurance.price = Math.ceil(res);
+            this.updatePriceField(insurance);
         }
         else {
             insurance.price = null;

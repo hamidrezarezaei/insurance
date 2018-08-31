@@ -1,8 +1,8 @@
-﻿.label-type .field-container {
+﻿.label-type .field-container, .price-type .field-container {
     background-color: inherit;
-    border:0;
+    border: 0;
     font-weight: bold;
-    color:maroon;
+    color: maroon;
 }
 dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-material .dp-calendar-nav-container * {
     background-color: #58595b !important;

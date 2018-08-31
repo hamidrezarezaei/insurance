@@ -511,7 +511,7 @@ namespace Insurance.Services
                     foreach (var field in fieldSet.fields)
                     {
                         if (field.type == "label" || field.type == "html" ||
-                            field.type == "acceptCheckBox")
+                            field.type == "acceptCheckBox" || field.type == "price")
                             continue;
                         else if (field.type == "paymentType")
                         {

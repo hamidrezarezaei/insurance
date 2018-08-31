@@ -21,7 +21,9 @@ export class stepComponent {
         this._authService = authService;
         this._insuranceService = insuranceService;
     }
-
+    ngOnInit() {
+        this._insuranceService.refreshFields(this.insurance);
+    }
     nextStepClick() {
         this.insurance.currentStep++;
         this.stepChanged.emit(this.insurance);

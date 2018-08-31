@@ -342,6 +342,8 @@ namespace DAL.Migrations
 
                     b.Property<int>("fieldSetId");
 
+                    b.Property<string>("formula");
+
                     b.Property<bool>("isDeleted");
 
                     b.Property<bool>("isHideLabel");
