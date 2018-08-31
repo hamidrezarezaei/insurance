@@ -59,9 +59,8 @@ namespace Insurance.Services
             string host = this.httpContextAccessor.HttpContext.Request.Host.ToString();
 
             if (host.Contains("localhost"))
-                host = "www.danainsurance.co";
-            //host = "www.bimebaz.com";
-
+                //host = "www.danainsurance.co";
+                host = "www.bimebaz.com";
 
             return context.sites.FirstOrDefault(s => s.host.ToLower() == host.ToLower()).id;
         }
@@ -126,7 +125,7 @@ namespace Insurance.Services
             this.context.SaveChanges();
             return entity;
         }
-        public baseClass DuplicateEntity(baseClass entity,baseClass newEntity)
+        public baseClass DuplicateEntity(baseClass entity, baseClass newEntity)
         {
             var values = context.Entry(entity).CurrentValues.Clone();
             values["id"] = 0;
@@ -200,10 +199,10 @@ namespace Insurance.Services
         public IEnumerable<reminder> GetReminders(int remindDays)
         {
             PersianCalendar pc = new PersianCalendar();
-            var dt= pc.AddDays(DateTime.Now, remindDays);
+            var dt = pc.AddDays(DateTime.Now, remindDays);
             int dayOfMonth = pc.GetDayOfMonth(dt);
             int month = pc.GetMonth(dt);
-            var reminders = context.reminders.Where(r => r.day == dayOfMonth && r.month == month && 
+            var reminders = context.reminders.Where(r => r.day == dayOfMonth && r.month == month &&
                                                         (r.siteId == this.allSiteId || r.siteId == this.siteId) && !r.isDeleted).
                                               OrderBy(r => r.title).
                                               ToList();
@@ -466,7 +465,7 @@ namespace Insurance.Services
                                           (o.siteId == this.siteId) && !o.isDeleted).
                                  Include(o => o.insurance).
                                  Include(o => o.orderStatus).
-                                 OrderByDescending(o=>o.dateTime).
+                                 OrderByDescending(o => o.dateTime).
                                  ToList();
 
             foreach (var order in orders)
@@ -617,7 +616,7 @@ namespace Insurance.Services
         public IEnumerable<setting> GetSettings()
         {
             var settings = context.settings.Where(s => (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).
-                                     OrderBy(s=>s.orderIndex).
+                                     OrderBy(s => s.orderIndex).
                                      ToList();
             return settings;
 
@@ -652,7 +651,7 @@ namespace Insurance.Services
                                                OrderBy(s => s.number).ToList();
                 foreach (var step in steps)
                 {
-                    insurance.step_navigations.Add(new step_navigation { title = step.title, number = step.number ,image=step.image});
+                    insurance.step_navigations.Add(new step_navigation { title = step.title, number = step.number, image = step.image });
                 }
             }
             return res;
@@ -942,7 +941,7 @@ namespace Insurance.Services
                 dataValue.categories = dataValue.categories.Where(dv => !dv.isDeleted).ToList();
                 foreach (var category in dataValue.categories)
                 {
-                    category.category.attributes = category.category.attributes.Where(a => !a.isDeleted && a.active).ToList() ;
+                    category.category.attributes = category.category.attributes.Where(a => !a.isDeleted && a.active).ToList();
                 }
             }
             //var dataValues = this.GetActiveDataTypeIncludeValues(dataTypeId).dataValues;
@@ -1522,9 +1521,9 @@ namespace Insurance.Services
             return hooks;
 
         }
-         public List<sms> GetActiveSmses(string hookName)
+        public List<sms> GetActiveSmses(string hookName)
         {
-            var smses = this.context.smses.Where(s => s.hook.name == hookName&&
+            var smses = this.context.smses.Where(s => s.hook.name == hookName &&
                                                               (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted && s.active).
                                                          OrderBy(s => s.orderIndex).
                                                          ToList();
@@ -1551,7 +1550,7 @@ namespace Insurance.Services
         #region Sms
         public List<sms> GetSmsesOfHook(int? hookId)
         {
-            var smses = context.smses.Where(s => s.hookId== hookId &&
+            var smses = context.smses.Where(s => s.hookId == hookId &&
                                 (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).ToList();
             return smses;
         }

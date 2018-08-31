@@ -1,0 +1,58 @@
+﻿@model IEnumerable<box>
+
+<div id="@ViewData["componentName"]" class="row no-gutters">
+    <div class="col-12">
+        <div id="slider_@ViewData["componentName"]" class="carousel slide" data-ride="carousel" data-interval="@ViewData["interval"]">
+
+            <!-- Indicators -->
+            <ul class="carousel-indicators">
+                @{
+                    int i = 0;
+                }
+                @foreach (var box in Model)
+                {
+                    string cls = "";
+                    @if (i == 0)
+                    {
+                        cls += " active";
+                    }
+                    <li data-target="#slider_@ViewData["componentName"]" data-slide-to="@i" class="@cls"></li>
+                    i++;
+                }
+            </ul>
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+                @{
+                    i = 0;
+                }
+                @foreach (var box in Model)
+                {
+                    string cls = "carousel-item ";
+                    @if (i == 0)
+                    {
+                        cls += " active";
+                    }
+                    <div class="@cls">
+                        <img src="@box.image" alt="@box.title" title="@box.title">
+                        @if ((bool)ViewData["isShowContent"])
+                        {
+                            <div class="carousel-caption">
+                                @Html.Raw(box.content)
+                            </div>
+                        }
+                    </div>
+                    i++;
+                }
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="carousel-control-prev" href="#slider_@ViewData["componentName"]" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#slider_@ViewData["componentName"]" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </div>
+</div>

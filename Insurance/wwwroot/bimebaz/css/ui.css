@@ -3,6 +3,17 @@
     #fde428
 */
 
+#main_slider {
+    height: calc(100vh - 110px);
+    overflow: hidden;
+    position:absolute;
+}
+    #main_slider .carousel-item img{
+        width:100%;
+    }
+.carousel-control-next, .carousel-control-prev {
+    z-index:99999;
+}
 /********************************************************************************************************/
 #sec-header #phone {
     /*display:none;*/
@@ -85,7 +96,6 @@
 }
 
 #sec-insurance {
-    background-image: url(../image/theme/4.jpg);
     background-attachment: fixed;
     background-size: cover;
     min-height: calc(100vh - 110px);

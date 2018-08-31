@@ -5,8 +5,10 @@
 
 @await Html.PartialAsync("_header.cshtml")
 
-<section id="sec-insurance"> 
-    <div class="container-fluid holder" >
+@await Component.InvokeAsync("BoxCategory", new { template = "Carousel", id = 1014, isShowCategoryTitle = false, isShowImage = true, isShowContent = false, componentName = "main_slider", interval = 100000 })
+
+<section id="sec-insurance">
+    <div class="container-fluid holder">
         <app class="row no-gutters" asp-ng2-prerender-module="ClientApp/dist/main-server" asp-prerender-timeout="100000">
             <div id="loadingContainer">
                 <div class="loading"></div>
@@ -28,7 +30,7 @@
                         سه بار تاریخ بیمه‌نامه‌اتو یادآوری می‌کنیم
                     </span>
                 </h2>
-                @await Component.InvokeAsync("Reminder", new {componentName = "reminder" })
+                @await Component.InvokeAsync("Reminder", new { componentName = "reminder" })
 
             </div>
         </div>

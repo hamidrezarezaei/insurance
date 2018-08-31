@@ -23,7 +23,8 @@ namespace insurance_new
             bool isShowCategoryTitle = true,
             bool isShowTitle = true,
             bool isShowImage = true,
-            bool isShowContent = true
+            bool isShowContent = true,
+            int interval = 5000
             )
         {
             ViewData["componentName"] = componentName;
@@ -32,6 +33,7 @@ namespace insurance_new
             ViewData["isShowTitle"] = isShowTitle;
             ViewData["isShowImage"] = isShowImage;
             ViewData["isShowContent"] = isShowContent;
+            ViewData["interval"] = interval;
             var items = await repository.GetActiveBoxesOfCategory_Async(id);
             return View(template, items);
         } 
