@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "483fda120fe9f05d37d9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "84aed8db087d76912aab"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -88449,6 +88449,11 @@ var fieldComponent = (function () {
             this.field.value = false;
             return;
         }
+        if (file < 200000) {
+            this._insuranceService.addFile(this.insurance.name, this.field.name, file);
+            this.field.value = true;
+            return;
+        }
         //compress image
         var cnv = document.createElement('canvas');
         var reader = new FileReader();
@@ -88456,8 +88461,8 @@ var fieldComponent = (function () {
         reader.onload = function (event) {
             var img = new Image();
             img.onload = function () {
-                var MAX_WIDTH = 400;
-                var MAX_HEIGHT = 300;
+                var MAX_WIDTH = 800;
+                var MAX_HEIGHT = 600;
                 var width = img.width;
                 var height = img.height;
                 if (width > height) {
@@ -88477,14 +88482,14 @@ var fieldComponent = (function () {
                 var ctx = cnv.getContext("2d");
                 if (ctx)
                     ctx.drawImage(img, 0, 0, width, height);
-                var dataurl = cnv.toDataURL("image/jpg");
+                var dataurl = cnv.toDataURL("image/jpeg", 0.9);
                 var blobBin = atob(dataurl.split(',')[1]);
                 var array = [];
                 for (var i = 0; i < blobBin.length; i++) {
                     array.push(blobBin.charCodeAt(i));
                 }
                 //get compressed file
-                var createdFile = new Blob([new Uint8Array(array)], { type: 'image/jpg' });
+                var createdFile = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
                 //set compressed file into files array
                 thisPointer._insuranceService.addFile(thisPointer.insurance.name, thisPointer.field.name, createdFile);
                 //show image

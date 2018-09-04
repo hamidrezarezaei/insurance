@@ -91,7 +91,11 @@ export class fieldComponent {
             return;
         }
 
-
+        if (file < 200000) {
+            this._insuranceService.addFile(this.insurance.name, this.field.name, file);
+            this.field.value = true;
+            return;
+        }
         //compress image
         let cnv = document.createElement('canvas');
         var reader = new FileReader();
@@ -101,8 +105,8 @@ export class fieldComponent {
         reader.onload = (event: any) => {
             let img = new Image();
             img.onload = function () {
-                var MAX_WIDTH = 400;
-                var MAX_HEIGHT = 300;
+                var MAX_WIDTH = 800;
+                var MAX_HEIGHT = 600;
                 var width = img.width;
                 var height = img.height;
 
@@ -125,7 +129,7 @@ export class fieldComponent {
                 if (ctx)
                     ctx.drawImage(img, 0, 0, width, height);
 
-                var dataurl = cnv.toDataURL("image/jpg");
+                var dataurl = cnv.toDataURL("image/jpeg",0.9);
                 var blobBin = atob(dataurl.split(',')[1]);
                 var array = [];
                 for (var i = 0; i < blobBin.length; i++) {
@@ -133,7 +137,7 @@ export class fieldComponent {
                 }
 
                 //get compressed file
-                var createdFile = new Blob([new Uint8Array(array)], { type: 'image/jpg' });
+                var createdFile = new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
                 //set compressed file into files array
                 thisPointer._insuranceService.addFile(thisPointer.insurance.name, thisPointer.field.name, createdFile);
                 //show image
