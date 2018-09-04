@@ -93,7 +93,12 @@ export class insuranceService {
         this.isWaiting = true;
         this.http.get(this.baseUrl + 'api/Insurance/GetInsurances').subscribe(result => {
             this.insurances = result.json();
-            this.currentInsurance = this.insurances[0];
+            for (var i = 0; i < this.insurances.length; i++) {
+                if (this.insurances[i].isDefault) {
+                    this.currentInsurance = this.insurances[i];
+                }
+            }
+            //this.currentInsurance = this.insurances[0];
             this.fetchStep(this.currentInsurance, 1);
             this.isWaiting = false;
             //console.log(this.insurances)

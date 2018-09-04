@@ -131,5 +131,12 @@
 
             </tr>
         }
+        @if (ViewBag.type == "create" || ViewBag.type == "edit")
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.isDefault) :</td>
+                <td><input asp-for="isDefault" /></td>
+            </tr>
+        }
     </table>
 </div>

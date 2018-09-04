@@ -59,8 +59,8 @@ namespace Insurance.Services
             string host = this.httpContextAccessor.HttpContext.Request.Host.ToString();
 
             if (host.Contains("localhost"))
-                //host = "www.danainsurance.co";
-                host = "www.bimebaz.com";
+                host = "www.danainsurance.co";
+            //host = "www.bimebaz.com";
 
             return context.sites.FirstOrDefault(s => s.host.ToLower() == host.ToLower()).id;
         }

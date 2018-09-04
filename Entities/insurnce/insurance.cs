@@ -48,6 +48,8 @@ namespace Entities
         public List<order> orders { get; set; }
         [Display(Name = "جاوااسکریپت")]
         public string onClientClick { get; set; }
+        [Display(Name = "بیمه پیشفرض")]
+        public bool isDefault { get; set; }
     }
 
     public class insurance_client : baseClient
@@ -69,6 +71,7 @@ namespace Entities
         public List<step_navigation> step_navigations { get; set; }
         public string tabLocation { get; set; }
         public string onClientClick { get; set; }
+        public bool isDefault { get; set; }
 
     }
 }

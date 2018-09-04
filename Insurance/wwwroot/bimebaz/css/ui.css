@@ -2,10 +2,12 @@
     #0f2d63
     #fde428
 */
-
-#termsAndCondition .field-container{
-    border:none;
-    background-color:transparent;
+ainsurance{
+    display:none;
+}
+#termsAndCondition .field-container {
+    border: none;
+    background-color: transparent;
 }
 #main_slider {
     height: calc(100vh - 110px);
@@ -87,7 +89,7 @@
     padding-right: 6px;
 }
 #sec-insurance #discounts{
-    /*margin-top:-75px;*/
+    margin-top:-50px;
 }
 #sec-insurance .checkBox-type label {
     font-size: 0.8rem;

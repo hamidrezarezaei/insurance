@@ -461,6 +461,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("formula");
 
+                    b.Property<bool>("isDefault");
+
                     b.Property<bool>("isDeleted");
 
                     b.Property<string>("name");

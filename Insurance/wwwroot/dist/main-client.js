@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e855f47824423e5c4aa3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "483fda120fe9f05d37d9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -29912,7 +29912,12 @@ var insuranceService = (function () {
         this.isWaiting = true;
         this.http.get(this.baseUrl + 'api/Insurance/GetInsurances').subscribe(function (result) {
             _this.insurances = result.json();
-            _this.currentInsurance = _this.insurances[0];
+            for (var i = 0; i < _this.insurances.length; i++) {
+                if (_this.insurances[i].isDefault) {
+                    _this.currentInsurance = _this.insurances[i];
+                }
+            }
+            //this.currentInsurance = this.insurances[0];
             _this.fetchStep(_this.currentInsurance, 1);
             _this.isWaiting = false;
             //console.log(this.insurances)
