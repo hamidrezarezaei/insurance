@@ -30,6 +30,8 @@ export class fieldComponent {
     }
 
     ngOnInit() {
+        if (this.field.isRequire)
+            this.field.labelCssClass += " require";
         if (this.field && this.field.type == "image")
             this.showImage();
 
@@ -129,7 +131,7 @@ export class fieldComponent {
                 if (ctx)
                     ctx.drawImage(img, 0, 0, width, height);
 
-                var dataurl = cnv.toDataURL("image/jpeg",0.9);
+                var dataurl = cnv.toDataURL("image/jpeg",0.95);
                 var blobBin = atob(dataurl.split(',')[1]);
                 var array = [];
                 for (var i = 0; i < blobBin.length; i++) {

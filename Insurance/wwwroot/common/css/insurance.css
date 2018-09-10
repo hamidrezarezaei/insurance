@@ -86,7 +86,15 @@ dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-mater
     font-weight: 500;
     color: black;
 }
-
+    .field-title.require:after,
+    .image-button.require:after {
+        display: inline-block;
+        margin-right: 1px;
+        content: "*";
+        line-height: 1;
+        font-size: 14px;
+        color: #f5222d;
+    }
     .field-title.checkBox-type {
         padding: 3px 0px;
     }
@@ -212,18 +220,18 @@ dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-mater
         z-index: 1;
     }
 .step-navigation.enable .step-navigation-icon {
-    border: 2px solid #4caf50;
-    cursor:pointer;
+    border: 2px solid #f8b617;
+    cursor: pointer;
 }
 
 .step-navigation.current .step-navigation-icon {
-    border: 2px solid #4caf50;
+    border: 2px solid #f8b617;
 }
 
 .step-navigation-container .step-navigation.enable:before,
 .step-navigation-container .step-navigation.enable:after,
 .step-navigation-container .step-navigation.current:before {
-    background-color: #4caf50;
+    background-color: #f8b617;
 }
 
 .step-navigation .step-label {
@@ -232,7 +240,7 @@ dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-mater
 }
 .step-navigation.enable .step-label,
 .step-navigation.current .step-label {
-    color: #4caf50;
+    /*color: #4caf50;*/
     font-weight: bold;
 }
             .field-set {

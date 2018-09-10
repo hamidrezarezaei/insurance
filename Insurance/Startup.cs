@@ -96,6 +96,7 @@ namespace insurance_new
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            
             app.UseRewriter(new RewriteOptions()
                .AddRedirectToWww()
             //.AddRedirectToHttps()

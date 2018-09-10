@@ -49,6 +49,12 @@ namespace Insurance.Services
             this.roleManager = roleManager;
             this.siteId = this.GetSiteId();
             this.userId = this.GetUserId();
+
+            //اگر https است باید ریدایرکت شود
+            if (GetSetting("isHttps") == "true" && !this.httpContextAccessor.HttpContext.Request.IsHttps && !this.httpContextAccessor.HttpContext.Request.Host.ToString().Contains("localhost"))
+            {
+                this.httpContextAccessor.HttpContext.Response.Redirect("https://" + this.httpContextAccessor.HttpContext.Request.Host + this.httpContextAccessor.HttpContext.Request.Path, true);
+            }
         }
         #endregion
 

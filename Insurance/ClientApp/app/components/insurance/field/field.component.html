@@ -8,6 +8,7 @@
             </div>
         </div>
     </ng-container>
+  
     <ng-container *ngIf="field.type=='calc'">
         <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
         <div id="{{field.name}}" class="calc-type {{field.elementCssClass}}">
@@ -17,6 +18,7 @@
             </div>
         </div>
     </ng-container>
+    
     <ng-container *ngIf="field.type=='label'">
         <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
         <div id="{{field.name}}" class="label-type {{field.elementCssClass}}">
@@ -43,7 +45,7 @@
                 <img [src]="imageFile" (click)="openFileDialog()">
                 <!--<canvas #imageCanvas (click)="openFileDialog()"></canvas>-->
                 <input type="file" (change)="valueChange($event)" accept="image/x-png,image/jpeg" #fileInput id="{{field.name}}" style="display: none;" />
-                <button (click)="openFileDialog()" class="image-button">{{field.title}}</button>
+                <button (click)="openFileDialog()" [ngClass]="{'require': field.isRequire}" class="image-button">{{field.title}}</button>
             </div>
         </div>
     </ng-container>
