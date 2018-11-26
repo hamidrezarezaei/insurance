@@ -1,7 +1,16 @@
-﻿@model IEnumerable<setting>
+﻿@model pagedResult<setting>
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست تنظیمات</h1>
+    <h1 class="col-md-4 admin-box-title">لیست تنظیمات</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
+
     <div class="col-md-3 op-buttns top">
         <a btntype="Create" asp-action="Create" asp-route-returnurl="/Admin/Setting/Index">ایجاد تنظیم جدید</a>
     </div>
@@ -11,21 +20,22 @@
     <table class="table table-striped">
 
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in Model)
+            @{int r = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage;}
+            @foreach (var item in Model.items)
             {
                 r++;
-            <tr>
+                <tr>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">@r - @item.title ( @item.key ) </a>
-                </td>
-                <td class="op-buttns">
-                    <a btntype="Edit" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">ویرایش</a>
-                    <a btntype="Delete" asp-action="Delete" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">حذف</a>
-                </td>
-            </tr>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">@r - @item.title ( @item.key ) </a>
+                    </td>
+                    <td class="op-buttns">
+                        <a btntype="Edit" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">ویرایش</a>
+                        <a btntype="Delete" asp-action="Delete" asp-route-id="@item.id" asp-route-returnurl="/Admin/Setting/Index">حذف</a>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="Setting" search-string="@ViewData["searchString"]"></nav>

@@ -1,5 +1,9 @@
-﻿body{
+﻿.post .container {
+    text-align: justify;
+    margin-top:15px;
+}
 
+body {
 }
 .field-title.static-width {
     width: 160px;

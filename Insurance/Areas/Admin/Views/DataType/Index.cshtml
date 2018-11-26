@@ -1,7 +1,16 @@
-﻿@model IEnumerable<dataType>
+﻿@model pagedResult<dataType>
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست انواع داده</h1>
+    <h1 class="col-md-4 admin-box-title">لیست انواع داده</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
+
     <div class="col-md-3 op-buttns top">
         <a btntype="Create" asp-action="Create" asp-route-returnurl="/Admin/DataType/Index">ایجاد نوع داده جدید</a>
     </div>
@@ -10,16 +19,16 @@
 <div class="admin-box">
     <table class="table  table-striped">
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in Model)
+            @{int r = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage; }
+            @foreach (var item in Model.items)
             {
                 r++;
                 <tr>
                     <td>
-                        <a asp-action="Details" asp-route-id="@item.id" >@r - @Html.DisplayFor(modelItem => item.title)</a>
+                        <a asp-action="Details" asp-route-id="@item.id">@r - @Html.DisplayFor(modelItem => item.title)</a>
                     </td>
                     <td class="op-buttns">
-                        <a btntype="Edit" asp-action="Edit"  asp-route-id="@item.id" asp-route-returnurl="/Admin/DataType/Index">ویرایش</a> 
+                        <a btntype="Edit" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/DataType/Index">ویرایش</a>
                         <a btntype="Delete" asp-action="Delete" asp-route-id="@item.id" asp-route-returnurl="/Admin/DataType/Index">حذف</a>
                     </td>
                 </tr>
@@ -27,3 +36,4 @@
         </tbody>
     </table>
 </div>
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="DataType" search-string="@ViewData["searchString"]"></nav>

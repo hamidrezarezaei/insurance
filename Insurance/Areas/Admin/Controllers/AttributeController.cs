@@ -56,6 +56,7 @@ namespace Insurance.Areas.Admin.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(attribute);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, attribute attribute, string returnUrl = null)
@@ -74,6 +75,7 @@ namespace Insurance.Areas.Admin.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View(attribute);
         }
+
         public IActionResult Delete(int? id, string returnUrl = null)
         {
             if (id == null)

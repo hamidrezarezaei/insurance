@@ -13,7 +13,15 @@
 @Html.Partial("Details_partial", Model)
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست باکس های دسته @Model.title</h1>
+    <h1 class="col-md-4 admin-box-title">لیست باکس های دسته @Model.title</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
     <div class="col-md-3 op-buttns">
         <a btntype="Create" asp-controller="Box" asp-action="Create" asp-route-boxCategoryId="@Model.id" asp-route-returnurl="/Admin/BoxCategory/Details/@Model.id">ایجاد باکس جدید</a>
     </div>
@@ -21,8 +29,8 @@
 <div class="admin-box">
     <table class="table table-striped">
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in ViewBag.boxes)
+            @{int r = (ViewBag.boxes.pagingData.currentPage - 1) * ViewBag.boxes.pagingData.itemsPerPage; }
+            @foreach (var item in ViewBag.boxes.items)
             {
                 r++;
 
@@ -40,6 +48,8 @@
         </tbody>
     </table>
 </div>
+<nav page-model="@ViewBag.boxes.pagingData" page-action="Details" page-contoller="boxCategory" item-id="@Model.id" search-string="@ViewData["searchString"]"></nav>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

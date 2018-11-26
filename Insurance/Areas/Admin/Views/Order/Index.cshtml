@@ -1,4 +1,4 @@
-﻿@model IEnumerable<order>
+﻿@model pagedResult<order>
 
 @{
     List<orderStatus> orderStatuses = ViewBag.orderStatuses;
@@ -25,9 +25,9 @@
 <div class="admin-box">
     <table class="table table-striped">
         <tbody>
-            @{int r = 0;}
+            @{int r = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage;}
 
-            @foreach (var order in Model)
+            @foreach (var order in Model.items)
     {
         r++;
         <tr>
@@ -52,3 +52,4 @@
         </tbody>
     </table>
 </div>
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="Order" item-id="@ViewBag.orderStatusId" search-string="@ViewData["searchString"]"></nav>

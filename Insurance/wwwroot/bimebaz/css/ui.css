@@ -2,6 +2,58 @@
     #0f2d63
     #fde428
 */
+#why-us > .col {
+    background-color: white;
+    margin: 5px;
+    padding: 15px 5px;
+    box-shadow: 2px 2px 2px 0px rgba(168,168,168,0.5);
+    border-radius: 7px;
+}
+
+#sec-why-us .title {
+    font-family: IRANSans,IRANSans, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 3em;
+    text-transform: lowercase;
+    letter-spacing: -0.3px;
+    padding-top: 5px;
+}
+td{
+    padding:3px;
+}
+.post > .container
+{
+    text-align:justify;
+    margin-top:15px;
+}
+.post h1 {
+    color: #0f2d63;
+    background-color: #fdfdfd7d;
+}
+post-header {
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    position: relative;
+    overflow: hidden;
+}
+.post-header .background-img {
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    top: 0px;
+    right: 0px;
+}
+.post-header {
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    position: relative;
+    overflow: hidden;
+}
+/********************************************************************************************************/
+
 ainsurance{
     display:none;
 }

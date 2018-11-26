@@ -20,13 +20,14 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber, string searchString)
         {
-            var dataTypes = this.repository.GetDataTypes();
+            var dataTypes = this.repository.GetDataTypes(pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(dataTypes);
         }
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int pageNumber, string searchString)
         {
             if (id == null)
             {
@@ -38,7 +39,8 @@ namespace Insurance.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.dataValues = this.repository.GetDataValuesOfDataType(id);
+            ViewBag.dataValues = this.repository.GetDataValuesOfDataType(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(dataType);
         }
         public IActionResult Create(string returnUrl = null)

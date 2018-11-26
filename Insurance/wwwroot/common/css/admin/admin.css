@@ -1,4 +1,13 @@
-﻿.fieldset {
+﻿.pagination {
+    align-items: center;
+    justify-content: center;
+}
+/*.pagination li {
+    border: 1px solid red;
+    margin:5px;
+    padding:5px;
+}*/
+.fieldset {
     margin: 15px;
     margin-top: 20px;
     border: 2px solid #cdcdcd;

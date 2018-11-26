@@ -12,7 +12,6 @@ namespace Insurance.Areas.Admin.Controllers
     public class StepController : Controller
     {
         #region Constructor
-
         private readonly repository repository;
 
         public StepController(repository repository)
@@ -21,7 +20,7 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int pageNumber, string searchString)
         {
             if (id == null)
             {
@@ -35,8 +34,8 @@ namespace Insurance.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.fieldSets = this.repository.GetFieldSetsOfStep(id);
-
+            ViewBag.fieldSets = this.repository.GetFieldSetsOfStep(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(step);
         }
 

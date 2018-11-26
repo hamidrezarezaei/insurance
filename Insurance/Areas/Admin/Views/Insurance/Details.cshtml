@@ -17,7 +17,15 @@
 
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست مراحل @Model.title</h1>
+    <h1 class="col-md-4 admin-box-title">لیست مراحل @Model.title</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
     <div class="col-md-3 op-buttns">
         <a btntype="Create" asp-controller="Step" asp-action="Create" asp-route-insuranceId="@Model.id" asp-route-returnurl="/Admin/Insurance/Details/@Model.id">ایجاد مرحله جدید</a>
     </div>
@@ -26,14 +34,13 @@
     <table class="table table-striped">
 
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in ViewBag.steps)
+            @{int r = (ViewBag.steps.pagingData.currentPage - 1) * ViewBag.steps.pagingData.itemsPerPage;}
+            @foreach (var item in ViewBag.steps.items)
             {
                 r++;
 
                 step step = item as step;
                 <tr>
-
                     <td>
                         <a asp-controller="Step" asp-action="Details" asp-route-id="@step.id">@r - @Html.DisplayFor(modelItem => step.title)</a>
                     </td>
@@ -46,3 +53,4 @@
         </tbody>
     </table>
 </div>
+<nav page-model="@ViewBag.steps.pagingData" page-action="Details" page-contoller="Insurance" item-id="@Model.id" search-string="@ViewData["searchString"]"></nav>

@@ -19,7 +19,7 @@ namespace Insurance.Controllers
         }
         #endregion
 
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int pageNumber, string searchString)
         {
             if (id == null)
             {
@@ -32,7 +32,8 @@ namespace Insurance.Controllers
             {
                 return NotFound();
             }
-            ViewBag.fields = this.repository.GetFieldsOfFieldSet(id);
+            ViewBag.fields = this.repository.GetFieldsOfFieldSet(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(fieldSet);
         }
         public IActionResult Create(int stepId, string returnUrl = null)

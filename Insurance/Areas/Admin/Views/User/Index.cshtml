@@ -1,4 +1,4 @@
-﻿@model List<user>
+﻿@model pagedResult<user>
 
 <div class="row">
     <h1 class="col-md-9 admin-box-title">لیست کاربران</h1>
@@ -9,12 +9,15 @@
 
 <div class="admin-box">
     <table class="table table-striped">
-        @foreach (var user in Model)
+        @{int r = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage;}
+
+        @foreach (var user in Model.items)
         {
+            r++;
             <tr>
                 <td>
                     <a asp-action="Details" asp-route-id="@user.Id">
-                        @user.fullName
+                        @r - @user.fullName
                     </a>
                 </td>
                 <td class="ltr">
@@ -36,3 +39,4 @@
 
     </table>
 </div>
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="User" search-string="@ViewData["searchString"]"></nav>

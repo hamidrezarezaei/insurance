@@ -14,7 +14,15 @@
 @Html.Partial("Details_partial", Model)
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست کلاس های دسته @Model.title</h1>
+    <h1 class="col-md-4 admin-box-title">لیست کلاس های دسته @Model.title</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
     <div class="col-md-3 op-buttns">
         <a btntype="Create" asp-controller="Category" asp-action="Create" asp-route-termId="@Model.id" asp-route-returnurl="/Admin/Term/Details/@Model.id">ایجاد کلاس جدید</a>
     </div>
@@ -24,8 +32,8 @@
     <table class="table table-striped">
 
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in ViewBag.categories)
+            @{int r = (ViewBag.categories.pagingData.currentPage - 1) * ViewBag.categories.pagingData.itemsPerPage;}
+            @foreach (var item in ViewBag.categories.items)
             {
                 r++;
 
@@ -44,5 +52,4 @@
         </tbody>
     </table>
 </div>
-
-
+<nav page-model="@ViewBag.categories.pagingData" page-action="Details" page-contoller="Term" item-id="@Model.id" search-string="@ViewData["searchString"]"></nav>

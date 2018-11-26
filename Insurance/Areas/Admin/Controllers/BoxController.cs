@@ -20,18 +20,6 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Index(int? id)
-        {
-            if (id == null)
-                return NotFound();
-            var boxes = this.repository.GetBoxesOfBoxCategory(id);
-            if (boxes == null)
-            {
-                return NotFound();
-            }
-            return View(boxes);
-        }
-
         public IActionResult Details(int? id)
         {
             if (id == null)

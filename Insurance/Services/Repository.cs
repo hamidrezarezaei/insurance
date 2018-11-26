@@ -28,6 +28,7 @@ namespace Insurance.Services
         private int siteId = 0;
         private readonly int allSiteId = 1;
         private int userId = 0;
+        private int pageSize = 10;
 
         public repository(
             context context,
@@ -55,6 +56,8 @@ namespace Insurance.Services
             {
                 this.httpContextAccessor.HttpContext.Response.Redirect("https://" + this.httpContextAccessor.HttpContext.Request.Host + this.httpContextAccessor.HttpContext.Request.Path, true);
             }
+            if (!string.IsNullOrEmpty(GetSetting("pageSize")))
+                this.pageSize = Int32.Parse(GetSetting("pageSize"));
         }
         #endregion
 
@@ -225,15 +228,31 @@ namespace Insurance.Services
 
 
         #region User
-        public List<user> GetUsers_ThisSite()
+        public pagedResult<user> GetUsers_ThisSite(int pageNumber, string searchString = "")
         {
-            var users = userManager.Users.Where(u =>
-                            u.siteId == this.siteId && !u.isDeleted).ToList();
-            foreach (var user in users)
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<user> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = userManager.Users.Where(u =>
+                                            u.siteId == this.siteId && !u.isDeleted);
+            else
+                query = userManager.Users.Where(u =>
+                            u.siteId == this.siteId && !u.isDeleted);
+
+            pagedResult<user> result = new pagedResult<user>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderByDescending(p => p.Id).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            foreach (var user in result.items)
             {
                 user.role = this.GetRole(user);
             }
-            return users;
+            return result;
         }
 
         public user GetUser(string userName)
@@ -320,6 +339,30 @@ namespace Insurance.Services
             var roles = roleManager.Roles.Where(r =>
                           r.siteId == this.siteId && !r.isDeleted).ToList();
             return roles;
+        }
+
+        public pagedResult<role> GetAllRoles_ThisSite(int pageNumber, string searchString = "")
+        {
+
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<role> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = roleManager.Roles.Where(r => r.Name.Contains(searchString)&&
+                                                r.siteId == this.siteId && !r.isDeleted);
+            else
+                query = roleManager.Roles.Where(r =>
+                          r.siteId == this.siteId && !r.isDeleted);
+
+            pagedResult<role> result = new pagedResult<role>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.Name).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public string GetRole(user user)
@@ -465,20 +508,38 @@ namespace Insurance.Services
                                              ToList();
             return orders;
         }
-        public List<order> GetOrdersInStatus_ThisSite(int? statusId)
+        public pagedResult<order> GetOrdersInStatus_ThisSite(int? statusId, int pageNumber, string searchString = "")
         {
-            var orders = this.context.orders.Where(o => o.orderStatusId == statusId &&
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<order> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.orders.Where(o => o.orderStatusId == statusId &&
                                           (o.siteId == this.siteId) && !o.isDeleted).
                                  Include(o => o.insurance).
                                  Include(o => o.orderStatus).
-                                 OrderByDescending(o => o.dateTime).
-                                 ToList();
+                                 OrderByDescending(o => o.dateTime);
+            else
+                query = context.orders.Where(o => o.orderStatusId == statusId &&
+                                          (o.siteId == this.siteId) && !o.isDeleted).
+                                 Include(o => o.insurance).
+                                 Include(o => o.orderStatus).
+                                 OrderByDescending(o => o.dateTime);
 
-            foreach (var order in orders)
+            pagedResult<order> result = new pagedResult<order>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+
+            foreach (var order in result.items)
             {
                 order.user = this.GetUser(order.userId);
             }
-            return orders;
+            return result;
         }
         public bool SetOrderBankReference(order order, string bankReference)
         {
@@ -565,13 +626,26 @@ namespace Insurance.Services
                                                                      ToList();
             return orderStatuses;
         }
-        public IEnumerable<orderStatus> GetOrderStatuses()
+        public pagedResult<orderStatus> GetOrderStatuses(int pageNumber, string searchString = "")
         {
-            var orderStatuses = context.orderStatuses.Where(os => (os.siteId == this.allSiteId || os.siteId == this.siteId) && !os.isDeleted).
-                                     OrderBy(os => os.orderIndex).
-                                     ToList();
-            return orderStatuses;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<orderStatus> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.orderStatuses.Where(os => os.title.Contains(searchString) &&
+                                                    (os.siteId == this.allSiteId || os.siteId == this.siteId) && !os.isDeleted);
+            else
+                query = context.orderStatuses.Where(os => (os.siteId == this.allSiteId || os.siteId == this.siteId) && !os.isDeleted);
+
+            pagedResult<orderStatus> result = new pagedResult<orderStatus>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
         public orderStatus GetOrderStatus(int? id)
         {
@@ -619,13 +693,26 @@ namespace Insurance.Services
             }
         }
 
-        public IEnumerable<setting> GetSettings()
+        public pagedResult<setting> GetSettings(int pageNumber, string searchString = "")
         {
-            var settings = context.settings.Where(s => (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).
-                                     OrderBy(s => s.orderIndex).
-                                     ToList();
-            return settings;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<setting> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.settings.Where(s => (s.title.Contains(searchString) || s.key.Contains(searchString)) &&
+                                    (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted);
+            else
+                query = context.settings.Where(s => (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted);
+
+            pagedResult<setting> result = new pagedResult<setting>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public setting GetSetting(int? id)
@@ -663,13 +750,26 @@ namespace Insurance.Services
             return res;
 
         }
-        public IEnumerable<insurance> GetInsurances()
+        public pagedResult<insurance> GetInsurances(int pageNumber, string searchString = "")
         {
-            var insurances = context.insurances.Where(i => (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted).
-                                     OrderBy(insurance => insurance.orderIndex).
-                                     ToList();
-            return insurances;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<insurance> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.insurances.Where(i => i.title.Contains(searchString) &&
+                                                    (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted);
+            else
+                query = context.insurances.Where(i => (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted);
+
+            pagedResult<insurance> result = new pagedResult<insurance>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
         public insurance GetInsurance(int? id)
         {
@@ -677,37 +777,31 @@ namespace Insurance.Services
                                                                 (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted);
             return insurance;
         }
-        //public insurance AddInsurance(insurance insurance, IFormFile image)
-        //{
-        //    this.UpdateEntity(insurance as baseClass);
-        //    this.context.Add(insurance);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<insurance>(image, insurance);
-        //    return insurance;
-        //}
 
-        //public insurance UpdateInsurance(insurance insurance, IFormFile image)
-        //{
-        //    this.UpdateEntity(insurance as baseClass);
-        //    this.context.Update(insurance);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<insurance>(image, insurance);
-        //    return insurance;
-        //}
-        //public void DeleteInsurance(insurance insurance)
-        //{
-        //    this.DeleteEntity(insurance as baseClass);
-        //}
         #endregion
 
         #region Step
-        public List<step> GetStepsOfInsurance(int? insuranceId)
+        public pagedResult<step> GetStepsOfInsurance(int? insuranceId, int pageNumber, string searchString = "")
         {
-            var steps = context.steps.Where(s => s.insuranceId == insuranceId &&
-                                (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted).
-                                OrderBy(s => s.number).
-                                ToList();
-            return steps;
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<step> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.steps.Where(s => s.insuranceId == insuranceId && s.title.Contains(searchString) &&
+                                (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted);
+            else
+                query = context.steps.Where(s => s.insuranceId == insuranceId &&
+                                (s.siteId == this.allSiteId || s.siteId == this.siteId) && !s.isDeleted);
+
+            pagedResult<step> result = new pagedResult<step>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public step GetStep(int? id)
@@ -717,26 +811,7 @@ namespace Insurance.Services
             return step;
         }
 
-        //public step AddStep(step step)
-        //{
-        //    this.UpdateEntity(step as baseClass);
-        //    this.context.Add(step);
-        //    this.context.SaveChanges();
-        //    return step;
-        //}
 
-        //public step UpdateStep(step step)
-        //{
-        //    this.UpdateEntity(step as baseClass);
-        //    this.context.Update(step);
-        //    this.context.SaveChanges();
-        //    return step;
-        //}
-
-        //public void DeleteStep(step step)
-        //{
-        //    this.DeleteEntity(step);
-        //}
 
         public step GetActiveStep(int insuranceId, int stepNumber)
         {
@@ -774,14 +849,29 @@ namespace Insurance.Services
         #endregion
 
         #region FieldSet
-        public List<fieldSet> GetFieldSetsOfStep(int? stepId)
+        public pagedResult<fieldSet> GetFieldSetsOfStep(int? stepId, int pageNumber, string searchString = "")
         {
-            var fieldSets = context.fieldSets.Where(fs => fs.stepId == stepId &&
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<fieldSet> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.fieldSets.Where(fs => fs.stepId == stepId && fs.title.Contains(searchString) &&
                                 (fs.siteId == this.allSiteId || fs.siteId == this.siteId) && !fs.isDeleted).
-                                Include(fs => fs.step).
-                                OrderBy(fs => fs.orderIndex).
-                                ToList();
-            return fieldSets;
+                                Include(fs => fs.step);
+            else
+                query = context.fieldSets.Where(fs => fs.stepId == stepId &&
+                                (fs.siteId == this.allSiteId || fs.siteId == this.siteId) && !fs.isDeleted).
+                                Include(fs => fs.step);
+
+            pagedResult<fieldSet> result = new pagedResult<fieldSet>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public fieldSet GetFieldSet(int? id)
@@ -791,37 +881,33 @@ namespace Insurance.Services
             return fieldSet;
         }
 
-        //public fieldSet AddFieldSet(fieldSet fieldSet)
-        //{
-        //    this.UpdateEntity(fieldSet as baseClass);
-        //    this.context.Add(fieldSet);
-        //    this.context.SaveChanges();
-        //    return fieldSet;
-        //}
 
-        //public fieldSet UpdateFieldSet(fieldSet fieldSet)
-        //{
-        //    this.UpdateEntity(fieldSet as baseClass);
-        //    this.context.Update(fieldSet);
-        //    this.context.SaveChanges();
-        //    return fieldSet;
-        //}
-
-        //public void DeleteFieldSet(fieldSet fieldSet)
-        //{
-        //    this.DeleteEntity(fieldSet as baseClass);
-        //}
         #endregion
 
         #region Field
-        public List<field> GetFieldsOfFieldSet(int? fieldSetId)
+        public pagedResult<field> GetFieldsOfFieldSet(int? fieldSetId, int pageNumber, string searchString = "")
         {
-            var fields = context.fields.Where(f => f.fieldSetId == fieldSetId &&
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<field> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.fields.Where(f => f.fieldSetId == fieldSetId && f.title.Contains(searchString) &&
                                               (f.siteId == this.allSiteId || f.siteId == this.siteId) && !f.isDeleted).
-                                    Include(f => f.fieldSet).
-                                    OrderBy(f => f.orderIndex).
-                                    ToList();
-            return fields;
+                                      Include(f => f.fieldSet);
+            else
+                query = context.fields.Where(f => f.fieldSetId == fieldSetId &&
+                                              (f.siteId == this.allSiteId || f.siteId == this.siteId) && !f.isDeleted).
+                                      Include(f => f.fieldSet);
+
+            pagedResult<field> result = new pagedResult<field>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public List<field> GetFieldsOfInsurance(int? insuranceId)
@@ -842,29 +928,6 @@ namespace Insurance.Services
                                                           (f.siteId == this.allSiteId || f.siteId == this.siteId) && !f.isDeleted);
             return field;
         }
-
-        //public field AddField(field field, IFormFile image)
-        //{
-        //    this.UpdateEntity(field as baseClass);
-        //    this.context.Add(field);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<field>(image, field);
-        //    return field;
-        //}
-
-        //public field UpdateField(field field, IFormFile image)
-        //{
-        //    this.UpdateEntity(field as baseClass);
-        //    this.context.Update(field);
-        //    this.context.SaveChanges();
-        //    this.SaveFile<field>(image, field);
-        //    return field;
-        //}
-
-        //public void DeleteField(field field)
-        //{
-        //    this.DeleteEntity(field as baseClass);
-        //}
         #endregion
 
         #region DataType 
@@ -876,6 +939,29 @@ namespace Insurance.Services
             return dataTypes;
 
         }
+
+        public pagedResult<dataType> GetDataTypes(int pageNumber, string searchString = "")
+        {
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<dataType> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.dataTypes.Where(i => i.title.Contains(searchString) &&
+                                                (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted);
+            else
+                query = context.dataTypes.Where(i => (i.siteId == this.allSiteId || i.siteId == this.siteId) && !i.isDeleted);
+
+            pagedResult<dataType> result = new pagedResult<dataType>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
+        }
+
 
         public dataType GetDataType(int? id)
         {
@@ -909,13 +995,27 @@ namespace Insurance.Services
         #endregion
 
         #region DataValue
-        public List<dataValue> GetDataValuesOfDataType(int? dataTypeId)
+        public pagedResult<dataValue> GetDataValuesOfDataType(int? dataTypeId, int pageNumber, string searchString = "")
         {
-            var dataValues = context.dataValues.Where(dv => dv.dataTypeId == dataTypeId &&
-                                (dv.siteId == this.allSiteId || dv.siteId == this.siteId) && !dv.isDeleted).
-                                OrderBy(dv => dv.orderIndex).
-                                ToList();
-            return dataValues;
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<dataValue> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.dataValues.Where(dv => dv.dataTypeId == dataTypeId && dv.title.Contains(searchString) &&
+                                (dv.siteId == this.allSiteId || dv.siteId == this.siteId) && !dv.isDeleted);
+            else
+                query = context.dataValues.Where(dv => dv.dataTypeId == dataTypeId &&
+                                (dv.siteId == this.allSiteId || dv.siteId == this.siteId) && !dv.isDeleted);
+
+            pagedResult<dataValue> result = new pagedResult<dataValue>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
         public List<dataValue> GetDataValuesOfFatherDataType(int? dataTypeId)
         {
@@ -980,13 +1080,26 @@ namespace Insurance.Services
         #endregion
 
         #region Term
-        public IEnumerable<term> GetTerms()
+        public pagedResult<term> GetTerms(int pageNumber, string searchString = "")
         {
-            var terms = context.terms.Where(t => (t.siteId == this.allSiteId || t.siteId == this.siteId) && !t.isDeleted).
-                                  OrderBy(t => t.orderIndex).
-                                  ToList();
-            return terms;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<term> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.terms.Where(t => t.title.Contains(searchString) &&
+                                            (t.siteId == this.allSiteId || t.siteId == this.siteId) && !t.isDeleted);
+            else
+                query = context.terms.Where(t => (t.siteId == this.allSiteId || t.siteId == this.siteId) && !t.isDeleted);
+
+            pagedResult<term> result = new pagedResult<term>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
         public List<term> GetTermsIncludeCategory(int dataTypeId)
         {
@@ -1070,11 +1183,27 @@ namespace Insurance.Services
         #endregion
 
         #region Category
-        public List<category> GetCategoriesOfTerm(int? termId)
+        public pagedResult<category> GetCategoriesOfTerm(int? termId, int pageNumber, string searchString = "")
         {
-            var categories = context.categories.Where(c => c.termId == termId &&
-                                (c.siteId == this.allSiteId || c.siteId == this.siteId) && !c.isDeleted).ToList();
-            return categories;
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<category> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.categories.Where(c => c.termId == termId && c.title.Contains(searchString) &&
+                                (c.siteId == this.allSiteId || c.siteId == this.siteId) && !c.isDeleted);
+            else
+                query = context.categories.Where(c => c.termId == termId &&
+                                (c.siteId == this.allSiteId || c.siteId == this.siteId) && !c.isDeleted);
+
+            pagedResult<category> result = new pagedResult<category>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public category GetCategory(int? id)
@@ -1084,37 +1213,32 @@ namespace Insurance.Services
             return category;
         }
 
-        //public category AddCategory(category category)
-        //{
-        //    this.UpdateEntity(category as baseClass);
-        //    this.context.Add(category);
-        //    this.context.SaveChanges();
-        //    return category;
-        //}
-
-        //public category UpdateCategory(category category)
-        //{
-        //    this.UpdateEntity(category as baseClass);
-        //    this.context.Update(category);
-        //    this.context.SaveChanges();
-        //    return category;
-        //}
-
-        //public void DeleteCategory(category category)
-        //{
-        //    this.DeleteEntity(category as baseClass);
-        //}
-
         #endregion
 
         #region Attribute
-        public List<attribute> GetAttributesOfCategory(int? categoryId)
+        public pagedResult<attribute> GetAttributesOfCategory(int? categoryId, int pageNumber, string searchString = "")
         {
-            var attributes = context.attributes.Where(a => a.categoryId == categoryId &&
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<attribute> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.attributes.Where(a => a.categoryId == categoryId && (a.title.Contains(searchString) || a.name.Contains(searchString)) &&
                                                        (a.siteId == this.allSiteId || a.siteId == this.siteId) && !a.isDeleted).
-                                            Include(a => a.category).
-                                            ToList();
-            return attributes;
+                                                       Include(a => a.category);
+            else
+                query = context.attributes.Where(a => a.categoryId == categoryId &&
+                                                       (a.siteId == this.allSiteId || a.siteId == this.siteId) && !a.isDeleted).
+                                                       Include(a => a.category);
+
+            pagedResult<attribute> result = new pagedResult<attribute>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public attribute GetAttribute(int? id)
@@ -1123,37 +1247,30 @@ namespace Insurance.Services
                                                                (a.siteId == this.allSiteId || a.siteId == this.siteId) && !a.isDeleted);
             return attribute;
         }
-
-        //public attribute AddAttribute(attribute attribute)
-        //{
-        //    this.UpdateEntity(attribute as baseClass);
-        //    this.context.Add(attribute);
-        //    this.context.SaveChanges();
-        //    return attribute;
-        //}
-
-        //public attribute UpdateAttribute(attribute attribute)
-        //{
-        //    this.UpdateEntity(attribute as baseClass);
-        //    this.context.Update(attribute);
-        //    this.context.SaveChanges();
-        //    return attribute;
-        //}
-
-        //public void DeleteAttribute(attribute attribute)
-        //{
-        //    this.DeleteEntity(attribute as baseClass);
-        //}
         #endregion
 
         #region Box
-        public List<box> GetBoxesOfBoxCategory(int? boxCategoryId)
+        public pagedResult<box> GetBoxesOfBoxCategory(int? boxCategoryId, int pageNumber, string searchString = "")
         {
-            var boxes = context.boxes.Where(b => b.boxCategoryId == boxCategoryId &&
-                                             (b.siteId == this.allSiteId || b.siteId == this.siteId) && !b.isDeleted).
-                                  //Include(b=>b.boxCategory).
-                                  ToList();
-            return boxes;
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<box> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.boxes.Where(b => b.boxCategoryId == boxCategoryId && b.title.Contains(searchString) &&
+                                             (b.siteId == this.allSiteId || b.siteId == this.siteId) && !b.isDeleted);
+            else
+                query = context.boxes.Where(b => b.boxCategoryId == boxCategoryId &&
+                                             (b.siteId == this.allSiteId || b.siteId == this.siteId) && !b.isDeleted);
+
+            pagedResult<box> result = new pagedResult<box>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(s => s.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public box GetBox(int? id)
@@ -1206,17 +1323,34 @@ namespace Insurance.Services
 
         }
 
-        public IEnumerable<boxCategory> GetBoxCategories_hierarchy()
+        public pagedResult<boxCategory> GetBoxCategories_hierarchy(int pageNumber, string searchString = "")
         {
-            var boxCategories = context.boxCategories.Where(bc => bc.father == null &&
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<boxCategory> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.boxCategories.Where(bc => bc.father == null && bc.title.Contains(searchString) &&
                                     (bc.siteId == this.allSiteId || bc.siteId == this.siteId) && !bc.isDeleted).
                                                    Include(bc => bc.childs).
                                                     ThenInclude(bc => bc.childs).
+                                                    ThenInclude(bc => bc.childs);
+            else
+                query = context.boxCategories.Where(bc => bc.father == null &&
+                                    (bc.siteId == this.allSiteId || bc.siteId == this.siteId) && !bc.isDeleted).
+                                                   Include(bc => bc.childs).
                                                     ThenInclude(bc => bc.childs).
-                                                  OrderBy(bc => bc.orderIndex).
-                                                  ToList();
+                                                    ThenInclude(bc => bc.childs);
 
-            foreach (var level1 in boxCategories)
+            pagedResult<boxCategory> result = new pagedResult<boxCategory>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+
+            foreach (var level1 in result.items)
             {
                 if (level1.childs != null && level1.childs.Count > 0)
                 {
@@ -1237,7 +1371,7 @@ namespace Insurance.Services
                     }
                 }
             }
-            return boxCategories;
+            return result;
         }
 
         public boxCategory GetBoxCategory(int? id)
@@ -1441,13 +1575,26 @@ namespace Insurance.Services
         #endregion
 
         #region Post
-        public IEnumerable<post> GetPosts()
+        public pagedResult<post> GetPosts(int pageNumber, string searchString = "")
         {
-            var posts = context.posts.Where(p => (p.siteId == this.allSiteId || p.siteId == this.siteId) && !p.isDeleted).
-                                     OrderBy(p => p.orderIndex).
-                                     ToList();
-            return posts;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<post> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.posts.Where(p => p.title.Contains(searchString) &&
+                                     (p.siteId == this.allSiteId || p.siteId == this.siteId) && !p.isDeleted);
+            else
+                query = context.posts.Where(p => (p.siteId == this.allSiteId || p.siteId == this.siteId) && !p.isDeleted);
+
+            pagedResult<post> result = new pagedResult<post>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public post GetPost(int? id)
@@ -1464,6 +1611,28 @@ namespace Insurance.Services
             var paymentTypes = this.context.paymentTypes.Where(pt => (pt.siteId == this.allSiteId || pt.siteId == this.siteId) && !pt.isDeleted).
                                                          OrderBy(pt => pt.orderIndex).ToList();
             return paymentTypes;
+        }
+
+        public pagedResult<paymentType> GetPaymentTypes(int pageNumber, string searchString = "")
+        {
+            if (pageNumber == 0)
+                pageNumber = 1;
+
+            IQueryable<paymentType> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.paymentTypes.Where(pt => pt.title.Contains(searchString) &&
+                                                    (pt.siteId == this.allSiteId || pt.siteId == this.siteId) && !pt.isDeleted);
+            else
+                query = context.paymentTypes.Where(pt => (pt.siteId == this.allSiteId || pt.siteId == this.siteId) && !pt.isDeleted);
+
+            pagedResult<paymentType> result = new pagedResult<paymentType>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
 
         public List<paymentType> GetAcitvePaymentTypes(int? uId)
@@ -1519,13 +1688,26 @@ namespace Insurance.Services
         #endregion
 
         #region Term
-        public IEnumerable<hook> GetHooks()
+        public pagedResult<hook> GetHooks(int pageNumber, string searchString = "")
         {
-            var hooks = context.hooks.Where(h => (h.siteId == this.allSiteId || h.siteId == this.siteId) && !h.isDeleted).
-                                  OrderBy(h => h.orderIndex).
-                                  ToList();
-            return hooks;
+            if (pageNumber == 0)
+                pageNumber = 1;
 
+            IQueryable<hook> query;
+            if (!String.IsNullOrEmpty(searchString))
+                query = context.hooks.Where(h => h.title.Contains(searchString) &&
+                                           (h.siteId == this.allSiteId || h.siteId == this.siteId) && !h.isDeleted);
+            else
+                query = context.hooks.Where(h => (h.siteId == this.allSiteId || h.siteId == this.siteId) && !h.isDeleted);
+
+            pagedResult<hook> result = new pagedResult<hook>();
+            result.pagingData.currentPage = pageNumber;
+            result.pagingData.itemsPerPage = pageSize;
+            result.pagingData.totalItems = query.Count();
+            result.items = query.OrderBy(p => p.orderIndex).
+                Skip((pageNumber - 1) * pageSize).Take(pageSize).
+                ToList();
+            return result;
         }
         public List<sms> GetActiveSmses(string hookName)
         {

@@ -1,16 +1,24 @@
-﻿@model IEnumerable<boxCategory>
+﻿@model pagedResult<boxCategory>
 
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست دسته های باکس</h1>
+    <h1 class="col-md-4 admin-box-title">لیست دسته های باکس</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
     <div class="col-md-3 op-buttns top">
-        <a btntype="Create"  asp-action="Create" asp-route-returnurl="/Admin/BoxCategory/Index">ایجاد دسته جدید</a>
+        <a btntype="Create" asp-action="Create" asp-route-returnurl="/Admin/BoxCategory/Index">ایجاد دسته جدید</a>
     </div>
 </div>
 <div class="admin-box">
     <table class="table table-striped">
         <tbody>
             @{int l1 = 0;}
-            @foreach (var level1 in Model)
+            @foreach (var level1 in Model.items)
             {
                 l1++;
                 <tr class="level1">
@@ -24,7 +32,7 @@
                         <a btntype="Delete" asp-action="Delete" asp-route-id="@level1.id" asp-route-returnurl="/Admin/BoxCategory/Index">حذف </a>
                     </td>
                 </tr>
-                int l2 = 0;
+                int l2 = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage; ;
                 @foreach (var level2 in level1.childs)
                 {
                     l2++;
@@ -76,3 +84,4 @@
         </tbody>
     </table>
 </div>
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="BoxCategory" search-string="@ViewData["searchString"]"></nav>

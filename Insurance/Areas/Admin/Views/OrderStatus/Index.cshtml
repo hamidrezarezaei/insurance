@@ -1,8 +1,16 @@
-﻿@model IEnumerable<orderStatus>
+﻿@model pagedResult<orderStatus>
 
 <div class="row">
-    <h1 class="col-md-8 admin-box-title">لیست وضعیت های سفارش</h1>
-    <div class="col-md-4 op-buttns top">
+    <h1 class="col-md-4 admin-box-title">لیست وضعیت های سفارش</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
+    <div class="col-md-3 op-buttns top">
         <a btntype="Create" asp-action="Create" asp-route-returnurl="/Admin/OrderStatus/Index">ایجاد وضعیت جدید</a>
     </div>
 </div>
@@ -10,8 +18,8 @@
 <div class="admin-box">
     <table class="table  table-striped">
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in Model)
+            @{int r = (Model.pagingData.currentPage - 1) * Model.pagingData.itemsPerPage;}
+            @foreach (var item in Model.items)
             {
                 r++;
                 <tr>
@@ -30,3 +38,5 @@
         </tbody>
     </table>
 </div>
+
+<nav page-model="@Model.pagingData" page-action="index" page-contoller="OrderStatus" search-string="@ViewData["searchString"]"></nav>

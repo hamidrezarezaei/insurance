@@ -1,5 +1,4 @@
-﻿using DAL;
-using Entities;
+﻿using Entities;
 using Insurance.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,12 +19,15 @@ namespace Insurance.Areas.Admin.Controllers
             this.repository = repository;
         }
         #endregion
-        public IActionResult Index()
+
+        public IActionResult Index(int pageNumber, string searchString)
         {
-            var boxCategories = this.repository.GetBoxCategories_hierarchy();
+            var boxCategories = this.repository.GetBoxCategories_hierarchy(pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(boxCategories);
         }
-        public IActionResult Details(int? id)
+
+        public IActionResult Details(int? id, int pageNumber, string searchString)
         {
             if (id == null)
             {
@@ -38,7 +40,8 @@ namespace Insurance.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ViewBag.boxes = this.repository.GetBoxesOfBoxCategory(id);
+            ViewBag.boxes = this.repository.GetBoxesOfBoxCategory(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(boxCategory);
         }
 

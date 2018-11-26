@@ -19,12 +19,13 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber, string searchString)
         {
-            var terms = this.repository.GetTerms();
+            var terms = this.repository.GetTerms(pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(terms);
         }
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, int pageNumber, string searchString)
         {
             if (id == null)
             {
@@ -36,7 +37,8 @@ namespace Insurance.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewBag.categories = this.repository.GetCategoriesOfTerm(id);
+            ViewBag.categories = this.repository.GetCategoriesOfTerm(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(term);
         }
         public IActionResult Create(string returnUrl = null)

@@ -22,9 +22,10 @@ namespace Insurance.Areas.Admin.Controllers
             this.repository = repository;
         }
         #endregion
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber, string searchString)
         {
-            var paymentTypes = this.repository.GetPaymentTypes();
+            var paymentTypes = this.repository.GetPaymentTypes(pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(paymentTypes);
         }
 

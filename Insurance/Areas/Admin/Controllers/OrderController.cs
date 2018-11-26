@@ -19,13 +19,14 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Index(int? id)
+        public IActionResult Index(int? id, int pageNumber, string searchString)
         {
             ViewBag.orderStatuses = this.repository.GetActiveOrderStatuses();
             if (id == null)
                 id = (int)orderStatuses.payed;
             ViewBag.orderStatusId = id;
-            var orders = this.repository.GetOrdersInStatus_ThisSite(id);
+            var orders = this.repository.GetOrdersInStatus_ThisSite(id, pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(orders);
         }
         public IActionResult Details(int? id)

@@ -15,17 +15,26 @@
 
 @Html.Partial("Details_partial", Model)
 <div class="row">
-    <h1 class="col-md-9 admin-box-title">لیست خاصیت های کلاس @Model.title</h1>
+    <h1 class="col-md-4 admin-box-title">لیست خاصیت های کلاس @Model.title</h1>
+    <div class="col-md-5 admin-box-title">
+        <form>
+            <p>
+                فیلتر: <input type="text" value="@ViewData["searchString"]" name="SearchString">
+                <input type="submit" value="اعمال" />
+            </p>
+        </form>
+    </div>
+
     <div class="col-md-3 op-buttns">
-        <a btntype="Create" asp-controller="Attribute" asp-action="Create" asp-route-categoryId="@Model.id"  asp-route-returnurl="/Admin/Category/Details/@Model.id">ایجاد خاصیت جدید</a>
+        <a btntype="Create" asp-controller="Attribute" asp-action="Create" asp-route-categoryId="@Model.id" asp-route-returnurl="/Admin/Category/Details/@Model.id">ایجاد خاصیت جدید</a>
     </div>
 </div>
 
 <div class="admin-box">
     <table class="table table-striped">
         <tbody>
-            @{int r = 0;}
-            @foreach (var item in ViewBag.attributes)
+            @{int r = (ViewBag.attributes.pagingData.currentPage - 1) * ViewBag.attributes.pagingData.itemsPerPage;}
+            @foreach (var item in ViewBag.attributes.items)
             {
                 r++;
 
@@ -45,3 +54,4 @@
     </table>
 </div>
 
+<nav page-model="@ViewBag.attributes.pagingData" page-action="Details" page-contoller="Category" item-id="@Model.id" search-string="@ViewData["searchString"]"></nav>

@@ -21,9 +21,10 @@ namespace Insurance.Areas.Admin.Controllers
         }
         #endregion
 
-        public IActionResult Index()
+        public IActionResult Index(int pageNumber, string searchString)
         {
-            var users = this.repository.GetUsers_ThisSite();
+            var users = this.repository.GetUsers_ThisSite(pageNumber, searchString);
+            ViewData["searchString"] = searchString;
             return View(users);
         }
         public IActionResult Details(int? id)
