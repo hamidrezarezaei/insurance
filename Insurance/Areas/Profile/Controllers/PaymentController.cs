@@ -68,14 +68,14 @@ namespace Insurance.Areas.Profile.Controllers
                 this.repository.SetOrderBankReference(order, SaleReferenceId);
                 this.repository.ChangeOrderStatus(order, (int)orderStatuses.payed);
 
-                try
-                {
-                    this.mellatService.SettleRequest(order);
-                }
-                catch (Exception ex)
-                {
-                    //AddMessage(ex.Message, "Info");
-                }
+                //try
+                //{
+                //    this.mellatService.SettleRequest(order);
+                //}
+                //catch (Exception ex)
+                //{
+                //    //AddMessage(ex.Message, "Info");
+                //}
                 this.hookManager.HookFired("orderCompleted", order.user, order);
                 this.hookManager.HookFired("paymentCompleted", order.user, order);
                 return View("Completed",order);

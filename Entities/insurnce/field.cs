@@ -66,6 +66,11 @@ namespace Entities
                 return "";
             }
         }
+
+        [Display(Name = "راهنما")]
+        [DataType(DataType.MultilineText)]
+        public string tooltip { get; set; }
+
         [Display(Name = "فیلدست")]
         public int fieldSetId { get; set; }
         [Display(Name = "فیلدست")]
@@ -111,7 +116,7 @@ namespace Entities
         public string showIf { get; set; }
         public bool isShowField { get; set; }
         public string formula { get; set; }
-
+        public string tooltip { get; set; }
     }
 
 }

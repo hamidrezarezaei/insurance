@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "154cfa31fe15d8671e43"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "acedc89269f4db1627da"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -21048,7 +21048,7 @@ var authService = (function () {
         this.isWaiting = true;
         this.http.get(this.baseUrl + 'api/User/GetUser').subscribe(function (result) {
             _this.user = result.json();
-            console.log(_this.user);
+            //console.log(this.user)
             _this.isWaiting = false;
         }, function (error) { return console.error(error); });
     };
@@ -21057,14 +21057,14 @@ var authService = (function () {
         var _this = this;
         this.user.actualUserName = actualUserName;
         this.user.passWord = passWord;
-        console.log(this.user);
+        //console.log(this.user);
         this.isWaiting = true;
         var formData = new FormData();
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-type': 'application/json' });
         this.http.post(this.baseUrl + "api/User/Login/", this.user, new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers }))
             .subscribe(function (result) {
             _this.user = result.json();
-            console.log(_this.user);
+            //console.log(this.user)
             _this.isWaiting = false;
         });
     };
@@ -21082,14 +21082,14 @@ var authService = (function () {
         this.user.email = email;
         this.user.actualUserName = actualUserName;
         this.user.passWord = passWord;
-        console.log(this.user);
+        //console.log(this.user);
         var formData = new FormData();
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-type': 'application/json' });
         this.isWaiting = true;
         this.http.post(this.baseUrl + "api/User/Register/", this.user, new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers }))
             .subscribe(function (result) {
             _this.user = result.json();
-            console.log(_this.user);
+            //console.log(this.user)
             _this.isWaiting = false;
         });
     };
@@ -29838,15 +29838,104 @@ var insuranceService = (function () {
         //console.log('insuranceserviceconstructor');
         this.fetchInsurances();
     }
+    //-----------------------------------------------------------------------------
+    //not used
+    //addOrder(insurance: any) {
+    //    //console.log("addOrder start");
+    //    const headers = new Headers({ 'Content-type': 'application/json' });
+    //    this.isWaiting = true;
+    //    let minInsurance = this.minifyInsurance(insurance);
+    //    this.http.post(this.baseUrl + "api/Order/AddOrder/", minInsurance, new RequestOptions({ headers: headers }))
+    //        .subscribe(result => {
+    //            let orderId = +result.text();
+    //            if (orderId == -1) {
+    //                console.log("خطا در ثبت سفارش");
+    //            }
+    //            else if (this.fileCount(insurance.name) > 0) {
+    //                this.uploadOrderFiles(orderId, insurance.name);
+    //            }
+    //            else {
+    //                window.location.href = '/profile/Payment/Index/' + orderId;
+    //            }
+    //        });
+    //}
+    //-----------------------------------------------------------------------------
+    insuranceService.prototype.processOrder = function (insurance) {
+        var _this = this;
+        console.log("processOrder start");
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-type': 'application/json' });
+        this.isWaiting = true;
+        var minInsurance = this.minifyInsurance(insurance);
+        console.log("minified");
+        this.http.post(this.baseUrl + "api/Order/ProcessOrder/", minInsurance, new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers }))
+            .subscribe(function (result) {
+            var orderId = +result.text();
+            insurance.orderId = orderId;
+            console.log("order - send recive - orderid > " + orderId);
+            if (orderId == -1) {
+                console.log("خطا در ثبت سفارش");
+            }
+            else if (insurance.currentStep > insurance.stepCount) {
+                window.location.href = '/profile/Payment/Index/' + orderId;
+                return;
+            }
+            _this.isWaiting = false;
+        });
+    };
+    //-----------------------------------------------------------------------------
+    //not used
+    //uploadOrderFiles(orderId: number, insuranceName: string) {
+    //    let formData: FormData = new FormData();
+    //    //console.log(insuranceName);
+    //    this.isWaiting = true;
+    //    for (let i = 0; i < this.files.length; i++) {
+    //        if (this.files[i].insuranceName == insuranceName)
+    //            formData.append(orderId + "@" + this.files[i].fieldName, this.files[i].file);
+    //    }
+    //    this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
+    //        .subscribe(result => {
+    //            let orderId = +result.text();
+    //            if (orderId == -1) {
+    //                this.isWaiting = false;
+    //                console.log("خطا در آپلود فایل");
+    //            }
+    //            else {
+    //                console.log("سفارش با موفقیت ثبت شد کد پرداخت");
+    //                window.location.href = '/profile/Payment/Index/' + orderId;
+    //            }
+    //        });
+    //}
+    //-----------------------------------------------------------------------------
+    insuranceService.prototype.uploadOrderFile = function (insuranceName, fieldName, file) {
+        var _this = this;
+        var formData = new FormData();
+        this.isWaiting = true;
+        var insurance = this.findInsurance(insuranceName);
+        var orderId = insurance.orderId;
+        console.log("uploadFile orderId > " + orderId);
+        formData.append(orderId + "@" + fieldName, file);
+        this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
+            .subscribe(function (result) {
+            var orderId = +result.text();
+            if (orderId == -1) {
+                _this.isWaiting = false;
+                console.log("خطا در آپلود فایل");
+            }
+            else {
+                _this.isWaiting = false;
+            }
+        });
+    };
     // اگر فایل بود آن را آپدیت کن در غیر اینصورت فایل را اضافه می کند
     insuranceService.prototype.addFile = function (insuranceName, fieldName, file) {
+        //ارسال برای سرور
+        this.uploadOrderFile(insuranceName, fieldName, file);
         if (this.isFileExist(insuranceName, fieldName)) {
             this.updateFile(insuranceName, fieldName, file);
         }
         else {
             this.pushFile(insuranceName, fieldName, file);
         }
-        //console.log(this.files);
     };
     //فایل را به آرایه اضافه می کند
     insuranceService.prototype.pushFile = function (insuranceName, fieldName, file) {
@@ -29920,21 +30009,21 @@ var insuranceService = (function () {
             //this.currentInsurance = this.insurances[0];
             _this.fetchStep(_this.currentInsurance, 1);
             _this.isWaiting = false;
-            //console.log(this.insurances)
         }, function (error) { return console.error(error); });
     };
     //-----------------------------------------------------------------------------
     insuranceService.prototype.stepChange = function (insurance) {
-        //اگر به آخرین مرحله بوده که باید بریم سراغ ثبت سفارش
-        if (insurance.currentStep > insurance.stepCount) {
-            this.addOrder(insurance);
-            return;
-        }
+        //اگر مرحله آخر بوده است
+        if (insurance.currentStep > insurance.stepCount)
+            this.processOrder(insurance);
         //اگر استپی که میخواهیم نیست آن را لود می کنیم
         for (var i = 0; i < insurance.steps.length; i++) {
             var step = insurance.steps[i];
-            if (step.number == insurance.currentStep)
+            if (step.number == insurance.currentStep) {
+                //با هر تغییر در مراحل یک بار اطلاعات به سرور فرستاده می شود
+                this.processOrder(insurance);
                 return;
+            }
         }
         this.fetchStep(insurance, insurance.currentStep);
     };
@@ -29953,6 +30042,9 @@ var insuranceService = (function () {
                 insurance.steps.push(step);
             //console.log(step)
             _this.isWaiting = false;
+            //اطلاعات به سرور فرستاده شود
+            if (stepNumber > 1)
+                _this.processOrder(insurance);
         }, function (error) { return console.error(error); });
     };
     //-----------------------------------------------------------------------------
@@ -30249,8 +30341,11 @@ var insuranceService = (function () {
     insuranceService.prototype.minifyInsurance = function (insurance) {
         var resInsurance = {
             id: insurance.id,
-            orderIndex: insurance.orderIndex,
+            orderId: insurance.orderId,
+            //orderIndex: insurance.orderIndex,
             price: insurance.price,
+            //stepCount: insurance.stepCount,
+            //currentStep: insurance.currentStep,
             steps: Array()
         };
         for (var i = 0; i < insurance.steps.length; i++) {
@@ -30284,49 +30379,6 @@ var insuranceService = (function () {
             resInsurance.steps.push(resStep);
         }
         return resInsurance;
-    };
-    //-----------------------------------------------------------------------------
-    insuranceService.prototype.addOrder = function (insurance) {
-        var _this = this;
-        //console.log("addOrder start");
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-type': 'application/json' });
-        this.isWaiting = true;
-        var minInsurance = this.minifyInsurance(insurance);
-        this.http.post(this.baseUrl + "api/Order/AddOrder/", minInsurance, new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers }))
-            .subscribe(function (result) {
-            var orderId = +result.text();
-            if (orderId == -1) {
-                console.log("خطا در ثبت سفارش");
-            }
-            else if (_this.fileCount(insurance.name) > 0) {
-                _this.uploadOrderFiles(orderId, insurance.name);
-            }
-            else {
-                window.location.href = '/profile/Payment/Index/' + orderId;
-            }
-        });
-    };
-    insuranceService.prototype.uploadOrderFiles = function (orderId, insuranceName) {
-        var _this = this;
-        var formData = new FormData();
-        //console.log(insuranceName);
-        this.isWaiting = true;
-        for (var i = 0; i < this.files.length; i++) {
-            if (this.files[i].insuranceName == insuranceName)
-                formData.append(orderId + "@" + this.files[i].fieldName, this.files[i].file);
-        }
-        this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
-            .subscribe(function (result) {
-            var orderId = +result.text();
-            if (orderId == -1) {
-                _this.isWaiting = false;
-                console.log("خطا در آپلود فایل");
-            }
-            else {
-                console.log("سفارش با موفقیت ثبت شد کد پرداخت");
-                window.location.href = '/profile/Payment/Index/' + orderId;
-            }
-        });
     };
     insuranceService = __decorate([
         __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* Injectable */])(),
@@ -88408,6 +88460,9 @@ var fieldComponent = (function () {
             this.showImage();
         //console.log("oninit");
         //console.log(this.field.dataValues);
+        if (this.field && this.field.type == "date") {
+            this.field.value = __WEBPACK_IMPORTED_MODULE_1_jalali_moment__();
+        }
         if (this.field && this.field.type == "comboBox" && !this.field.dataValues && !this.field.fatherid)
             this._insuranceService.fetchDataValues(this.field);
         else if (this.field && this.field.type == "paymentType" && !this.field.dataValues)
@@ -89772,7 +89827,7 @@ module.exports = XmlEntities;
 /* 205 */
 /***/ (function(module, exports) {
 
-module.exports = "<insurance *ngIf=\"_insuranceService.currentInsurance\" [insurances]=\"_insuranceService.insurances\" [currentInsurance]=\"_insuranceService.currentInsurance\" class=\"col-12\" ></insurance>\r\n\r\n";
+module.exports = "\r\n<insurance *ngIf=\"_insuranceService.currentInsurance\" [insurances]=\"_insuranceService.insurances\" [currentInsurance]=\"_insuranceService.currentInsurance\" class=\"col-12\" ></insurance>\r\n\r\n";
 
 /***/ }),
 /* 206 */
@@ -89784,19 +89839,19 @@ module.exports = "<img *ngIf=\"!insurance.steps\" src=\"/dana/image/theme/loadin
 /* 207 */
 /***/ (function(module, exports) {
 
-module.exports = "<div  class=\"field-set col-12\">\r\n    <span *ngIf=\"fieldSet.title\" class=\"field-set-legend\">{{fieldSet.title}}</span>\r\n    <div class=\"row no-gutters\">\r\n        <ng-container *ngFor=\"let field of fieldSet.fields\">\r\n            <div *ngIf=\"field.beforeCssClass\" class=\"{{field.beforeCssClass}}\"></div>\r\n            <field  *ngIf=\"field.isShowField != false\" class=\"{{field.fieldCssClass}} {{field.name}}\"  [insurance]=\"insurance\" [step]=\"step\" [fieldSet]=\"fieldSet\" [field]=\"field\" (valueChanged)=\"fieldValueChange($event)\"></field>\r\n        </ng-container>\r\n\r\n    </div>\r\n</div>";
+module.exports = "<div  class=\"field-set col-12\">\r\n    <span *ngIf=\"fieldSet.title\" class=\"field-set-legend\">{{fieldSet.title}}</span>\r\n    <div id=\"{{fieldSet.name}}\" class=\"row no-gutters\">\r\n        <ng-container *ngFor=\"let field of fieldSet.fields\">\r\n            <div *ngIf=\"field.beforeCssClass\" class=\"{{field.beforeCssClass}}\"></div>\r\n            <field  *ngIf=\"field.isShowField != false\" class=\"{{field.fieldCssClass}} {{field.name}}\"  [insurance]=\"insurance\" [step]=\"step\" [fieldSet]=\"fieldSet\" [field]=\"field\" (valueChanged)=\"fieldValueChange($event)\"></field>\r\n        </ng-container>\r\n\r\n    </div>\r\n</div>";
 
 /***/ }),
 /* 208 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row no-gutters\">\r\n    <ng-container *ngIf=\"field.type=='price'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"price-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{field.value | frenchDecimal:locale}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n  \r\n    <ng-container *ngIf=\"field.type=='calc'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"calc-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{field.value}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n    \r\n    <ng-container *ngIf=\"field.type=='label'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"label-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{_insuranceService.textById(insurance.name,field.fatherid)}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='html'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title html-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"html-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <div class=\"control\" [innerHTML]=\"field.value\"></div>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='image'\">\r\n        <div class=\"image-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img [src]=\"imageFile\" (click)=\"openFileDialog()\">\r\n                <!--<canvas #imageCanvas (click)=\"openFileDialog()\"></canvas>-->\r\n                <input type=\"file\" (change)=\"valueChange($event)\" accept=\"image/x-png,image/jpeg\" #fileInput id=\"{{field.name}}\" style=\"display: none;\" />\r\n                <button (click)=\"openFileDialog()\" [ngClass]=\"{'require': field.isRequire}\" class=\"image-button\">{{field.title}}</button>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='inputImage'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textBox-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div class=\"inputImage-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <input type=\"file\" (change)=\"valueChange($event)\" accept=\"image/x-png,image/jpeg\" #inputImage id=\"{{field.name}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='button'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title button-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n\r\n        <div id=\"{{field.name}}\" class=\"button-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <button class=\"control\"> {{field.title}} </button>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='number'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title number-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"number-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <input type=\"text\" [(ngModel)]=\"field.value\" value=\"{{field.value  | frenchDecimal}}\" (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='textBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textBox-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"textBox-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <input type=\"text\" [(ngModel)]=\"field.value\" (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='checkBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title checkBox-type {{field.elementCssClass}} {{field.name}}\"><input type=\"checkbox\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" id=\"{{field.name}}\" /><label for=\"{{field.name}}\">{{field.title}}</label></div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='acceptCheckBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title  acceptCheckBox-type {{field.elementCssClass}}\"><input type=\"checkbox\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" id=\"{{field.name}}\" /><label for=\"{{field.name}}\">{{field.title}}</label></div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='date'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title date-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"date-type  {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <div class=\"date-container control\">\r\n                    <dp-date-picker dir=\"rtl\" [(ngModel)]=\"field.value\" [config]=\"datePickerConfig\" (onChange)=\"valueChange($event)\" mode=\"day\" theme=\"dp-material\" placeholder=\"{{field.placeHolder}}\"> </dp-date-picker>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='textArea'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textArea-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"textArea-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <textarea [(ngModel)]='field.value' (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\"></textarea>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='radio'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title radio-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <label *ngFor=\"let dataValue of field.dataValues\">\r\n            <input type=\"radio\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" class=\"{{field.elementCssClass}}\">\r\n            {{dataValue.title}}\r\n        </label>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='radioButton'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title radioButton-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <label *ngFor=\"let dataValue of field.dataValues\" [ngClass]=\"{'btn-success': dataValue.id == field.value}\" class=\"field-label {{field.elementCssClass}}\">\r\n            <input type=\"radio\" style=\"display:none;\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\">\r\n            {{dataValue.title}}\r\n        </label>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='comboBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title comboBox-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"comboBox-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"!field.isShowLoading&&field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <img *ngIf=\"field.isShowLoading\" class=\"icon\" src=\"/common/image/loading32.gif\" />\r\n\r\n                <ng-select2 [(data)]=\"field.dataValues\"\r\n                            [placeholder]=\"field.placeHolder\"\r\n                            [(ngModel)]=\"field.value\"\r\n                            (valueChanged)=\"valueChange($event)\"\r\n                            dir=\"rtl\"\r\n                            class=\"control\">\r\n                </ng-select2>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='year'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title year-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"year-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n\r\n                <ng-select2 [(data)]=\"years\"\r\n                            [placeholder]=\"field.placeHolder\"\r\n                            [(ngModel)]=\"field.value\"\r\n                            (valueChanged)=\"valueChange($event)\"\r\n                            dir=\"rtl\"\r\n                            class=\"control\">\r\n                </ng-select2>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='paymentType'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title paymentType-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <img *ngIf=\"field.isShowLoading\" class=\"icon\" src=\"/common/image/loading32.gif\" />\r\n\r\n        <div *ngFor=\"let dataValue of field.dataValues\" class=\"paymentType-type  {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n\r\n                <label class=\"btn control dv-{{dataValue.id}}\" ngClass=\"{{dataValue.id == field.value ? 'btn-success': 'btn-default'}}\">\r\n                    <input type=\"radio\" style=\"display:none;\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\">\r\n                    {{dataValue.title}}\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <div *ngIf=\"field.afterCssClass\" class=\"{{field.afterCssClass}}\"></div>\r\n</div>";
+module.exports = "<div class=\"row no-gutters\"  >\r\n    <ng-container *ngIf=\"field.type=='price'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"price-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{field.value | frenchDecimal:locale}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='calc'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"calc-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{field.value}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='label'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title label-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n        <div id=\"{{field.name}}\" class=\"label-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <label class=\"control\">{{_insuranceService.textById(insurance.name,field.fatherid)}}</label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='html'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title html-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"html-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <div class=\"control\" [innerHTML]=\"field.value\"></div>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='image'\">\r\n        <div class=\"image-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img [src]=\"imageFile\" (click)=\"openFileDialog()\">\r\n                <!--<canvas #imageCanvas (click)=\"openFileDialog()\"></canvas>-->\r\n                <input type=\"file\" (change)=\"valueChange($event)\" accept=\"image/x-png,image/jpeg\" #fileInput id=\"{{field.name}}\" style=\"display: none;\" />\r\n                <button (click)=\"openFileDialog()\" [ngClass]=\"{'require': field.isRequire}\" class=\"image-button\">\r\n                    {{field.title}}\r\n                </button>\r\n                <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='inputImage'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textBox-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <div class=\"inputImage-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <input type=\"file\" (change)=\"valueChange($event)\" accept=\"image/x-png,image/jpeg\" #inputImage id=\"{{field.name}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='button'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title button-type {{field.labelCssClass}}\">{{field.title}}:</div>\r\n\r\n        <div id=\"{{field.name}}\" class=\"button-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <button class=\"control\"> {{field.title}} </button>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='number'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title number-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"number-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <input type=\"text\" [(ngModel)]=\"field.value\" value=\"{{field.value  | frenchDecimal}}\" (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='textBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textBox-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"textBox-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <input type=\"text\" [(ngModel)]=\"field.value\" (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\" />\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='checkBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title checkBox-type {{field.elementCssClass}} {{field.name}}\">\r\n            <input type=\"checkbox\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" id=\"{{field.name}}\" />\r\n            <label for=\"{{field.name}}\">\r\n                {{field.title}}\r\n                <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n            </label>\r\n        </div>\r\n\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='acceptCheckBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title  acceptCheckBox-type {{field.elementCssClass}}\">\r\n            <input type=\"checkbox\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" id=\"{{field.name}}\" />\r\n            <label for=\"{{field.name}}\">\r\n                {{field.title}}\r\n            </label>\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='date'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title date-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"date-type  {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <div class=\"date-container control\">\r\n                    <dp-date-picker dir=\"rtl\" [(ngModel)]=\"field.value\" [config]=\"datePickerConfig\" (onChange)=\"valueChange($event)\" mode=\"day\" theme=\"dp-material\" placeholder=\"{{field.placeHolder}}\"> </dp-date-picker>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='textArea'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title textArea-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"textArea-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <textarea [(ngModel)]='field.value' (input)=\"valueChange($event)\" class=\"control\" placeholder=\"{{field.placeHolder}}\"></textarea>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='radio'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title radio-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <label *ngFor=\"let dataValue of field.dataValues\">\r\n            <input type=\"radio\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\" class=\"{{field.elementCssClass}}\">\r\n            {{dataValue.title}}\r\n        </label>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='radioButton'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title radioButton-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <label *ngFor=\"let dataValue of field.dataValues\" [ngClass]=\"{'btn-success': dataValue.id == field.value}\" class=\"field-label {{field.elementCssClass}}\">\r\n            <input type=\"radio\" style=\"display:none;\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\">\r\n            {{dataValue.title}}\r\n        </label>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='comboBox'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title comboBox-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"comboBox-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"!field.isShowLoading&&field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n                <img *ngIf=\"field.isShowLoading\" class=\"icon\" src=\"/common/image/loading32.gif\" />\r\n\r\n                <ng-select2 [(data)]=\"field.dataValues\"\r\n                            [placeholder]=\"field.placeHolder\"\r\n                            [(ngModel)]=\"field.value\"\r\n                            (valueChanged)=\"valueChange($event)\"\r\n                            dir=\"rtl\"\r\n                            class=\"control\">\r\n                </ng-select2>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='year'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title year-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <div id=\"{{field.name}}\" class=\"year-type {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n                <img *ngIf=\"field.image\" class=\"icon\" src=\"{{field.image}}\" />\r\n\r\n                <ng-select2 [(data)]=\"years\"\r\n                            [placeholder]=\"field.placeHolder\"\r\n                            [(ngModel)]=\"field.value\"\r\n                            (valueChanged)=\"valueChange($event)\"\r\n                            dir=\"rtl\"\r\n                            class=\"control\">\r\n                </ng-select2>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <ng-container *ngIf=\"field.type=='paymentType'\">\r\n        <div *ngIf=\"!field.isHideLabel\" class=\"field-title paymentType-type {{field.labelCssClass}}\">\r\n            {{field.title}}:\r\n            <button *ngIf=\"field.tooltip && field.tooltip.length>0\" type=\"button\" class=\"new-tooltip\" data-toggle=\"tooltip\" data-html=\"true\" data-placement=\"left\" title=\"{{field.tooltip}}\">?</button>\r\n        </div>\r\n        <img *ngIf=\"field.isShowLoading\" class=\"icon\" src=\"/common/image/loading32.gif\" />\r\n\r\n        <div *ngFor=\"let dataValue of field.dataValues\" class=\"paymentType-type  {{field.elementCssClass}}\">\r\n            <div class=\"field-container\">\r\n\r\n                <label class=\"btn control dv-{{dataValue.id}}\" ngClass=\"{{dataValue.id == field.value ? 'btn-success': 'btn-default'}}\">\r\n                    <input type=\"radio\" style=\"display:none;\" name=\"field.name\" value=\"{{dataValue.id}}\" [(ngModel)]=\"field.value\" (change)=\"valueChange($event)\">\r\n                    {{dataValue.title}}\r\n                </label>\r\n            </div>\r\n        </div>\r\n    </ng-container>\r\n\r\n    <div *ngIf=\"field.afterCssClass\" class=\"{{field.afterCssClass}}\"></div>\r\n</div>";
 
 /***/ }),
 /* 209 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row no-gutters insurance\">\r\n    <ng-container *ngIf=\"_insuranceService.isWaiting||_authService.isWaiting\">\r\n        <div id=\"loadingContainer\">\r\n            <div class=\"loading\"></div>\r\n        </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!currentInsurance.tabLocation || currentInsurance.tabLocation == 'top' || currentInsurance.tabLocation == ''\">\r\n        <tab class=\"col-12\" *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'right'\">\r\n        <tab *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <div class=\"col aInsurance-container\">\r\n        <div class=\"row no-gutters\">\r\n            <stepNavigation class=\"col-12\" *ngIf=\"currentInsurance.currentStep>1\" [insurance]=\"currentInsurance\" (stepChanged)=\"stepChange($event)\"></stepNavigation>\r\n            <aInsurance class=\"col-12\" [insurance]=\"currentInsurance\" id=\"{{currentInsurance.name}}\" (stepChanged)=\"stepChange($event)\"></aInsurance>\r\n        </div>\r\n    </div>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'left'\">\r\n        <tab  *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'bottom'\">\r\n        <tab class=\"col-12\" *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n\r\n</div>";
+module.exports = "<div class=\"row no-gutters insurance\" onmouseover=\"initToolTip()\">\r\n    <ng-container *ngIf=\"_insuranceService.isWaiting||_authService.isWaiting\">\r\n        <div id=\"loadingContainer\">\r\n            <div class=\"loading\"></div>\r\n        </div>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"!currentInsurance.tabLocation || currentInsurance.tabLocation == 'top' || currentInsurance.tabLocation == ''\">\r\n        <tab class=\"col-12\" *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'right'\">\r\n        <tab *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <div class=\"col aInsurance-container\">\r\n        <div class=\"row no-gutters\">\r\n            <stepNavigation class=\"col-12\" *ngIf=\"currentInsurance.currentStep>1\" [insurance]=\"currentInsurance\" (stepChanged)=\"stepChange($event)\"></stepNavigation>\r\n            <aInsurance class=\"col-12\" [insurance]=\"currentInsurance\" id=\"{{currentInsurance.name}}\" (stepChanged)=\"stepChange($event)\"></aInsurance>\r\n        </div>\r\n    </div>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'left'\">\r\n        <tab *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n    <ng-container *ngIf=\"currentInsurance.tabLocation == 'bottom'\">\r\n        <tab class=\"col-12\" *ngIf=\"currentInsurance.currentStep==1\" [insurances]=\"insurances\" [currentInsurance]=\"currentInsurance\" (tabChanged)=\"tabChange($event)\"></tab>\r\n    </ng-container>\r\n\r\n</div>";
 
 /***/ }),
 /* 210 */

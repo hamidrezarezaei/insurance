@@ -407,7 +407,7 @@ ainsurance{
     margin-top: -18rem;
 }
 
-    #sec-article h2 > span {
+    #sec-article .title2 > span {
         color: #fde428;
     }
 
@@ -440,15 +440,15 @@ ainsurance{
 }
 
 /********************************************************************************************************/
-h3 {
+.title3 {
     font-size: 1.2rem;
     font-weight: 500;
     margin-bottom: 1.3rem;
 }
-h3 >span{
+.title3 >span{
     position:relative;
 }
-    h3 > span::after {
+    .title3 > span::after {
         content: '';
         position: absolute;
         bottom: -10px;
@@ -486,12 +486,12 @@ h3 >span{
         color:white;
         padding:1.5rem 0;
     }
-    #sec-reminder-old h2 span {
+    #sec-reminder-old .title2 span {
         color: #fde428;
         text-shadow: 2px 2px black;
     }
 
-h1,h2 {
+h1,.title2 {
     text-align: center;
     padding: 10px;
     color: #222222;
@@ -499,12 +499,12 @@ h1,h2 {
     margin-bottom: 2rem;
     margin-top: 1rem;
 }
-    h1 > span ,h2 > span {
+    h1 > span ,.title2 > span {
         position: relative;
         padding: 0 20px;
         font-size: 1.5rem;
     }
-        h1 > span::after ,h2 > span::after {
+        h1 > span::after ,.title2 > span::after {
             content: '';
             position: absolute;
             bottom: -10px;

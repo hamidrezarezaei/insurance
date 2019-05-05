@@ -86,8 +86,8 @@ dp-calendar-nav.dp-material .dp-calendar-nav-container, dp-calendar-nav.dp-mater
     font-weight: 500;
     color: black;
 }
-    .field-title.require:after,
-    .image-button.require:after {
+    .field-title.require:before,
+    .image-button.require:before {
         display: inline-block;
         margin-right: 1px;
         content: "*";

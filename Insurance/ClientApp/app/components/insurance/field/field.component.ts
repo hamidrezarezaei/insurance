@@ -37,6 +37,9 @@ export class fieldComponent {
 
         //console.log("oninit");
         //console.log(this.field.dataValues);
+        if (this.field && this.field.type == "date") {
+            this.field.value = moment();
+        }
 
         if (this.field && this.field.type == "comboBox" && !this.field.dataValues && !this.field.fatherid)
             this._insuranceService.fetchDataValues(this.field);

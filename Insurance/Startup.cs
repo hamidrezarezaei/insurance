@@ -43,6 +43,7 @@ namespace insurance_new
                     config.Password.RequireUppercase = false;
                     config.Password.RequiredUniqueChars = 0;
                     config.Password.RequireLowercase = false;
+                    config.User.RequireUniqueEmail = false;
                 }
                 ).
                 AddEntityFrameworkStores<identityContext>().

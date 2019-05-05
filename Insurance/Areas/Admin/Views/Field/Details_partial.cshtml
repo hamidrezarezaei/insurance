@@ -283,6 +283,17 @@ else if (ViewBag.type == "create")
 
             </tr>}
         <tr>
+            <td>@Html.DisplayNameFor(model => model.tooltip)  :</td>
+            @if (ViewBag.type == "create" || ViewBag.type == "edit")
+            {
+                <td><textarea asp-for="tooltip" class="editor form-control"></textarea> </td>
+            }
+            else
+            {
+                <td> @Html.Raw(Model.tooltip)</td>
+            }
+        </tr>
+        <tr>
             <td>
                 @Html.DisplayNameFor(model => model.dataType)
             </td>

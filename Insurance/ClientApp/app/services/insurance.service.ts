@@ -16,18 +16,116 @@ export class insuranceService {
         //console.log('insuranceserviceconstructor');
         this.fetchInsurances();
     }
+    //-----------------------------------------------------------------------------
+    //not used
+    //addOrder(insurance: any) {
+    //    //console.log("addOrder start");
+    //    const headers = new Headers({ 'Content-type': 'application/json' });
+    //    this.isWaiting = true;
+    //    let minInsurance = this.minifyInsurance(insurance);
+
+    //    this.http.post(this.baseUrl + "api/Order/AddOrder/", minInsurance, new RequestOptions({ headers: headers }))
+    //        .subscribe(result => {
+    //            let orderId = +result.text();
+    //            if (orderId == -1) {
+    //                console.log("خطا در ثبت سفارش");
+    //            }
+    //            else if (this.fileCount(insurance.name) > 0) {
+    //                this.uploadOrderFiles(orderId, insurance.name);
+    //            }
+    //            else {
+    //                window.location.href = '/profile/Payment/Index/' + orderId;
+    //            }
+    //        });
+    //}
+    //-----------------------------------------------------------------------------
+    processOrder(insurance: any) {
+        console.log("processOrder start");
+        const headers = new Headers({ 'Content-type': 'application/json' });
+        this.isWaiting = true;
+        let minInsurance = this.minifyInsurance(insurance);
+        console.log("minified");
+        this.http.post(this.baseUrl + "api/Order/ProcessOrder/", minInsurance, new RequestOptions({ headers: headers }))
+            .subscribe(result => {
+                let orderId = +result.text();
+                insurance.orderId = orderId;
+
+                console.log("order - send recive - orderid > " + orderId);
+                if (orderId == -1) {
+                    console.log("خطا در ثبت سفارش");
+                }
+                else if (insurance.currentStep > insurance.stepCount) {
+                    window.location.href = '/profile/Payment/Index/' + orderId;
+                    return;
+                }
+                this.isWaiting = false;
+            });
+    }
+    //-----------------------------------------------------------------------------
+    //not used
+    //uploadOrderFiles(orderId: number, insuranceName: string) {
+    //    let formData: FormData = new FormData();
+
+    //    //console.log(insuranceName);
+    //    this.isWaiting = true;
+
+    //    for (let i = 0; i < this.files.length; i++) {
+    //        if (this.files[i].insuranceName == insuranceName)
+    //            formData.append(orderId + "@" + this.files[i].fieldName, this.files[i].file);
+    //    }
+
+    //    this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
+    //        .subscribe(result => {
+    //            let orderId = +result.text();
+    //            if (orderId == -1) {
+    //                this.isWaiting = false;
+    //                console.log("خطا در آپلود فایل");
+    //            }
+    //            else {
+    //                console.log("سفارش با موفقیت ثبت شد کد پرداخت");
+    //                window.location.href = '/profile/Payment/Index/' + orderId;
+    //            }
+    //        });
+    //}
+    //-----------------------------------------------------------------------------
+    uploadOrderFile(insuranceName: string, fieldName: string, file: any) {
+        let formData: FormData = new FormData();
+
+        this.isWaiting = true;
+
+        let insurance = this.findInsurance(insuranceName);
+        let orderId = insurance.orderId; 
+
+        console.log("uploadFile orderId > " + orderId);
+
+        formData.append(orderId + "@" + fieldName, file);
+
+        this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
+            .subscribe(result => {
+                let orderId = +result.text();
+                if (orderId == -1) {
+                    this.isWaiting = false;
+                    console.log("خطا در آپلود فایل");
+                }
+                else {
+                    this.isWaiting = false;
+                }
+            });
+    }
 
     //-----------------------------------------------------------------------------
     files: fileClass[] = [];
     // اگر فایل بود آن را آپدیت کن در غیر اینصورت فایل را اضافه می کند
     addFile(insuranceName: string, fieldName: string, file: any) {
+        //ارسال برای سرور
+        this.uploadOrderFile(insuranceName, fieldName, file);
+
         if (this.isFileExist(insuranceName, fieldName)) {
             this.updateFile(insuranceName, fieldName, file);
         }
         else {
             this.pushFile(insuranceName, fieldName, file);
         }
-        //console.log(this.files);
 
     }
     //فایل را به آرایه اضافه می کند
@@ -101,21 +199,22 @@ export class insuranceService {
             //this.currentInsurance = this.insurances[0];
             this.fetchStep(this.currentInsurance, 1);
             this.isWaiting = false;
-            //console.log(this.insurances)
         }, error => console.error(error));
     }
     //-----------------------------------------------------------------------------
     stepChange(insurance: any) {
-        //اگر به آخرین مرحله بوده که باید بریم سراغ ثبت سفارش
-        if (insurance.currentStep > insurance.stepCount) {
-            this.addOrder(insurance);
-            return;
-        }
+        //اگر مرحله آخر بوده است
+        if (insurance.currentStep > insurance.stepCount)
+            this.processOrder(insurance);
+
         //اگر استپی که میخواهیم نیست آن را لود می کنیم
         for (let i = 0; i < insurance.steps.length; i++) {
             let step = insurance.steps[i];
-            if (step.number == insurance.currentStep)
+            if (step.number == insurance.currentStep) {
+                //با هر تغییر در مراحل یک بار اطلاعات به سرور فرستاده می شود
+                this.processOrder(insurance);
                 return;
+            }
         }
         this.fetchStep(insurance, insurance.currentStep);
     }
@@ -133,6 +232,10 @@ export class insuranceService {
                 insurance.steps.push(step);
             //console.log(step)
             this.isWaiting = false;
+            //اطلاعات به سرور فرستاده شود
+            if (stepNumber > 1)
+                this.processOrder(insurance);
+
         }, error => console.error(error));
     }
     //-----------------------------------------------------------------------------
@@ -446,8 +549,11 @@ export class insuranceService {
     minifyInsurance(insurance: any) {
         var resInsurance = {
             id: insurance.id,
-            orderIndex: insurance.orderIndex,
+            orderId: insurance.orderId,
+            //orderIndex: insurance.orderIndex,
             price: insurance.price,
+            //stepCount: insurance.stepCount,
+            //currentStep: insurance.currentStep,
             steps: Array()
         };
 
@@ -483,52 +589,6 @@ export class insuranceService {
             resInsurance.steps.push(resStep);
         }
         return resInsurance;
-    }
-    //-----------------------------------------------------------------------------
-    addOrder(insurance: any) {
-        //console.log("addOrder start");
-        const headers = new Headers({ 'Content-type': 'application/json' });
-        this.isWaiting = true;
-        let minInsurance = this.minifyInsurance(insurance);
-
-        this.http.post(this.baseUrl + "api/Order/AddOrder/", minInsurance, new RequestOptions({ headers: headers }))
-            .subscribe(result => {
-                let orderId = +result.text();
-                if (orderId == -1) {
-                    console.log("خطا در ثبت سفارش");
-                }
-                else if (this.fileCount(insurance.name) > 0) {
-                    this.uploadOrderFiles(orderId, insurance.name);
-                }
-                else {
-                    window.location.href = '/profile/Payment/Index/' + orderId;
-                }
-            });
-    }
-
-    uploadOrderFiles(orderId: number, insuranceName: string) {
-        let formData: FormData = new FormData();
-
-        //console.log(insuranceName);
-        this.isWaiting = true;
-
-        for (let i = 0; i < this.files.length; i++) {
-            if (this.files[i].insuranceName == insuranceName)
-                formData.append(orderId + "@" + this.files[i].fieldName, this.files[i].file);
-        }
-
-        this.http.post(this.baseUrl + "api/Order/uploadOrderFiles/", formData)
-            .subscribe(result => {
-                let orderId = +result.text();
-                if (orderId == -1) {
-                    this.isWaiting = false;
-                    console.log("خطا در آپلود فایل");
-                }
-                else {
-                    console.log("سفارش با موفقیت ثبت شد کد پرداخت");
-                    window.location.href = '/profile/Payment/Index/' + orderId;
-                }
-            });
     }
 }
 

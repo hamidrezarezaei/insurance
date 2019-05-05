@@ -59,6 +59,7 @@ namespace Entities
             this.price = 0;
             this.currentStep = 1;
         }
+        public int orderId { get; set; }
         public string name { get; set; }
         public string title { get; set; }
         public string formula { get; set; }

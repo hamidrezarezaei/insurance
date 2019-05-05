@@ -1,21 +1,57 @@
-﻿.post .container {
+﻿.new-tooltip {
+    width: 15px;
+    height: 15px;
+    border: none;
+    font-weight: bolder;
+    padding: 1px 0;
+    text-align: center;
+    background: #585858;
+    color: #f3f3f3;
+    font-size: 12px;
+    border-radius: 50%;
+}
+ 
+.tooltip-inner {
+    direction:rtl;
+    text-align:justify;
+    max-width: none;
+    width: auto;
+}
+#thirdParty #calcThirdParty fieldset > div > div.row {
+    flex-direction: column;
+    height: 180px;
+}
+
+    #thirdParty #calcThirdParty field {
+        flex: 0 0 25%;
+    }
+
+.post .container {
     text-align: justify;
-    margin-top:15px;
+    margin-top: 15px;
+}
+
+.post-header .container {
+    text-align: center;
 }
 
 body {
 }
+
 .field-title.static-width {
     width: 160px;
     padding-right: 10px;
 }
+
 .field-title.static-width-small {
     width: 110px;
     padding-right: 5px;
 }
+
 .mobile-menu {
     display: none;
 }
+
 .select2-search__field {
     background-image: url(../image/theme/search.png);
     background-repeat: no-repeat;
@@ -164,9 +200,11 @@ body {
         height: 460px;
         overflow: hidden;
     }
-#box-category-articles img{
-    width:100%;
+
+#box-category-articles img {
+    width: 100%;
 }
+
 #sec-article #box-category-articles .box .title {
     text-align: center;
     color: black;
@@ -174,14 +212,14 @@ body {
     padding: 10px;
 }
 
-        #sec-article #box-category-articles .box .content {
-            text-align: justify;
-            color: #444;
-        }
+#sec-article #box-category-articles .box .content {
+    text-align: justify;
+    color: #444;
+}
 
 /*******************************************************************************************/
 
-h1,h2 {
+h1, .title2 {
     text-align: center;
     padding: 10px;
     color: #222222;
@@ -189,12 +227,12 @@ h1,h2 {
     font-size: 24px;
 }
 
-    h1 > span, h2 > span {
+    h1 > span, .title2 > span {
         position: relative;
         padding: 0 20px;
     }
 
-        h1 > span::before ,h2 > span::before {
+        h1 > span::before, .title2 > span::before {
             display: block;
             content: "";
             position: absolute;
@@ -207,7 +245,7 @@ h1,h2 {
             margin: 0 auto;
         }
 
-        h1 > span::after ,h2 > span::after {
+        h1 > span::after, .title2 > span::after {
             display: block;
             content: "";
             position: absolute;
@@ -220,12 +258,12 @@ h1,h2 {
             margin: 0 auto;
         }
 
-h3 {
+.title3 {
     font-size: 16px;
     font-weight: 500;
 }
 
-    h3 > span::after {
+    .title3 > span::after {
         display: block;
         content: "";
         width: 100px;
@@ -276,8 +314,8 @@ h3 {
     text-align: center;
     padding-top: 120px;
     padding-bottom: 120px;
-    position:relative;
-    overflow:hidden;
+    position: relative;
+    overflow: hidden;
 }
 
     .post-header .background-img {
@@ -287,12 +325,13 @@ h3 {
         top: 0px;
         right: 0px;
     }
-    .post .title {
-        font-weight: 700;
-        font-size: 35px;
-        color: white;
-        margin-bottom: 25px;
-    }
+
+.post .title {
+    font-weight: 700;
+    font-size: 35px;
+    color: white;
+    margin-bottom: 25px;
+}
 
 .post .title2 {
     font-size: 18px;

@@ -37,10 +37,16 @@ namespace Insurance.Controllers
 
         public IActionResult Post(int id, string title)
         {
+            if(title.Contains(" "))
+            {
+               return RedirectToAction("post", new { id=id, title = title.Replace(' ','-') });
+            }
+
             var post = this.repository.GetPost(id);
             ViewData["Title"] = post.title;
             ViewData["MetaDescription"] = post.metaDescription;
             ViewData["MetaKeywords"] = post.metaKeywords;
+            ViewData["GoogleAnalytics"] = this.repository.GetSetting("GoogleAnalytics");
             return View(this.viewAddress("Post"), post);
         }
         public IActionResult PostCategory(int id, string title)

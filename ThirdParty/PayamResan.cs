@@ -26,7 +26,6 @@ namespace ThirdParty
                { "From", this.From},
                { "To", to },
                { "Text", text }
-
             };
 
             var content = new FormUrlEncodedContent(values);

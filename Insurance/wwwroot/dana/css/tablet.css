@@ -1,4 +1,7 @@
-﻿body {
+﻿#thirdParty #calcThirdParty fieldset > div > div.row {
+    height: auto;
+}
+body {
 }
 .desktop{
     display:none;

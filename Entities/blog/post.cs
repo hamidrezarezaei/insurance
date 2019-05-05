@@ -44,5 +44,12 @@ namespace Entities
         [Display(Name = "سی اس اس")]
         public string cssClass { get; set; }
         public List<post_postCategory> categories { get; set; }
+        [NotMapped]
+        public string SeoTitle {
+            get {
+                return this.title.Replace(" ", "-");
+            }
+        }
     }
 }
+

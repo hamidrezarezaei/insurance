@@ -1,4 +1,4 @@
-<div class="row no-gutters insurance">
+<div class="row no-gutters insurance" onmouseover="initToolTip()">
     <ng-container *ngIf="_insuranceService.isWaiting||_authService.isWaiting">
         <div id="loadingContainer">
             <div class="loading"></div>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <ng-container *ngIf="currentInsurance.tabLocation == 'left'">
-        <tab  *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
+        <tab *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>
     </ng-container>
     <ng-container *ngIf="currentInsurance.tabLocation == 'bottom'">
         <tab class="col-12" *ngIf="currentInsurance.currentStep==1" [insurances]="insurances" [currentInsurance]="currentInsurance" (tabChanged)="tabChange($event)"></tab>

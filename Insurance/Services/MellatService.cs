@@ -84,8 +84,5 @@ namespace Insurance.Services
                 throw new Exception(ex.Message);
             }
         }
-
-
-
     }
 }

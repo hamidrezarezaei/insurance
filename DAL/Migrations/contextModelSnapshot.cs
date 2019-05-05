@@ -364,6 +364,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("title");
 
+                    b.Property<string>("tooltip");
+
                     b.Property<string>("type");
 
                     b.Property<DateTime>("updateDateTime");

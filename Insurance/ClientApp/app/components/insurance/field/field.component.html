@@ -1,6 +1,9 @@
-<div class="row no-gutters">
+<div class="row no-gutters"  >
     <ng-container *ngIf="field.type=='price'">
-        <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <div id="{{field.name}}" class="price-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -8,7 +11,7 @@
             </div>
         </div>
     </ng-container>
-  
+
     <ng-container *ngIf="field.type=='calc'">
         <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
         <div id="{{field.name}}" class="calc-type {{field.elementCssClass}}">
@@ -18,7 +21,7 @@
             </div>
         </div>
     </ng-container>
-    
+
     <ng-container *ngIf="field.type=='label'">
         <div *ngIf="!field.isHideLabel" class="field-title label-type {{field.labelCssClass}}">{{field.title}}:</div>
         <div id="{{field.name}}" class="label-type {{field.elementCssClass}}">
@@ -30,7 +33,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='html'">
-        <div *ngIf="!field.isHideLabel" class="field-title html-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title html-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <div id="{{field.name}}" class="html-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -45,13 +51,19 @@
                 <img [src]="imageFile" (click)="openFileDialog()">
                 <!--<canvas #imageCanvas (click)="openFileDialog()"></canvas>-->
                 <input type="file" (change)="valueChange($event)" accept="image/x-png,image/jpeg" #fileInput id="{{field.name}}" style="display: none;" />
-                <button (click)="openFileDialog()" [ngClass]="{'require': field.isRequire}" class="image-button">{{field.title}}</button>
+                <button (click)="openFileDialog()" [ngClass]="{'require': field.isRequire}" class="image-button">
+                    {{field.title}}
+                </button>
+                <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
             </div>
         </div>
     </ng-container>
 
     <ng-container *ngIf="field.type=='inputImage'">
-        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <div class="inputImage-type {{field.elementCssClass}}">
             <div class="field-container">
                 <input type="file" (change)="valueChange($event)" accept="image/x-png,image/jpeg" #inputImage id="{{field.name}}" />
@@ -70,7 +82,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='number'">
-        <div *ngIf="!field.isHideLabel" class="field-title number-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title number-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <div id="{{field.name}}" class="number-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -80,7 +95,11 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='textBox'">
-        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title textBox-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+
+        </div>
         <div id="{{field.name}}" class="textBox-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -90,15 +109,32 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='checkBox'">
-        <div *ngIf="!field.isHideLabel" class="field-title checkBox-type {{field.elementCssClass}} {{field.name}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
+        <div *ngIf="!field.isHideLabel" class="field-title checkBox-type {{field.elementCssClass}} {{field.name}}">
+            <input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" />
+            <label for="{{field.name}}">
+                {{field.title}}
+                <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+            </label>
+        </div>
+
     </ng-container>
 
     <ng-container *ngIf="field.type=='acceptCheckBox'">
-        <div *ngIf="!field.isHideLabel" class="field-title  acceptCheckBox-type {{field.elementCssClass}}"><input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" /><label for="{{field.name}}">{{field.title}}</label></div>
+        <div *ngIf="!field.isHideLabel" class="field-title  acceptCheckBox-type {{field.elementCssClass}}">
+            <input type="checkbox" [(ngModel)]="field.value" (change)="valueChange($event)" id="{{field.name}}" />
+            <label for="{{field.name}}">
+                {{field.title}}
+            </label>
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
     </ng-container>
 
     <ng-container *ngIf="field.type=='date'">
-        <div *ngIf="!field.isHideLabel" class="field-title date-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title date-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+
+        </div>
         <div id="{{field.name}}" class="date-type  {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -110,7 +146,11 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='textArea'">
-        <div *ngIf="!field.isHideLabel" class="field-title textArea-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title textArea-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+
+        </div>
         <div id="{{field.name}}" class="textArea-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -120,7 +160,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='radio'">
-        <div *ngIf="!field.isHideLabel" class="field-title radio-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title radio-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <label *ngFor="let dataValue of field.dataValues">
             <input type="radio" name="field.name" value="{{dataValue.id}}" [(ngModel)]="field.value" (change)="valueChange($event)" class="{{field.elementCssClass}}">
             {{dataValue.title}}
@@ -128,7 +171,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='radioButton'">
-        <div *ngIf="!field.isHideLabel" class="field-title radioButton-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title radioButton-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <label *ngFor="let dataValue of field.dataValues" [ngClass]="{'btn-success': dataValue.id == field.value}" class="field-label {{field.elementCssClass}}">
             <input type="radio" style="display:none;" name="field.name" value="{{dataValue.id}}" [(ngModel)]="field.value" (change)="valueChange($event)">
             {{dataValue.title}}
@@ -138,6 +184,8 @@
     <ng-container *ngIf="field.type=='comboBox'">
         <div *ngIf="!field.isHideLabel" class="field-title comboBox-type {{field.labelCssClass}}">
             {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+
         </div>
         <div id="{{field.name}}" class="comboBox-type {{field.elementCssClass}}">
             <div class="field-container">
@@ -156,7 +204,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='year'">
-        <div *ngIf="!field.isHideLabel" class="field-title year-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title year-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <div id="{{field.name}}" class="year-type {{field.elementCssClass}}">
             <div class="field-container">
                 <img *ngIf="field.image" class="icon" src="{{field.image}}" />
@@ -173,7 +224,10 @@
     </ng-container>
 
     <ng-container *ngIf="field.type=='paymentType'">
-        <div *ngIf="!field.isHideLabel" class="field-title paymentType-type {{field.labelCssClass}}">{{field.title}}:</div>
+        <div *ngIf="!field.isHideLabel" class="field-title paymentType-type {{field.labelCssClass}}">
+            {{field.title}}:
+            <button *ngIf="field.tooltip && field.tooltip.length>0" type="button" class="new-tooltip" data-toggle="tooltip" data-html="true" data-placement="left" title="{{field.tooltip}}">?</button>
+        </div>
         <img *ngIf="field.isShowLoading" class="icon" src="/common/image/loading32.gif" />
 
         <div *ngFor="let dataValue of field.dataValues" class="paymentType-type  {{field.elementCssClass}}">

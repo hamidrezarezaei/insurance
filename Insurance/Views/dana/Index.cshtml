@@ -8,6 +8,7 @@
 <section id="sec-insurance">
     <div class="container holder">
         @*<app class="row no-gutters" asp-prerender-module="ClientApp/dist/main-server"><img src="~/dana/image/theme/loading.gif" class="loading" /></app>*@
+
         <app class="row no-gutters" asp-ng2-prerender-module="ClientApp/dist/main-server" asp-prerender-timeout="100000">
             <div id="loadingContainer">
                 <div class="loading"></div>
@@ -15,23 +16,8 @@
         </app>
     </div>
 </section>
-
-<section id="sec-about-us">
-    <div class="container holder">
-        <div class="row">
-            <h1 class="col-12">
-                <span>
-                    درباره بیمه دانا
-                </span>
-            </h1>
-            <div class="col1 col-md-6 col-xs-12">
-                @await Component.InvokeAsync("Box", new { id = 14, componentName = "about-us", isShowTitle = false })
-            </div>
-            <div class="col2 col-md-6 col-xs-12">
-                <img src="~/dana/image/theme/about-us.png" title="درباره بیمه دانا" alt="درباره بیمه دانا"  class="about-us-img" />
-            </div>
-        </div>
-    </div>
+<section id="sec-article" class="container">
+    @await Component.InvokeAsync("BoxCategory", new { id = 1, isShowCategoryTitle = true, componentName = "box-category-articles" })
 </section>
 
 <section id="sec-other-insurance">
@@ -40,9 +26,25 @@
     </div>
 </section>
 
-<section id="sec-article" class="container">
-    @await Component.InvokeAsync("BoxCategory", new { id = 1, isShowCategoryTitle = true, componentName = "box-category-articles" })
+<section id="sec-about-us">
+    <div class="container holder">
+        <div class="row">
+            <h1 class="col-12">
+                <span>
+                    بیمه دانا
+                </span>
+            </h1>
+            <div class="col1 col-md-6 col-xs-12">
+
+                @await Component.InvokeAsync("Box", new { id = 14, componentName = "about-us", isShowTitle = false })
+            </div>
+            <div class="col2 col-md-6 col-xs-12">
+                <img src="~/dana/image/theme/about-us.png" title="درباره بیمه دانا" alt="درباره بیمه دانا" class="about-us-img" />
+            </div>
+        </div>
+    </div>
 </section>
+
 
 @await Html.PartialAsync("_footer.cshtml")
 

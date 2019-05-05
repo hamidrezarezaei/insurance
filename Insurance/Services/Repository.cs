@@ -301,7 +301,7 @@ namespace Insurance.Services
                 actualUserName = user.actualUserName,
                 firstName = user.firstName,
                 lastName = user.lastName,
-                Email = user.email,
+                Email = user.email ?? "aa@bb.com",
                 nationalCode = user.nationalCode,
                 PhoneNumber = user.phoneNumber,
                 updateUserId = this.userId,
@@ -349,7 +349,7 @@ namespace Insurance.Services
 
             IQueryable<role> query;
             if (!String.IsNullOrEmpty(searchString))
-                query = roleManager.Roles.Where(r => r.Name.Contains(searchString)&&
+                query = roleManager.Roles.Where(r => r.Name.Contains(searchString) &&
                                                 r.siteId == this.siteId && !r.isDeleted);
             else
                 query = roleManager.Roles.Where(r =>
@@ -474,6 +474,67 @@ namespace Insurance.Services
             this.context.SaveChanges();
             return order.id;
         }
+        public int MapInsuranceToOrder(order order, insurance_client insurance)
+        {
+            order.userId = this.userId;
+            order.insuranceId = insurance.id;
+            order.price = insurance.price;
+            //from
+            foreach (var step in insurance.steps)
+            {
+                foreach (var fieldSet in step.fieldSets)
+                {
+                    foreach (var field in fieldSet.fields)
+                    {
+                        if (field.type == "label" || field.type == "html" ||
+                            field.type == "acceptCheckBox" || field.type == "price")
+                            continue;
+                        else if (field.type == "paymentType")
+                        {
+                            order.paymentTypeId = Convert.ToInt32(field.value);
+                            continue;
+                        }
+
+                        orderField orderField;
+
+                        orderField = order.fields.FirstOrDefault(of => of.name == field.name);
+                        if (orderField == null)
+                        {
+                            orderField = new orderField
+                            {
+                                name = field.name,
+                                type = field.type,
+                                title = field.title
+                            };
+                            this.Labeling(orderField as baseClass);
+                            orderField.orderIndex = step.orderIndex * 10000 + fieldSet.orderIndex * 100 + field.orderIndex;
+                            order.fields.Add(orderField);
+                        }
+
+                        if (field.type == "comboBox")
+                        {
+                            try
+                            {
+                                int? id = Int32.Parse(field.value);
+                                orderField.value = this.GetDataValue(id).title;
+                            }
+                            catch { }
+                        }
+                        else
+                        {
+                            orderField.value = field.value;
+                        }
+                    }
+                }
+            }
+
+            //to
+            this.context.SaveChanges();
+            return order.id;
+        }
+
+
+
         public order GetOrder(int? id)
         {
             var order = this.context.orders.Where(o => o.id == id &&
@@ -515,7 +576,7 @@ namespace Insurance.Services
 
             IQueryable<order> query;
             if (!String.IsNullOrEmpty(searchString))
-                query = context.orders.Where(o => o.orderStatusId == statusId &&
+                query = context.orders.Where(o => o.orderStatusId == statusId && o.userId != 0 &&
                                           (o.siteId == this.siteId) && !o.isDeleted).
                                  Include(o => o.insurance).
                                  Include(o => o.orderStatus).
@@ -596,8 +657,12 @@ namespace Insurance.Services
 
                         if (field.type == "comboBox")
                         {
-                            int? id = Int32.Parse(field.value);
-                            orderField.value = this.GetDataValue(id).title;
+                            try
+                            {
+                                int? id = Int32.Parse(field.value);
+                                orderField.value = this.GetDataValue(id).title;
+                            }
+                            catch { }
                         }
                         else
                         {

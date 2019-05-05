@@ -2,11 +2,11 @@
 <div id="@ViewData["componentName"]" class="row no-gutters">
     @if ((bool)ViewData["isShowCategoryTitle"])
     {
-        <h2 class="boxcategory-title col-lg-12">
+        <div class="title2 boxcategory-title col-lg-12">
             <span>
                 @ViewData["categoryTitle"]
             </span>
-        </h2>
+        </div>
 
     }
     @foreach (var box in Model)

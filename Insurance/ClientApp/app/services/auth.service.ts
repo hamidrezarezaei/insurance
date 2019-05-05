@@ -16,7 +16,7 @@ export class authService {
         this.isWaiting = true;
         this.http.get(this.baseUrl + 'api/User/GetUser').subscribe(result => {
             this.user = result.json();
-            console.log(this.user)
+            //console.log(this.user)
             this.isWaiting = false;
         }, error => console.error(error));
     }
@@ -24,7 +24,7 @@ export class authService {
     login(actualUserName: string, passWord: string) {
         this.user.actualUserName = actualUserName;
         this.user.passWord = passWord;
-        console.log(this.user);
+        //console.log(this.user);
 
         this.isWaiting = true;
         let formData: FormData = new FormData();
@@ -33,7 +33,7 @@ export class authService {
         this.http.post(this.baseUrl + "api/User/Login/", this.user, new RequestOptions({ headers: headers }))
             .subscribe(result => {
                 this.user = result.json();
-                console.log(this.user)
+                //console.log(this.user)
                 this.isWaiting = false;
             });
     }
@@ -58,7 +58,7 @@ export class authService {
         this.user.actualUserName = actualUserName;
         this.user.passWord = passWord;
 
-        console.log(this.user);
+        //console.log(this.user);
         let formData: FormData = new FormData();
         const headers = new Headers({ 'Content-type': 'application/json' });
 
@@ -67,7 +67,7 @@ export class authService {
         this.http.post(this.baseUrl + "api/User/Register/", this.user, new RequestOptions({ headers: headers }))
             .subscribe(result => {
                 this.user = result.json();
-                console.log(this.user)
+                //console.log(this.user)
                 this.isWaiting = false;
             });
     }

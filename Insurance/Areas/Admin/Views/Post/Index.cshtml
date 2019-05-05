@@ -29,7 +29,7 @@
                         <a asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Post/Index">@r - @Html.DisplayFor(modelItem => item.title)</a>
                     </td>
                     <td class="ltr">
-                        /post/@item.id/@item.title
+                        /post/@item.id/@item.SeoTitle
                     </td>
                     <td class="op-buttns">
                         <a btntype="Edit" asp-action="Edit" asp-route-id="@item.id" asp-route-returnurl="/Admin/Post/Index">ویرایش</a>

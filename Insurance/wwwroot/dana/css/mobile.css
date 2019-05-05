@@ -20,11 +20,11 @@
     width: 100%;
 }
 
-h2 > span::before {
+.title2 > span::before {
     display: none
 }
 
-h2 > span::after {
+.title2 > span::after {
     display: none
 }
 #sec-insurance .insurance-tab .step-label{
